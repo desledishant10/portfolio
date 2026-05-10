@@ -7,7 +7,7 @@ export function Competitions() {
   return (
     <section id="competitions" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader index="05." title="competitions" subtitle="// blue_team_ops[]" />
+        <SectionHeader index="06." title="competitions" subtitle="// blue_team_ops[]" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {competitions.map((c, i) => (

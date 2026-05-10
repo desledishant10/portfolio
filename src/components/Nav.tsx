@@ -8,11 +8,11 @@ import clsx from 'clsx';
 const links = [
   { href: '#about', label: 'about', idx: '01' },
   { href: '#skills', label: 'skills', idx: '02' },
-  { href: '#experience', label: 'experience', idx: '03' },
-  { href: '#projects', label: 'projects', idx: '04' },
-  { href: '#competitions', label: 'competitions', idx: '05' },
-  { href: '#certifications', label: 'certifications', idx: '06' },
-  { href: '#education', label: 'education', idx: '07' },
+  { href: '#education', label: 'education', idx: '03' },
+  { href: '#experience', label: 'experience', idx: '04' },
+  { href: '#projects', label: 'projects', idx: '05' },
+  { href: '#competitions', label: 'competitions', idx: '06' },
+  { href: '#certifications', label: 'certifications', idx: '07' },
   { href: '#contact', label: 'contact', idx: '08' },
 ];
 

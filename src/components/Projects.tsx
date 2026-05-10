@@ -112,7 +112,7 @@ export function Projects() {
   return (
     <section id="projects" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader index="04." title="projects" subtitle="// builds[]" />
+        <SectionHeader index="05." title="projects" subtitle="// builds[]" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style={{ perspective: '1000px' }}>
           {projects.map((p, i) => (
             <ProjectCard key={p.title} project={p} i={i} />

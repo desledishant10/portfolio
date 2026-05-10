@@ -7,7 +7,7 @@ export function Education() {
   return (
     <section id="education" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader index="07." title="education" subtitle="// schools[]" />
+        <SectionHeader index="03." title="education" subtitle="// schools[]" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {education.map((e, i) => (

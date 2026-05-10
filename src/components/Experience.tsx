@@ -124,7 +124,7 @@ export function Experience() {
   return (
     <section id="experience" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader index="03." title="experience" subtitle="// timeline[]" />
+        <SectionHeader index="04." title="experience" subtitle="// timeline[]" />
 
         <div ref={sectionRef} className="relative">
           <div className="absolute left-4 top-0 bottom-0 w-px bg-bg-border -translate-x-px" />
