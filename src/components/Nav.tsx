@@ -57,15 +57,15 @@ export function Nav() {
               {l.label}
             </a>
           ))}
-          <div className="flex items-center gap-1 ml-2 pl-3 border-l border-bg-border">
-            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2 text-ink-dim hover:text-neon-cyan transition-colors">
-              <GithubIcon size={16} />
+          <div className="flex items-center gap-2 ml-3 pl-4 border-l border-bg-border">
+            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <GithubIcon size={20} />
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 text-ink-dim hover:text-neon-cyan transition-colors">
-              <LinkedinIcon size={16} />
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <LinkedinIcon size={20} />
             </a>
-            <a href={`mailto:${profile.email}`} aria-label="Email" className="p-2 text-ink-dim hover:text-neon-cyan transition-colors">
-              <Mail size={16} />
+            <a href={`mailto:${profile.email}`} aria-label="Email" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <Mail size={20} />
             </a>
           </div>
         </div>

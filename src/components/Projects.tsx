@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Folder } from 'lucide-react';
+import { ExternalLink, Folder } from 'lucide-react';
 import { projects } from '../data/content';
+import { GithubIcon } from './ui/BrandIcons';
 import { SectionHeader } from './ui/SectionHeader';
 
 const accentMap = {
@@ -42,18 +43,44 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
       transition={{ duration: 0.5, delay: i * 0.08 }}
       className={`panel ${accent.ring} ${accent.glow} p-6 flex flex-col gap-4 transition-shadow duration-300`}
     >
-      <div className="flex items-start justify-between" style={{ transform: 'translateZ(20px)' }}>
+      <div className="flex items-start justify-between gap-3" style={{ transform: 'translateZ(20px)' }}>
         <div className={`p-2 rounded bg-bg-soft border ${accent.ring} ${accent.text}`}>
           <Folder size={18} />
         </div>
-        {project.metric && (
-          <div className="text-right">
-            <div className={`font-mono text-2xl font-bold ${accent.text}`}>{project.metric.value}</div>
-            <div className="font-mono text-[10px] text-ink-mute uppercase tracking-wider">
-              {project.metric.label}
+        <div className="flex items-center gap-2">
+          {project.repo && (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${project.title} GitHub repository`}
+              onClick={(e) => e.stopPropagation()}
+              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}
+            >
+              <GithubIcon size={16} />
+            </a>
+          )}
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${project.title} demo`}
+              onClick={(e) => e.stopPropagation()}
+              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}
+            >
+              <ExternalLink size={16} />
+            </a>
+          )}
+          {project.metric && (
+            <div className="text-right pl-1">
+              <div className={`font-mono text-2xl font-bold ${accent.text}`}>{project.metric.value}</div>
+              <div className="font-mono text-[10px] text-ink-mute uppercase tracking-wider">
+                {project.metric.label}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div style={{ transform: 'translateZ(15px)' }}>

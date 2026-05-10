@@ -7,6 +7,9 @@ export const profile = {
   email: 'didesle7@gmail.com',
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
+  // TODO: replace with your TryHackMe username (the part after tryhackme.com/p/)
+  tryhackmeUsername: 'desledishant10',
+  resumePath: '/resume.pdf',
   tagline:
     'I build things that catch ransomware before it spreads and write the playbooks for what happens next.',
   bio: `Master's student in Cyber Security at the University of Denver, focused on threat detection, incident response, and security architecture. I like the part of the job where logs become stories — turning noisy telemetry into clear timelines, then automating the response so the same incident never has to be handled twice.`,
@@ -83,6 +86,10 @@ export type Project = {
   bullets: string[];
   metric?: { label: string; value: string };
   accent: 'green' | 'cyan' | 'violet';
+  // TODO: paste public GitHub URL for this project (or leave empty to hide the icon)
+  repo?: string;
+  // TODO: optional live demo / writeup URL
+  demo?: string;
 };
 
 export const projects: Project[] = [
@@ -98,6 +105,7 @@ export const projects: Project[] = [
     ],
     metric: { label: 'Detection rate', value: '98%' },
     accent: 'green',
+    repo: '',
   },
   {
     title: 'Intrusion Detection & Threat Analysis System (IDPS)',
@@ -110,6 +118,7 @@ export const projects: Project[] = [
       'Documented findings to simulate forensic-style analysis and isolated threats during response.',
     ],
     accent: 'cyan',
+    repo: '',
   },
   {
     title: 'Vulnerability Assessment & Security Hardening',
@@ -121,6 +130,7 @@ export const projects: Project[] = [
       'Implemented security configurations and controls to reduce exposure and improve resilience.',
     ],
     accent: 'violet',
+    repo: '',
   },
 ];
 
@@ -153,17 +163,19 @@ export type Certification = {
   name: string;
   issuer: string;
   date: string;
+  // TODO: paste credential / verification URL when you have it (Credly, TryHackMe, Coursera, etc.)
+  url?: string;
 };
 
 export const certifications: Certification[] = [
-  { name: 'Student Employees Achieve (SEA) Badge', issuer: 'University of Denver', date: 'Mar 2026' },
-  { name: 'Professionally API Testing', issuer: 'Antisyphon Training', date: 'Apr 2026' },
-  { name: 'Google Cybersecurity', issuer: 'Coursera', date: 'Feb 2026' },
-  { name: 'Google Cloud Cybersecurity', issuer: 'Coursera', date: 'Feb 2026' },
-  { name: 'Jr Penetration Tester', issuer: 'TryHackMe', date: 'Dec 2025' },
-  { name: 'CompTIA PenTest+ Pathway', issuer: 'TryHackMe', date: 'Sep 2025' },
-  { name: 'First Aid / CPR / AED', issuer: 'American Red Cross', date: 'Sep 2025 – Sep 2027' },
-  { name: 'Intro to Cyber Security', issuer: 'TryHackMe', date: 'Jun 2024' },
+  { name: 'Student Employees Achieve (SEA) Badge', issuer: 'University of Denver', date: 'Mar 2026', url: '' },
+  { name: 'Professionally API Testing', issuer: 'Antisyphon Training', date: 'Apr 2026', url: '' },
+  { name: 'Google Cybersecurity', issuer: 'Coursera', date: 'Feb 2026', url: '' },
+  { name: 'Google Cloud Cybersecurity', issuer: 'Coursera', date: 'Feb 2026', url: '' },
+  { name: 'Jr Penetration Tester', issuer: 'TryHackMe', date: 'Dec 2025', url: '' },
+  { name: 'CompTIA PenTest+ Pathway', issuer: 'TryHackMe', date: 'Sep 2025', url: '' },
+  { name: 'First Aid / CPR / AED', issuer: 'American Red Cross', date: 'Sep 2025 – Sep 2027', url: '' },
+  { name: 'Intro to Cyber Security', issuer: 'TryHackMe', date: 'Jun 2024', url: '' },
 ];
 
 export type Education = {
@@ -186,4 +198,24 @@ export const education: Education[] = [
     detail: '',
     date: 'May 2024',
   },
+];
+
+/**
+ * Badges to scroll in the marquee above the terminal in the Hero.
+ *
+ * To add a real badge:
+ *  1. Get the badge image URL (e.g. from Credly: right-click the badge image → Copy Image Address)
+ *     Examples:
+ *       Credly: https://images.credly.com/size/340x340/images/<uuid>/image.png
+ *       TryHackMe: https://tryhackme-badges.s3.amazonaws.com/<username>.png
+ *  2. Paste the URL as `src`, set `alt`, and `href` to the verification page.
+ *  3. The marquee will auto-scroll the list infinitely.
+ *
+ * Leave the array empty to hide the marquee. Placeholders below render a skeleton you can replace.
+ */
+export type Badge = { src: string; alt: string; href?: string };
+export const badges: Badge[] = [
+  // Examples — replace with real badge URLs:
+  // { src: 'https://images.credly.com/size/340x340/images/xxxx/image.png', alt: 'Google Cybersecurity', href: 'https://www.credly.com/badges/xxxx' },
+  // { src: 'https://tryhackme-badges.s3.amazonaws.com/desledishant10.png', alt: 'TryHackMe Profile', href: 'https://tryhackme.com/p/desledishant10' },
 ];
