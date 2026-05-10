@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { profile } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
+import { CountUp } from './ui/CountUp';
 
-const stats = [
-  { label: 'years studying security', value: '2+' },
-  { label: 'cyber competitions', value: '2' },
-  { label: 'certifications', value: '9' },
-  { label: 'detection rate', value: '98%' },
+const stats: { label: string; to: number; suffix?: string }[] = [
+  { label: 'years studying security', to: 2, suffix: '+' },
+  { label: 'cyber competitions', to: 2 },
+  { label: 'certifications', to: 9 },
+  { label: 'detection rate', to: 98, suffix: '%' },
 ];
 
 export function About() {
@@ -59,7 +60,11 @@ export function About() {
                 className="panel panel-hover p-5 flex flex-col gap-1"
                 style={{ animationDelay: `${i * 80}ms` }}
               >
-                <div className="font-mono text-3xl font-bold gradient-text">{s.value}</div>
+                <CountUp
+                  to={s.to}
+                  suffix={s.suffix}
+                  className="font-mono text-3xl font-bold gradient-text"
+                />
                 <div className="text-xs text-ink-dim font-mono">{s.label}</div>
               </motion.div>
             ))}

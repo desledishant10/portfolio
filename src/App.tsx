@@ -10,11 +10,17 @@ import { Certifications } from './components/Certifications';
 import { Education } from './components/Education';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { BootLoader } from './components/BootLoader';
+import { CursorSpotlight } from './components/CursorSpotlight';
+import { ScrollProgress } from './components/ScrollProgress';
 
 function App() {
   return (
     <>
+      <BootLoader />
+      <ScrollProgress />
       <MatrixRain opacity={0.16} />
+      <CursorSpotlight />
       <Nav />
       <main>
         <Hero />
