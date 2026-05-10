@@ -8,6 +8,8 @@ export const profile = {
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
   tryhackmeUsername: 'ddesle3',
+  tryhackmeStreakUrl:
+    'https://tryhackme.com/ddesle3/streak?sharerId=64e11a049da0a6e14be7cdc9',
   resumePath: '/resume.pdf',
   tagline:
     'I build things that catch ransomware before it spreads and write the playbooks for what happens next.',

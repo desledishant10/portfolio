@@ -77,12 +77,12 @@ function BadgesMarquee() {
 
 function TryHackMeWidget() {
   const username = profile.tryhackmeUsername;
-  const profileUrl = `https://tryhackme.com/p/${username}`;
+  const streakUrl = profile.tryhackmeStreakUrl;
   const badgeUrl = `https://tryhackme-badges.s3.amazonaws.com/${username}.png`;
 
   return (
     <a
-      href={profileUrl}
+      href={streakUrl}
       target="_blank"
       rel="noreferrer"
       className="panel panel-hover block group overflow-hidden"
@@ -96,7 +96,7 @@ function TryHackMeWidget() {
           <ShieldCheck size={9} /> live
         </span>
       </div>
-      <div className="p-3 flex items-center justify-center bg-[#0a0e14] min-h-[88px]">
+      <div className="p-3 flex items-center justify-center bg-[#0a0e14] min-h-[88px] relative">
         <img
           src={badgeUrl}
           alt={`${username} TryHackMe profile badge`}
@@ -107,6 +107,9 @@ function TryHackMeWidget() {
             img.style.display = 'none';
           }}
         />
+        <span className="absolute bottom-2 right-3 font-mono text-[9px] text-ink-mute group-hover:text-neon-cyan transition-colors flex items-center gap-1">
+          view_streak →
+        </span>
       </div>
     </a>
   );
