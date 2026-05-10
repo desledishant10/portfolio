@@ -1,10 +1,39 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { MapPin } from 'lucide-react';
-import { experience } from '../data/content';
+import { Briefcase, MapPin } from 'lucide-react';
+import { experience, type Role } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 
-function TimelineItem({
+function RoleBlock({ role }: { role: Role }) {
+  return (
+    <div className="relative pl-4 border-l border-bg-border hover:border-neon-cyan/30 transition-colors group/role">
+      <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-bg-border group-hover/role:bg-neon-cyan group-hover/role:shadow-glow-cyan transition-all" />
+      <div className="font-mono text-[10px] text-neon-cyan uppercase tracking-wider">
+        {role.start} → {role.end}
+      </div>
+      <h4 className="text-base font-semibold text-ink mt-0.5">{role.title}</h4>
+      <ul className="mt-3 space-y-1.5 text-sm text-ink-dim leading-relaxed">
+        {role.bullets.map((b) => (
+          <li key={b} className="flex gap-2">
+            <span className="text-neon-green mt-0.5 shrink-0">▸</span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+      {role.skills && role.skills.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {role.skills.map((s) => (
+            <span key={s} className="chip text-[10px] py-0.5">
+              {s}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExperienceCard({
   e,
   i,
 }: {
@@ -26,11 +55,9 @@ function TimelineItem({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative grid grid-cols-1 md:grid-cols-2 gap-6 ${
-        i % 2 ? 'md:[&>*:first-child]:order-2' : ''
-      }`}
+      className="relative pl-12"
     >
-      <div className="absolute left-4 md:left-1/2 top-6 -translate-x-1/2 z-10">
+      <div className="absolute left-4 top-6 -translate-x-1/2 z-10">
         <motion.span
           style={{ scale: dotScale, opacity: dotOpacity }}
           className="block w-4 h-4 rounded-full bg-neon-cyan shadow-glow-cyan ring-4 ring-bg"
@@ -42,32 +69,46 @@ function TimelineItem({
       </div>
 
       <motion.div
-        initial={{ opacity: 0, x: i % 2 ? 30 : -30 }}
+        initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        className={`pl-12 md:pl-0 ${i % 2 ? 'md:pr-12' : 'md:pl-12'}`}
+        className="panel panel-hover p-6"
       >
-        <div className="panel panel-hover p-6">
-          <div className="font-mono text-xs text-neon-cyan mb-1">
-            {e.start} → {e.end}
+        <div className="flex items-start gap-3 pb-4 mb-5 border-b border-bg-border">
+          <div className="p-2 rounded bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20">
+            <Briefcase size={16} />
           </div>
-          <h3 className="text-xl font-semibold text-ink">{e.role}</h3>
-          <div className="text-ink-dim mt-1">{e.org}</div>
-          <div className="flex items-center gap-1.5 text-xs font-mono text-ink-mute mt-1">
-            <MapPin size={11} /> {e.location}
+          <div className="flex-1">
+            <h3 className="text-xl font-semibold text-ink">{e.org}</h3>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs font-mono text-ink-mute">
+              <span className="flex items-center gap-1.5">
+                <MapPin size={11} /> {e.location}
+              </span>
+              {e.type && <span>· {e.type}</span>}
+              <span className="text-neon-green">
+                · {e.roles.length} role{e.roles.length > 1 ? 's' : ''}
+              </span>
+            </div>
           </div>
-          <ul className="mt-4 space-y-2 text-sm text-ink-dim leading-relaxed">
-            {e.bullets.map((b) => (
-              <li key={b} className="flex gap-2">
-                <span className="text-neon-green mt-0.5 shrink-0">▸</span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {e.roles.map((r, ri) => (
+            <motion.div
+              key={r.title}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4, delay: 0.1 + ri * 0.08 }}
+            >
+              <RoleBlock role={r} />
+            </motion.div>
+          ))}
         </div>
       </motion.div>
-      <div className="hidden md:block" />
+      {/* unused but reserves the index var */}
+      <span className="hidden">{i}</span>
     </motion.div>
   );
 }
@@ -86,15 +127,15 @@ export function Experience() {
         <SectionHeader index="03." title="experience" subtitle="// timeline[]" />
 
         <div ref={sectionRef} className="relative">
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-bg-border md:-translate-x-px" />
+          <div className="absolute left-4 top-0 bottom-0 w-px bg-bg-border -translate-x-px" />
           <motion.div
             style={{ height: lineHeight }}
-            className="absolute left-4 md:left-1/2 top-0 w-px md:-translate-x-px bg-gradient-to-b from-neon-green via-neon-cyan to-neon-violet shadow-glow-cyan"
+            className="absolute left-4 top-0 w-px -translate-x-px bg-gradient-to-b from-neon-green via-neon-cyan to-neon-violet shadow-glow-cyan"
           />
 
           <div className="flex flex-col gap-12">
             {experience.map((e, i) => (
-              <TimelineItem key={e.org} e={e} i={i} />
+              <ExperienceCard key={e.org} e={e} i={i} />
             ))}
           </div>
         </div>

@@ -45,37 +45,160 @@ export const skills: SkillCategory[] = [
   },
 ];
 
-export type ExperienceItem = {
-  org: string;
-  role: string;
-  location: string;
+export type Role = {
+  title: string;
   start: string;
   end: string;
   bullets: string[];
+  skills?: string[];
+};
+
+export type ExperienceItem = {
+  org: string;
+  location: string;
+  type?: string;
+  roles: Role[];
 };
 
 export const experience: ExperienceItem[] = [
   {
     org: 'University of Denver',
-    role: 'Facility & Service Associate',
     location: 'Denver, CO',
-    start: 'Mar 2025',
-    end: 'Present',
-    bullets: [
-      'Monitored access control systems and investigated anomalies, supporting real-time incident identification and response.',
-      'Documented incidents and maintained structured reports aligned with audit and compliance standards.',
-      'Applied situational awareness and escalation protocols in high-responsibility environments.',
+    type: 'Part-time · 1 yr 3 mos',
+    roles: [
+      {
+        title: 'Facility Associate — Ritchie Center',
+        start: 'Mar 2025',
+        end: 'Present',
+        bullets: [
+          'Oversee daily operations across multiple campus facilities, maintaining physical security controls, access enforcement, and situational awareness.',
+          'Monitor high-traffic and restricted areas to detect unauthorized access, policy violations, and safety anomalies.',
+          'Perform routine inspections of facilities and equipment; generate incident documentation and remediation requests to reduce operational risk.',
+          'Execute incident response procedures during emergencies, collaborating with campus safety and supervisory teams.',
+          'Support secure event operations, including pre-event preparation and post-event recovery for athletic and community programs.',
+          'Maintain environmental readiness by ensuring compliance with safety, cleanliness, and operational standards.',
+        ],
+        skills: [
+          'Facilities Operations',
+          'Safety Monitoring',
+          'Access Control',
+          'Incident Reporting',
+          'Event Support',
+          'Equipment Inspection',
+          'Radio Communication',
+          'Customer Service',
+        ],
+      },
+      {
+        title: 'Service Associate — Joy Burns Arena & Coors Fitness Center',
+        start: 'Mar 2025',
+        end: 'Present',
+        bullets: [
+          'Manage member and guest check-ins using RecTrac, ensuring accurate identity verification, authorization, and policy-compliant access to facilities.',
+          'Administer locker room assignments and rental equipment through system tracking, maintaining controlled access and inventory accountability.',
+          'Operate and reconcile point-of-sale (POS) transactions within RecTrac for memberships, rentals, and programs, ensuring data accuracy and audit readiness.',
+          'Enforce access control policies at entry points to prevent unauthorized use and maintain a safe, secure environment.',
+          'Document incidents, safety concerns, and operational issues through work orders and incident reports, supporting timely remediation.',
+          'Use two-way radio systems for real-time communication, escalation, and coordination across multiple facilities.',
+          'Deliver professional customer support while maintaining a security-aware, policy-driven service environment.',
+        ],
+        skills: [
+          'Access Control',
+          'POS Systems',
+          'Identity Verification',
+          'Incident Reporting',
+          'Work Orders',
+          'Radio Communication',
+          'Inventory Tracking',
+          'CPR/AED Certified',
+        ],
+      },
     ],
   },
   {
-    org: 'Elicit Lab — University of Illinois Chicago',
-    role: 'Undergraduate Research Assistant',
+    org: 'University of Illinois Chicago — College of Engineering',
     location: 'Chicago, IL',
-    start: 'Dec 2022',
-    end: 'Aug 2023',
-    bullets: [
-      'Led prototyping and user testing; analyzed data and presented findings to stakeholders.',
-      'Awarded 1st Place — Undergraduate Research Forum 2023.',
+    type: 'Part-time · 1 yr 9 mos',
+    roles: [
+      {
+        title: 'Lifeguard',
+        start: 'Sep 2023',
+        end: 'May 2024',
+        bullets: [
+          'Ensured the safety of all patrons by vigilantly monitoring pool activities and enforcing safety regulations, resulting in zero major incidents during my tenure.',
+          'Executed a successful rescue and provided immediate first aid care, demonstrating quick decision-making and effective crisis management.',
+          'Provided emergency response and first aid care as a Red Cross Certified Lifeguard.',
+          'Represented the university at the 2024 Region III Student Lead On conference.',
+          'Conducted regular safety drills and training sessions to maintain high standards of preparedness across the team.',
+        ],
+        skills: [
+          'Lifeguarding',
+          'First Aid',
+          'Crisis Management',
+          'Emergency Response',
+          'Red Cross Certified',
+          'Leadership',
+        ],
+      },
+      {
+        title: 'Mathematics Grader',
+        start: 'Sep 2022',
+        end: 'May 2024',
+        bullets: [
+          'Evaluated and graded assignments and exams for foundational and advanced courses including Math 106, Math 121, and STAT 101.',
+          'Provided detailed feedback to students, helping them understand their mistakes and guiding them toward improved performance.',
+          'Contributed to course enhancement by identifying common areas of struggle and suggesting targeted improvements.',
+          'Collaborated with faculty to develop grading rubrics and ensure consistency in grading standards across multiple sections.',
+          'Maintained academic integrity by upholding strict confidentiality and ethical standards in the grading process.',
+        ],
+        skills: [
+          'Problem Solving',
+          'Feedback Delivery',
+          'Academic Integrity',
+          'Collaboration',
+          'Time Management',
+          'Grading & Assessment',
+        ],
+      },
+      {
+        title: 'Lead Frontend Developer · Elicit Lab — Undergraduate Research Assistant',
+        start: 'Dec 2022',
+        end: 'May 2023',
+        bullets: [
+          'Achieved 1st place at the Undergraduate Research Forum 2023.',
+          'Led UI/UX design efforts, developed prototypes, and presented findings to key stakeholders.',
+          'Collaborated within a research team to conduct user research and usability testing for the design of spherical screens and displays.',
+          'Implemented gesture-based interactions to enhance user engagement, using C# for backend logic and XML for frontend layout.',
+          'Analyzed logs, transcriptions, and audio/visual data to draw meaningful conclusions about user behavior and inform design decisions.',
+        ],
+        skills: [
+          'UI/UX Design',
+          'User Research',
+          'Usability Testing',
+          'C#',
+          'XML',
+          'Data Analysis',
+          'R&D',
+          'Prototyping',
+        ],
+      },
+      {
+        title: 'Research Observer · Early Research Scholar Program (ERSP)',
+        start: 'Sep 2022',
+        end: 'May 2023',
+        bullets: [
+          'Engaged in the Undergraduate Research Experience in STEM Program at UIC.',
+          'Conducted detailed observations of research projects, documenting data collection and analysis techniques.',
+          'Collaborated with research teams to develop proposals and hypotheses, gaining practical research experience.',
+        ],
+        skills: [
+          'R&D',
+          'Scientific Writing',
+          'Presentations',
+          'Project Management',
+          'Design Research',
+        ],
+      },
     ],
   },
 ];
