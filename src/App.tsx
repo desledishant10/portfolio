@@ -12,12 +12,16 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { BootLoader } from './components/BootLoader';
 import { ScrollProgress } from './components/ScrollProgress';
+import { CRTOverlay } from './components/CRTOverlay';
+import { SmoothScroll } from './components/SmoothScroll';
 
 function App() {
   return (
     <>
+      <SmoothScroll />
       <BootLoader />
       <ScrollProgress />
+      <CRTOverlay />
       <MatrixRain opacity={0.16} />
       <Nav />
       <main>

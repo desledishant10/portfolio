@@ -4,11 +4,14 @@ import { profile } from '../data/content';
 import { TerminalText } from './ui/TerminalText';
 import { GlitchText } from './ui/GlitchText';
 import { BadgesStrip } from './BadgesStrip';
+import { Magnetic } from './ui/Magnetic';
+import { HeroParticles } from './HeroParticles';
 
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen flex items-center pt-24 pb-20 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-grid bg-grid opacity-20 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" aria-hidden />
+      <div className="absolute inset-0 bg-grid-lines bg-grid opacity-20 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" aria-hidden />
+      <HeroParticles count={38} />
 
       <div className="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <motion.div
@@ -51,26 +54,32 @@ export function Hero() {
           </div>
 
           <div className="flex flex-wrap gap-3 mt-2">
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded hover:shadow-glow-cyan transition-all"
-            >
-              get_in_touch()
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink font-mono text-sm rounded hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
-            >
-              view_projects/
-            </a>
-            <a
-              href={profile.resumePath}
-              download="dishant-desle-resume.pdf"
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink-dim font-mono text-sm rounded hover:border-neon-green/50 hover:text-neon-green transition-all"
-            >
-              <Download size={14} /> resume.pdf
-            </a>
+            <Magnetic strength={12}>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded hover:shadow-glow-cyan transition-all"
+              >
+                get_in_touch()
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Magnetic>
+            <Magnetic strength={10}>
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink font-mono text-sm rounded hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
+              >
+                view_projects/
+              </a>
+            </Magnetic>
+            <Magnetic strength={10}>
+              <a
+                href={profile.resumePath}
+                download="dishant-desle-resume.pdf"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink-dim font-mono text-sm rounded hover:border-neon-green/50 hover:text-neon-green transition-all"
+              >
+                <Download size={14} /> resume.pdf
+              </a>
+            </Magnetic>
           </div>
         </motion.div>
 
