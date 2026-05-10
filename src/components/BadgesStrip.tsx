@@ -101,11 +101,11 @@ function TryHackMeWidget() {
       </div>
 
       {imageOk ? (
-        <div className="p-2 flex items-center justify-center bg-[#0a0e14] min-h-[120px]">
+        <div className="bg-[#0a0e14] overflow-hidden">
           <img
             src={streakImg}
             alt={`${username} TryHackMe streak`}
-            className="max-h-32 w-auto rounded group-hover:scale-[1.02] transition-transform"
+            className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-500"
             loading="lazy"
             onError={() => setImageOk(false)}
           />
