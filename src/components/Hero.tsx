@@ -5,13 +5,11 @@ import { TerminalText } from './ui/TerminalText';
 import { GlitchText } from './ui/GlitchText';
 import { BadgesStrip } from './BadgesStrip';
 import { Magnetic } from './ui/Magnetic';
-import { HeroParticles } from './HeroParticles';
 
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen flex items-center pt-24 pb-20 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-grid-lines bg-grid opacity-20 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" aria-hidden />
-      <HeroParticles count={38} />
 
       <div className="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <motion.div
