@@ -1,18 +1,13 @@
-import { MatrixRain } from './components/MatrixRain';
-import { Nav } from './components/Nav';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Skills } from './components/Skills';
-import { Experience } from './components/Experience';
-import { Projects } from './components/Projects';
-import { Competitions } from './components/Competitions';
-import { Certifications } from './components/Certifications';
-import { Education } from './components/Education';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
+import { Route, Routes } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { BootLoader } from './components/BootLoader';
 import { ScrollProgress } from './components/ScrollProgress';
 import { CRTOverlay } from './components/CRTOverlay';
+import { CommandPalette } from './components/CommandPalette';
+import { KonamiListener } from './components/KonamiListener';
+import HomePage from './routes/HomePage';
+import AdminPage from './routes/AdminPage';
+import NotFoundPage from './routes/NotFoundPage';
 
 function App() {
   return (
@@ -20,20 +15,14 @@ function App() {
       <BootLoader />
       <ScrollProgress />
       <CRTOverlay />
-      <MatrixRain opacity={0.16} />
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Education />
-        <Experience />
-        <Projects />
-        <Competitions />
-        <Certifications />
-        <Contact />
-      </main>
-      <Footer />
+      <CommandPalette />
+      <KonamiListener />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <Analytics />
     </>
   );
 }

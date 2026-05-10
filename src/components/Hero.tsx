@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, MapPin, Terminal } from 'lucide-react';
 import { profile } from '../data/content';
-import { TerminalText } from './ui/TerminalText';
 import { GlitchText } from './ui/GlitchText';
 import { BadgesStrip } from './BadgesStrip';
 import { Magnetic } from './ui/Magnetic';
+import { InteractiveTerminal } from './ui/InteractiveTerminal';
 
 export function Hero() {
   return (
@@ -96,18 +96,8 @@ export function Hero() {
               <span className="w-3 h-3 rounded-full bg-neon-green/70" />
               <span className="ml-2 font-mono text-xs text-ink-mute">~/dishant — zsh</span>
             </div>
-            <div className="p-5 min-h-[220px]">
-              <TerminalText
-                lines={[
-                  { prompt: '$ ', text: 'whoami' },
-                  { text: 'dishant.desle — cybersecurity analyst', delay: 200 },
-                  { prompt: '$ ', text: 'cat /etc/focus' },
-                  { text: 'threat_detection · incident_response · siem', delay: 200 },
-                  { prompt: '$ ', text: 'tail -f ~/now.log' },
-                  { text: 'shipping detection pipelines @ DU · grad Aug 2026', delay: 200 },
-                  { prompt: '$ ', text: 'curl -X CONTACT --data "let\'s talk"' },
-                ]}
-              />
+            <div className="p-5 min-h-[260px]">
+              <InteractiveTerminal />
             </div>
           </div>
         </motion.div>
