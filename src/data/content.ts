@@ -7,8 +7,7 @@ export const profile = {
   email: 'didesle7@gmail.com',
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
-  // TODO: replace with your TryHackMe username (the part after tryhackme.com/p/)
-  tryhackmeUsername: 'desledishant10',
+  tryhackmeUsername: 'ddesle3',
   resumePath: '/resume.pdf',
   tagline:
     'I build things that catch ransomware before it spreads and write the playbooks for what happens next.',
@@ -163,19 +162,64 @@ export type Certification = {
   name: string;
   issuer: string;
   date: string;
-  // TODO: paste credential / verification URL when you have it (Credly, TryHackMe, Coursera, etc.)
   url?: string;
 };
 
 export const certifications: Certification[] = [
-  { name: 'Student Employees Achieve (SEA) Badge', issuer: 'University of Denver', date: 'Mar 2026', url: '' },
-  { name: 'Professionally API Testing', issuer: 'Antisyphon Training', date: 'Apr 2026', url: '' },
-  { name: 'Google Cybersecurity', issuer: 'Coursera', date: 'Feb 2026', url: '' },
-  { name: 'Google Cloud Cybersecurity', issuer: 'Coursera', date: 'Feb 2026', url: '' },
-  { name: 'Jr Penetration Tester', issuer: 'TryHackMe', date: 'Dec 2025', url: '' },
-  { name: 'CompTIA PenTest+ Pathway', issuer: 'TryHackMe', date: 'Sep 2025', url: '' },
-  { name: 'First Aid / CPR / AED', issuer: 'American Red Cross', date: 'Sep 2025 – Sep 2027', url: '' },
-  { name: 'Intro to Cyber Security', issuer: 'TryHackMe', date: 'Jun 2024', url: '' },
+  {
+    name: 'Student Employees Achieve (SEA) Badge',
+    issuer: 'University of Denver',
+    date: 'Mar 2026',
+    url: 'https://www.credly.com/badges/9d5e098b-13e5-4834-bc24-9a2d1bf2cc1c',
+  },
+  {
+    name: 'Professionally API Testing',
+    issuer: 'Antisyphon Training',
+    date: 'Apr 2026',
+    url: 'https://drive.google.com/file/d/1ZZJSIWmPGfuQTgBkm8NPVwI2m9a3poC_/view?usp=drive_link',
+  },
+  {
+    name: 'Workshop: How to Think Like a Cybersecurity Defender',
+    issuer: 'Antisyphon Training',
+    date: '2026',
+    url: 'https://drive.google.com/file/d/1mOTyShwNQ5sz1XKZBZY-UzGXKJCcboAj/view?usp=drive_link',
+  },
+  {
+    name: 'Google Cybersecurity',
+    issuer: 'Coursera',
+    date: 'Feb 2026',
+    url: 'https://www.coursera.org/account/accomplishments/professional-cert/A9AY1VB9IJ63',
+  },
+  {
+    name: 'Google Cloud Cybersecurity',
+    issuer: 'Coursera',
+    date: 'Feb 2026',
+    url: 'https://www.coursera.org/account/accomplishments/professional-cert/R0HP6SLMLWHW',
+  },
+  {
+    name: 'Jr Penetration Tester',
+    issuer: 'TryHackMe',
+    date: 'Dec 2025',
+    url: 'https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YR86CPYWHH.pdf',
+  },
+  {
+    name: 'CompTIA PenTest+ Pathway',
+    issuer: 'TryHackMe',
+    date: 'Sep 2025',
+    url: 'https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-CXQWR9PBQJ.pdf',
+  },
+  {
+    name: 'First Aid / CPR / AED',
+    issuer: 'American Red Cross',
+    date: 'Sep 2025 – Sep 2027',
+    url: 'https://drive.google.com/file/d/1R4g7s3okvf8u9aRxPkHowWq4pVZqrN9q/view?usp=drive_link',
+  },
+  {
+    name: 'Intro to Cyber Security',
+    issuer: 'TryHackMe',
+    date: 'Jun 2024',
+    url: 'https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-ECEQPVHQLW.pdf',
+  },
 ];
 
 export type Education = {
@@ -201,21 +245,44 @@ export const education: Education[] = [
 ];
 
 /**
- * Badges to scroll in the marquee above the terminal in the Hero.
+ * Badges that scroll in the marquee above the terminal in the Hero.
+ * Each renders as a styled tile (icon + name + issuer + click → verification URL).
  *
- * To add a real badge:
- *  1. Get the badge image URL (e.g. from Credly: right-click the badge image → Copy Image Address)
- *     Examples:
- *       Credly: https://images.credly.com/size/340x340/images/<uuid>/image.png
- *       TryHackMe: https://tryhackme-badges.s3.amazonaws.com/<username>.png
- *  2. Paste the URL as `src`, set `alt`, and `href` to the verification page.
- *  3. The marquee will auto-scroll the list infinitely.
- *
- * Leave the array empty to hide the marquee. Placeholders below render a skeleton you can replace.
+ * To add a real badge image instead of the icon tile, set `src` to an image URL:
+ *   - Credly: https://images.credly.com/size/340x340/images/<image-uuid>/image.png
+ *   - TryHackMe: get from your THM profile (some badges have direct image URLs)
  */
-export type Badge = { src: string; alt: string; href?: string };
+export type Badge = {
+  name: string;
+  issuer: 'TryHackMe' | 'Credly' | 'Antisyphon' | string;
+  href: string;
+  src?: string;
+  accent?: 'green' | 'cyan' | 'violet' | 'amber' | 'pink';
+};
+
 export const badges: Badge[] = [
-  // Examples — replace with real badge URLs:
-  // { src: 'https://images.credly.com/size/340x340/images/xxxx/image.png', alt: 'Google Cybersecurity', href: 'https://www.credly.com/badges/xxxx' },
-  // { src: 'https://tryhackme-badges.s3.amazonaws.com/desledishant10.png', alt: 'TryHackMe Profile', href: 'https://tryhackme.com/p/desledishant10' },
+  {
+    name: 'Linux Guardian',
+    issuer: 'TryHackMe',
+    href: 'https://tryhackme.com/ddesle3/badges/linux-guardian',
+    accent: 'green',
+  },
+  {
+    name: 'Windows Guardian',
+    issuer: 'TryHackMe',
+    href: 'https://tryhackme.com/ddesle3/badges/windows-guardian',
+    accent: 'cyan',
+  },
+  {
+    name: 'Adversary',
+    issuer: 'TryHackMe',
+    href: 'https://tryhackme.com/ddesle3/badges/adversary',
+    accent: 'pink',
+  },
+  {
+    name: 'SEA Badge',
+    issuer: 'Credly · DU',
+    href: 'https://www.credly.com/badges/9d5e098b-13e5-4834-bc24-9a2d1bf2cc1c',
+    accent: 'amber',
+  },
 ];

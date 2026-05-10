@@ -5,7 +5,7 @@ import { SectionHeader } from './ui/SectionHeader';
 const stats = [
   { label: 'years studying security', value: '2+' },
   { label: 'cyber competitions', value: '2' },
-  { label: 'certifications', value: '8' },
+  { label: 'certifications', value: '9' },
   { label: 'detection rate', value: '98%' },
 ];
 
