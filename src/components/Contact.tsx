@@ -58,8 +58,9 @@ export function Contact() {
     setErrorMsg('');
 
     const fd = new FormData(e.currentTarget);
-    const honeypot = fd.get('website');
+    const honeypot = String(fd.get('website') || '');
     if (honeypot) {
+      // Bot detected — pretend success client-side; server will also reject.
       setStatus('sent');
       return;
     }
@@ -68,6 +69,7 @@ export function Contact() {
       name: String(fd.get('name') || '').trim(),
       email: String(fd.get('email') || '').trim(),
       message: String(fd.get('message') || '').trim(),
+      website: honeypot, // forwarded for server-side honeypot defense in depth
       turnstileToken: token,
     };
 
