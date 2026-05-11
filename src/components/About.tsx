@@ -33,9 +33,9 @@ export function About() {
 
             <div className="mt-7 grid grid-cols-2 gap-3 font-mono text-sm">
               {[
-                ['location', profile.location],
                 ['focus', 'threat_detection'],
                 ['status', 'open_to_work'],
+                ['relocate', 'true'],
                 ['grad', 'Aug 2026'],
               ].map(([k, v]) => (
                 <div key={k} className="flex gap-2">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, MapPin, Terminal } from 'lucide-react';
+import { ArrowRight, Download, Globe, Terminal } from 'lucide-react';
 import { profile } from '../data/content';
 import { GlitchText } from './ui/GlitchText';
 import { BadgesStrip } from './BadgesStrip';
@@ -46,7 +46,7 @@ export function Hero() {
               <Terminal size={12} /> {profile.title}
             </span>
             <span className="chip">
-              <MapPin size={12} /> {profile.location}
+              <Globe size={12} /> {profile.location}
             </span>
             <span className="chip">{profile.focus}</span>
           </div>

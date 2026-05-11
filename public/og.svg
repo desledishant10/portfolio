@@ -32,7 +32,7 @@
 
   <!-- bottom row -->
   <text x="64" y="560" fill="#22d3ee" font-family="monospace" font-size="18">M.S. Cyber Security · University of Denver</text>
-  <text x="64" y="588" fill="#5a6877" font-family="monospace" font-size="16">grad Aug 2026 · Denver, CO</text>
+  <text x="64" y="588" fill="#5a6877" font-family="monospace" font-size="16">grad Aug 2026 · open to relocate</text>
 
   <rect x="980" y="540" width="170" height="44" rx="6" fill="none" stroke="#22d3ee" stroke-opacity="0.4"/>
   <text x="1000" y="569" fill="#22d3ee" font-family="monospace" font-size="18">view portfolio →</text>

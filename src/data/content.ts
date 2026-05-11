@@ -3,7 +3,7 @@ export const profile = {
   handle: 'desledishant10',
   title: 'Cybersecurity Analyst',
   focus: 'SIEM · Threat Detection · Incident Response',
-  location: 'Denver, CO',
+  location: 'Open to relocate',
   email: 'didesle7@gmail.com',
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
