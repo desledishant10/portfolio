@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00ff9c"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(34,211,238,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#05070a"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- corner brackets -->
+  <text x="40" y="60" fill="#22d3ee" font-family="monospace" font-size="20" opacity="0.4">┌</text>
+  <text x="1140" y="60" fill="#22d3ee" font-family="monospace" font-size="20" opacity="0.4">┐</text>
+  <text x="40" y="610" fill="#22d3ee" font-family="monospace" font-size="20" opacity="0.4">└</text>
+  <text x="1140" y="610" fill="#22d3ee" font-family="monospace" font-size="20" opacity="0.4">┘</text>
+
+  <!-- top row -->
+  <text x="64" y="100" fill="#22d3ee" font-family="monospace" font-size="22">$ dishant.desle</text>
+  <circle cx="1010" cy="93" r="6" fill="#00ff9c"/>
+  <text x="1024" y="100" fill="#00ff9c" font-family="monospace" font-size="18">open_to_work</text>
+
+  <!-- center -->
+  <text x="64" y="260" fill="#9ba8b8" font-family="monospace" font-size="22">// hello, world. i'm</text>
+
+  <text x="64" y="390" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="110" font-weight="800" letter-spacing="-2">Dishant <tspan fill="url(#grad)">Desle.</tspan></text>
+
+  <text x="64" y="450" fill="#9ba8b8" font-family="Inter, system-ui, sans-serif" font-size="34">Cybersecurity Analyst · SIEM · Threat Detection</text>
+
+  <!-- bottom row -->
+  <text x="64" y="560" fill="#22d3ee" font-family="monospace" font-size="18">M.S. Cyber Security · University of Denver</text>
+  <text x="64" y="588" fill="#5a6877" font-family="monospace" font-size="16">grad Aug 2026 · Denver, CO</text>
+
+  <rect x="980" y="540" width="170" height="44" rx="6" fill="none" stroke="#22d3ee" stroke-opacity="0.4"/>
+  <text x="1000" y="569" fill="#22d3ee" font-family="monospace" font-size="18">view portfolio →</text>
+</svg>
