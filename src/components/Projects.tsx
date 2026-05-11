@@ -52,7 +52,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
             <a
               href={project.repo}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label={`${project.title} GitHub repository`}
               onClick={(e) => e.stopPropagation()}
               className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}
@@ -64,7 +64,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
             <a
               href={project.demo}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label={`${project.title} demo`}
               onClick={(e) => e.stopPropagation()}
               className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}

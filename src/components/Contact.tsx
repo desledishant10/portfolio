@@ -127,7 +127,7 @@ export function Contact() {
               <a
                 href={profile.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 p-3 panel panel-hover text-sm font-mono group"
               >
                 <LinkedinIcon size={16} className="text-neon-cyan" />
@@ -136,7 +136,7 @@ export function Contact() {
               <a
                 href={profile.github}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 p-3 panel panel-hover text-sm font-mono group"
               >
                 <GithubIcon size={16} className="text-neon-cyan" />

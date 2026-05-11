@@ -46,15 +46,15 @@ const items: Item[] = [
   { id: 'certifications', label: 'certifications', group: 'sections', icon: <Award size={14} />, action: () => scrollTo('certifications') },
   { id: 'contact', label: 'contact', group: 'sections', icon: <MessageSquare size={14} />, action: () => scrollTo('contact') },
 
-  { id: 'github', label: 'open GitHub', group: 'links', icon: <GithubIcon size={14} />, action: () => window.open(profile.github, '_blank') },
-  { id: 'linkedin', label: 'open LinkedIn', group: 'links', icon: <LinkedinIcon size={14} />, action: () => window.open(profile.linkedin, '_blank') },
+  { id: 'github', label: 'open GitHub', group: 'links', icon: <GithubIcon size={14} />, action: () => window.open(profile.github, '_blank', 'noopener,noreferrer') },
+  { id: 'linkedin', label: 'open LinkedIn', group: 'links', icon: <LinkedinIcon size={14} />, action: () => window.open(profile.linkedin, '_blank', 'noopener,noreferrer') },
   { id: 'email', label: `email ${profile.email}`, group: 'links', icon: <Mail size={14} />, action: () => (window.location.href = `mailto:${profile.email}`) },
 
   { id: 'resume', label: 'download resume.pdf', hint: 'cat', group: 'actions', icon: <Download size={14} />, keywords: ['resume', 'cv', 'cat'], action: () => (window.location.href = profile.resumePath) },
   { id: 'home', label: 'cd ~ (home)', group: 'actions', icon: <Terminal size={14} />, action: (nav) => nav('/') },
 
   { id: 'admin', label: 'open /admin (secret SOC)', hint: 'classified', group: 'secret', icon: <Shield size={14} />, keywords: ['admin', 'siem', 'soc', 'secret', 'easter'], action: (nav) => nav('/admin') },
-  { id: 'docs', label: 'view source on GitHub', group: 'secret', icon: <BookOpen size={14} />, keywords: ['code', 'source'], action: () => window.open('https://github.com/desledishant10/portfolio', '_blank') },
+  { id: 'docs', label: 'view source on GitHub', group: 'secret', icon: <BookOpen size={14} />, keywords: ['code', 'source'], action: () => window.open('https://github.com/desledishant10/portfolio', '_blank', 'noopener,noreferrer') },
 ];
 
 const GROUP_LABELS = {

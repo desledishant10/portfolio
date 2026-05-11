@@ -4,7 +4,18 @@ import { ArrowLeft } from 'lucide-react';
 import { MatrixRain } from '../components/MatrixRain';
 import { GlitchText } from '../components/ui/GlitchText';
 
+// Sanitize the pathname before rendering. React already escapes text nodes, so
+// HTML/script injection is impossible. This extra pass strips control chars,
+// bidi-override characters (Trojan Source-style), and caps length — preventing
+// visual confusion / very-long-path layout abuse from crafted URLs like
+// `/foo<bidi-override>bar`.
+function safePath(): string {
+  const raw = typeof window !== 'undefined' ? window.location.pathname : '/';
+  return raw.replace(/[ --‪-‮⁦-⁩]/g, '').slice(0, 80);
+}
+
 export default function NotFoundPage() {
+  const path = safePath();
   return (
     <>
       <MatrixRain opacity={0.1} />
@@ -21,9 +32,9 @@ export default function NotFoundPage() {
           </h1>
           <div className="font-mono text-sm text-ink-dim space-y-1 mb-8">
             <div>
-              <span className="text-neon-green">$ </span>cat {window.location.pathname}
+              <span className="text-neon-green">$ </span>cat {path}
             </div>
-            <div className="text-neon-red">cat: {window.location.pathname}: No such file or directory</div>
+            <div className="text-neon-red">cat: {path}: No such file or directory</div>
             <div>
               <span className="text-neon-green">$ </span>find / -name "this_page" 2&gt;/dev/null
             </div>

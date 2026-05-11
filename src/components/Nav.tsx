@@ -101,10 +101,10 @@ export function Nav() {
               <Command size={13} />
               <span>K</span>
             </button>
-            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
               <GithubIcon size={20} />
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
               <LinkedinIcon size={20} />
             </a>
             <a href={`mailto:${profile.email}`} aria-label="Email" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">

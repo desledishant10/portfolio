@@ -16,7 +16,7 @@ function BadgeTile({ badge }: { badge: Badge }) {
     <a
       href={badge.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       aria-label={`${badge.name} — ${badge.issuer}`}
       className={`shrink-0 w-40 panel ${accent.ring} ${accent.glow} p-3 flex items-center gap-3 transition-all duration-300 hover:-translate-y-0.5`}
     >
@@ -87,7 +87,7 @@ function TryHackMeWidget() {
     <a
       href={streakUrl}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       className="panel panel-hover block group overflow-hidden"
     >
       <div className="flex items-center justify-between px-4 py-2 border-b border-bg-border bg-bg-soft">

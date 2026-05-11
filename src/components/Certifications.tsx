@@ -34,7 +34,7 @@ function LinkedCertCard({ c, i, Icon }: { c: Certification; i: number; Icon: typ
     <motion.a
       href={c.url}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       ref={tilt.ref}
       onMouseMove={tilt.handlers.onMouseMove}
       onMouseLeave={tilt.handlers.onMouseLeave}
