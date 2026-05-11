@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#________';
+const SCRAMBLE_CHARS = '!<>-_\\/[]{}-=+*^?#________';
 
 function useScrambleReveal(target: string, active: boolean) {
   const [text, setText] = useState(active ? '' : target);

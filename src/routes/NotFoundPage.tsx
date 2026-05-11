@@ -5,7 +5,7 @@ import { GlitchText } from '../components/ui/GlitchText';
 
 // Sanitize the pathname before rendering. React already escapes text nodes, so
 // HTML/script injection is impossible. This extra pass strips control chars,
-// bidi-override characters (Trojan Source-style), and caps length — preventing
+// bidi-override characters (Trojan Source-style), and caps length - preventing
 // visual confusion / very-long-path layout abuse from crafted URLs like
 // `/foo<bidi-override>bar`.
 function safePath(): string {
@@ -24,7 +24,7 @@ export default function NotFoundPage() {
           transition={{ duration: 0.6 }}
           className="max-w-xl w-full panel scanline p-8 md:p-12 text-center"
         >
-          <div className="font-mono text-xs text-neon-red mb-4">SIGSEGV — segmentation fault</div>
+          <div className="font-mono text-xs text-neon-red mb-4">SIGSEGV - segmentation fault</div>
           <h1 className="text-7xl md:text-9xl font-extrabold tracking-tight gradient-text mb-3">
             <GlitchText className="">404</GlitchText>
           </h1>
@@ -36,7 +36,7 @@ export default function NotFoundPage() {
             <div>
               <span className="text-neon-green">$ </span>find / -name "this_page" 2&gt;/dev/null
             </div>
-            <div className="text-ink-mute">(nothing returned — page does not exist)</div>
+            <div className="text-ink-mute">(nothing returned - page does not exist)</div>
           </div>
           <Link
             to="/"

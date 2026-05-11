@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom';
  * Why a portal: when nested inside the React tree (e.g. inside HomePage), the
  * canvas's stacking context can be affected by ancestor elements that
  * unexpectedly create stacking contexts (transforms, filters, overflow tricks,
- * Framer Motion's wrapper divs, etc.) — which can render the negative z-index
+ * Framer Motion's wrapper divs, etc.) - which can render the negative z-index
  * canvas invisible. Rendering at <body> level guarantees the canvas sits in
  * the root stacking context, above the body background and below all app UI.
  */
@@ -61,7 +61,7 @@ export function MatrixRain({ opacity = 0.22 }: { opacity?: number }) {
     const step = (t: number) => {
       if (t - last > 55) {
         last = t;
-        // Slight trail effect — paints the previous frame over with the page bg,
+        // Slight trail effect - paints the previous frame over with the page bg,
         // creating the falling streak.
         ctx.fillStyle = 'rgba(5, 7, 10, 0.08)';
         ctx.fillRect(0, 0, width, height);

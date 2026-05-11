@@ -60,7 +60,7 @@ export function Contact() {
     const fd = new FormData(e.currentTarget);
     const honeypot = String(fd.get('website') || '');
     if (honeypot) {
-      // Bot detected — pretend success client-side; server will also reject.
+      // Bot detected - pretend success client-side; server will also reject.
       setStatus('sent');
       return;
     }
@@ -116,7 +116,7 @@ export function Contact() {
               I'm currently open to <span className="text-neon-green">SOC analyst</span>,{' '}
               <span className="text-neon-cyan">threat detection</span>, and{' '}
               <span className="text-neon-violet">incident response</span> roles starting summer 2026.
-              Drop a message — I read every one.
+              Drop a message - I read every one.
             </p>
             <div className="flex flex-col gap-2 mt-2">
               <a
@@ -183,14 +183,14 @@ export function Contact() {
               required
               textarea
               maxLength={5000}
-              placeholder="hey dishant — would love to chat about a SOC role at..."
+              placeholder="hey dishant - would love to chat about a SOC role at..."
             />
 
             {TURNSTILE_SITE_KEY ? (
               <div ref={turnstileRef} className="cf-turnstile" />
             ) : (
               <div className="text-[10px] font-mono text-ink-mute">
-                // turnstile not configured — set VITE_TURNSTILE_SITE_KEY before deploy
+                // turnstile not configured - set VITE_TURNSTILE_SITE_KEY before deploy
               </div>
             )}
 
@@ -217,7 +217,7 @@ export function Contact() {
             )}
             {status === 'error' && (
               <div className="flex items-center gap-2 text-sm font-mono text-neon-red">
-                <XCircle size={14} /> {errorMsg || 'send failed — try email instead'}
+                <XCircle size={14} /> {errorMsg || 'send failed - try email instead'}
               </div>
             )}
           </motion.form>

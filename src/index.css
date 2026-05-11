@@ -29,7 +29,7 @@ body {
   text-size-adjust: 100%;
 }
 
-/* #root must NOT have a background — the MatrixRain canvas is portaled to
+/* #root must NOT have a background - the MatrixRain canvas is portaled to
    document.body at z-index: -1, and needs to be visible through #root. */
 #root {
   min-height: 100vh;

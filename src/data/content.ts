@@ -13,7 +13,7 @@ export const profile = {
   resumePath: '/resume.pdf',
   tagline:
     'I build things that catch ransomware before it spreads and write the playbooks for what happens next.',
-  bio: `Master's student in Cyber Security at the University of Denver, focused on threat detection, incident response, and security architecture. I like the part of the job where logs become stories — turning noisy telemetry into clear timelines, then automating the response so the same incident never has to be handled twice.`,
+  bio: `Master's student in Cyber Security at the University of Denver, focused on threat detection, incident response, and security architecture. I like the part of the job where logs become stories - turning noisy telemetry into clear timelines, then automating the response so the same incident never has to be handled twice.`,
 };
 
 export type SkillCategory = {
@@ -67,7 +67,7 @@ export const experience: ExperienceItem[] = [
     type: 'Part-time · 1 yr 3 mos',
     roles: [
       {
-        title: 'Facility Associate — Ritchie Center',
+        title: 'Facility Associate - Ritchie Center',
         start: 'Mar 2025',
         end: 'Present',
         bullets: [
@@ -90,7 +90,7 @@ export const experience: ExperienceItem[] = [
         ],
       },
       {
-        title: 'Service Associate — Joy Burns Arena & Coors Fitness Center',
+        title: 'Service Associate - Joy Burns Arena & Coors Fitness Center',
         start: 'Mar 2025',
         end: 'Present',
         bullets: [
@@ -116,7 +116,7 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    org: 'University of Illinois Chicago — College of Engineering',
+    org: 'University of Illinois Chicago - College of Engineering',
     location: 'Chicago, IL',
     type: 'Part-time · 1 yr 9 mos',
     roles: [
@@ -161,7 +161,7 @@ export const experience: ExperienceItem[] = [
         ],
       },
       {
-        title: 'Lead Frontend Developer · Elicit Lab — Undergraduate Research Assistant',
+        title: 'Lead Frontend Developer · Elicit Lab - Undergraduate Research Assistant',
         start: 'Dec 2022',
         end: 'May 2023',
         bullets: [
@@ -336,7 +336,7 @@ export const certifications: Certification[] = [
   {
     name: 'First Aid / CPR / AED',
     issuer: 'American Red Cross',
-    date: 'Sep 2025 – Sep 2027',
+    date: 'Sep 2025 - Sep 2027',
     url: 'https://drive.google.com/file/d/1R4g7s3okvf8u9aRxPkHowWq4pVZqrN9q/view?usp=drive_link',
   },
   {
@@ -362,7 +362,7 @@ export const education: Education[] = [
     date: 'Expected Aug 2026',
   },
   {
-    school: 'University of Illinois — Chicago',
+    school: 'University of Illinois - Chicago',
     degree: 'B.S. in Computer Science',
     detail: '',
     date: 'May 2024',

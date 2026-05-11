@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const lines = [
-  { t: 90, text: 'BIOS v6.6.6 — initializing secure boot...' },
+  { t: 90, text: 'BIOS v6.6.6 - initializing secure boot...' },
   { t: 200, text: 'mounting /dev/dishant ............ [ OK ]' },
   { t: 280, text: 'loading kernel modules ........... [ OK ]' },
   { t: 360, text: 'verifying signed credentials ..... [ OK ]' },
   { t: 440, text: 'spawning cyber.portfolio ......... [ OK ]' },
-  { t: 540, text: 'access granted — welcome.' },
+  { t: 540, text: 'access granted - welcome.' },
 ];
 
 const SKIP_KEY = 'portfolio.bootSeen';

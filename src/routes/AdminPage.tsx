@@ -28,19 +28,19 @@ const SRC_POOL = [
 ];
 
 const MESSAGE_POOL = [
-  { msg: 'Failed SSH login attempt — invalid password (root)', level: 'warn' as const },
-  { msg: 'Port scan detected — TCP/22, TCP/80, TCP/443', level: 'warn' as const },
+  { msg: 'Failed SSH login attempt - invalid password (root)', level: 'warn' as const },
+  { msg: 'Port scan detected - TCP/22, TCP/80, TCP/443', level: 'warn' as const },
   { msg: 'Suricata alert: ET POLICY potential UA flagged', level: 'info' as const },
-  { msg: 'New SIEM event correlated — auth_failure cluster', level: 'info' as const },
-  { msg: 'Outbound connection blocked — destination on TI feed', level: 'crit' as const },
+  { msg: 'New SIEM event correlated - auth_failure cluster', level: 'info' as const },
+  { msg: 'Outbound connection blocked - destination on TI feed', level: 'crit' as const },
   { msg: 'IDS rule sid:2018959 triggered', level: 'warn' as const },
   { msg: 'Process anomaly: powershell -enc spawned by Word', level: 'crit' as const },
-  { msg: 'GeoIP anomaly — login from unusual country', level: 'warn' as const },
+  { msg: 'GeoIP anomaly - login from unusual country', level: 'warn' as const },
   { msg: 'YARA match: ransomware_canary_v3 on /tmp/staging', level: 'crit' as const },
   { msg: 'Splunk index rebuild complete · 412k events indexed', level: 'info' as const },
-  { msg: 'TLS handshake failed — expired cert on edge-7', level: 'info' as const },
+  { msg: 'TLS handshake failed - expired cert on edge-7', level: 'info' as const },
   { msg: 'Egress firewall blocked C2 beacon attempt', level: 'crit' as const },
-  { msg: 'AD policy applied — disabled stale service account', level: 'info' as const },
+  { msg: 'AD policy applied - disabled stale service account', level: 'info' as const },
 ];
 
 function ts() {
@@ -112,7 +112,7 @@ export default function AdminPage() {
                 </div>
                 <h1 className="text-xl font-bold text-ink font-mono">
                   dishant.<span className="text-neon-cyan">soc</span>
-                  <span className="text-neon-green"> — admin panel</span>
+                  <span className="text-neon-green"> - admin panel</span>
                 </h1>
               </div>
             </div>
@@ -219,7 +219,7 @@ export default function AdminPage() {
                 <Skull size={12} className="text-neon-red" /> easter_egg.readme
               </div>
               <p className="font-mono text-[11px] text-ink-dim leading-relaxed">
-                congrats — you found the secret <span className="text-neon-cyan">/admin</span> route.
+                congrats - you found the secret <span className="text-neon-cyan">/admin</span> route.
                 everything on this page is fake telemetry running in the browser. there is no real
                 SIEM behind it, but if you give me a real one to work on, i'd be happy to wire one up.{' '}
                 <Link to="/#contact" className="text-neon-green underline">say hi →</Link>

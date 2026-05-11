@@ -94,7 +94,7 @@ export function Hero() {
               <span className="w-3 h-3 rounded-full bg-neon-red/70" />
               <span className="w-3 h-3 rounded-full bg-neon-amber/70" />
               <span className="w-3 h-3 rounded-full bg-neon-green/70" />
-              <span className="ml-2 font-mono text-xs text-ink-mute">~/dishant — zsh</span>
+              <span className="ml-2 font-mono text-xs text-ink-mute">~/dishant - zsh</span>
             </div>
             <div className="p-5 min-h-[260px]">
               <InteractiveTerminal />
