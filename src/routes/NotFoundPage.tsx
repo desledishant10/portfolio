@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { MatrixRain } from '../components/MatrixRain';
 import { GlitchText } from '../components/ui/GlitchText';
 
 // Sanitize the pathname before rendering. React already escapes text nodes, so
@@ -18,7 +17,6 @@ export default function NotFoundPage() {
   const path = safePath();
   return (
     <>
-      <MatrixRain opacity={0.1} />
       <main className="relative min-h-screen flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -13,8 +13,6 @@ import {
   Skull,
   Zap,
 } from 'lucide-react';
-import { MatrixRain } from '../components/MatrixRain';
-
 type LogEntry = { ts: string; src: string; msg: string; level: 'info' | 'warn' | 'crit' };
 
 const SRC_POOL = [
@@ -97,7 +95,6 @@ export default function AdminPage() {
 
   return (
     <>
-      <MatrixRain opacity={0.1} />
       <main className="relative min-h-screen pt-8 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.header

@@ -1,4 +1,3 @@
-import { MatrixRain } from '../components/MatrixRain';
 import { Nav } from '../components/Nav';
 import { Hero } from '../components/Hero';
 import { About } from '../components/About';
@@ -14,7 +13,6 @@ import { Footer } from '../components/Footer';
 export default function HomePage() {
   return (
     <>
-      <MatrixRain opacity={0.16} />
       <Nav />
       <main>
         <Hero />
