@@ -168,7 +168,7 @@ export function CommandPalette() {
                 onChange={(e) => setQ(e.target.value)}
                 onKeyDown={onKeyDown}
                 placeholder="type a command..."
-                className="flex-1 bg-transparent outline-none font-mono text-sm text-ink placeholder:text-ink-mute"
+                className="flex-1 bg-transparent outline-none font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute"
               />
               <kbd className="font-mono text-[10px] text-ink-mute border border-bg-border px-1.5 py-0.5 rounded">
                 esc

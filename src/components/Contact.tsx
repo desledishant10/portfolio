@@ -245,7 +245,7 @@ function Field({
   textarea?: boolean;
 }) {
   const cls =
-    'w-full bg-bg-soft border border-bg-border rounded px-3 py-2.5 font-mono text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-neon-cyan/60 focus:ring-1 focus:ring-neon-cyan/30 transition-colors';
+    'w-full bg-bg-soft border border-bg-border rounded px-3 py-2.5 font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-neon-cyan/60 focus:ring-1 focus:ring-neon-cyan/30 transition-colors';
   return (
     <label className="flex flex-col gap-1.5">
       <span className="font-mono text-xs text-ink-dim">

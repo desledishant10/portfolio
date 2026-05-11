@@ -57,7 +57,7 @@ export function Nav() {
         scrolled ? 'bg-bg/70 backdrop-blur-lg border-b border-bg-border' : 'bg-transparent',
       )}
     >
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
         <a href="#top" className="font-mono text-sm flex items-center gap-2 group">
           <span className="text-neon-green">$</span>
           <span className="text-ink group-hover:text-neon-cyan transition-colors">
@@ -66,7 +66,7 @@ export function Nav() {
           <span className="w-2 h-4 bg-neon-cyan animate-blink" aria-hidden />
         </a>
 
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 min-w-0">
           {links.map((l) => {
             const id = l.href.slice(1);
             const isActive = active === id;
@@ -75,11 +75,11 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 className={clsx(
-                  'relative group px-3 py-2 font-mono text-xs transition-colors',
+                  'relative group px-2 xl:px-3 py-2 font-mono text-xs transition-colors whitespace-nowrap',
                   isActive ? 'text-neon-cyan' : 'text-ink-dim hover:text-neon-cyan',
                 )}
               >
-                <span className="text-neon-green/70 mr-1">{l.idx}.</span>
+                <span className="hidden xl:inline text-neon-green/70 mr-1">{l.idx}.</span>
                 {l.label}
                 {isActive && (
                   <motion.span
@@ -91,24 +91,24 @@ export function Nav() {
               </a>
             );
           })}
-          <div className="flex items-center gap-2 ml-3 pl-4 border-l border-bg-border">
+          <div className="flex items-center gap-1.5 ml-2 xl:ml-3 pl-3 xl:pl-4 border-l border-bg-border shrink-0">
             <button
               onClick={() => window.dispatchEvent(new Event('open-palette'))}
               aria-label="Open command palette"
               title="Open command palette (⌘K)"
-              className="flex items-center gap-1.5 px-2.5 py-2 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all font-mono text-[11px]"
+              className="flex items-center gap-1 px-2 py-2 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all font-mono text-[11px]"
             >
               <Command size={13} />
               <span>K</span>
             </button>
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
-              <GithubIcon size={20} />
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <GithubIcon size={18} />
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
-              <LinkedinIcon size={20} />
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <LinkedinIcon size={18} />
             </a>
-            <a href={`mailto:${profile.email}`} aria-label="Email" className="p-2.5 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
-              <Mail size={20} />
+            <a href={`mailto:${profile.email}`} aria-label="Email" className="p-2 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan hover:border-neon-cyan/40 hover:shadow-glow-cyan transition-all">
+              <Mail size={18} />
             </a>
           </div>
         </div>
@@ -128,7 +128,7 @@ export function Nav() {
           animate={{ opacity: 1, y: 0 }}
           className="lg:hidden border-t border-bg-border bg-bg/95 backdrop-blur-lg"
         >
-          <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1">
             {links.map((l) => {
               const id = l.href.slice(1);
               const isActive = active === id;
@@ -138,7 +138,7 @@ export function Nav() {
                   href={l.href}
                   onClick={() => setOpen(false)}
                   className={clsx(
-                    'py-2 font-mono text-sm transition-colors',
+                    'py-3 font-mono text-sm transition-colors min-h-[44px] flex items-center',
                     isActive ? 'text-neon-cyan' : 'text-ink-dim hover:text-neon-cyan',
                   )}
                 >
@@ -147,6 +147,33 @@ export function Nav() {
                 </a>
               );
             })}
+            <div className="flex items-center gap-2 pt-3 mt-2 border-t border-bg-border">
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="flex-1 p-3 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan flex items-center justify-center min-h-[44px]"
+              >
+                <GithubIcon size={18} />
+              </a>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="flex-1 p-3 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan flex items-center justify-center min-h-[44px]"
+              >
+                <LinkedinIcon size={18} />
+              </a>
+              <a
+                href={`mailto:${profile.email}`}
+                aria-label="Email"
+                className="flex-1 p-3 rounded-md border border-bg-border text-ink-dim hover:text-neon-cyan flex items-center justify-center min-h-[44px]"
+              >
+                <Mail size={18} />
+              </a>
+            </div>
           </div>
         </motion.div>
       )}
