@@ -385,29 +385,35 @@ export type Badge = {
   accent?: 'green' | 'cyan' | 'violet' | 'amber' | 'pink';
 };
 
+const THM_SHARER = '64e11a049da0a6e14be7cdc9';
+
 export const badges: Badge[] = [
+  {
+    name: 'SEA Badge',
+    issuer: 'Credly · DU',
+    src: 'https://images.credly.com/images/b0cdb1d6-c205-4366-96f5-563e486ca20d/linkedin_thumb_image.png',
+    href: 'https://www.credly.com/badges/9d5e098b-13e5-4834-bc24-9a2d1bf2cc1c',
+    accent: 'amber',
+  },
   {
     name: 'Linux Guardian',
     issuer: 'TryHackMe',
-    href: 'https://tryhackme.com/ddesle3/badges/linux-guardian',
+    src: 'https://assets.tryhackme.com/room-badges/18908d5bd61f470bd1bea5737d58d023.png',
+    href: `https://tryhackme.com/ddesle3/badges/linux-guardian?sharerId=${THM_SHARER}`,
     accent: 'green',
   },
   {
     name: 'Windows Guardian',
     issuer: 'TryHackMe',
-    href: 'https://tryhackme.com/ddesle3/badges/windows-guardian',
+    src: 'https://assets.tryhackme.com/room-badges/fea10f17246d396c5b29abeb0d4a672a.png',
+    href: `https://tryhackme.com/ddesle3/badges/windows-guardian?sharerId=${THM_SHARER}`,
     accent: 'cyan',
   },
   {
     name: 'Adversary',
     issuer: 'TryHackMe',
-    href: 'https://tryhackme.com/ddesle3/badges/adversary',
+    src: 'https://assets.tryhackme.com/room-badges/e2ce4a409fa11e6085a075fbf99a443a.png',
+    href: `https://tryhackme.com/ddesle3/badges/adversary?sharerId=${THM_SHARER}`,
     accent: 'pink',
-  },
-  {
-    name: 'SEA Badge',
-    issuer: 'Credly · DU',
-    href: 'https://www.credly.com/badges/9d5e098b-13e5-4834-bc24-9a2d1bf2cc1c',
-    accent: 'amber',
   },
 ];
