@@ -86,10 +86,6 @@ export function Certifications() {
             <CertCard key={c.name} c={c} i={i} />
           ))}
         </div>
-
-        <p className="mt-6 text-center font-mono text-[11px] text-ink-mute">
-          // tip: cards with no link will become clickable once you add their URL in src/data/content.ts
-        </p>
       </div>
     </section>
   );

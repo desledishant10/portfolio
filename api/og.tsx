@@ -2,7 +2,7 @@ import { ImageResponse } from '@vercel/og';
 
 export const config = { runtime: 'edge' };
 
-export default function handler() {
+export default async function handler(_req: Request): Promise<Response> {
   return new ImageResponse(
     (
       <div
@@ -18,21 +18,11 @@ export default function handler() {
           position: 'relative',
         }}
       >
-        {/* corner indicators */}
-        <div style={{ position: 'absolute', top: 20, left: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>
-          ┌
-        </div>
-        <div style={{ position: 'absolute', top: 20, right: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>
-          ┐
-        </div>
-        <div style={{ position: 'absolute', bottom: 20, left: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>
-          └
-        </div>
-        <div style={{ position: 'absolute', bottom: 20, right: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>
-          ┘
-        </div>
+        <div style={{ position: 'absolute', top: 20, left: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>┌</div>
+        <div style={{ position: 'absolute', top: 20, right: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>┐</div>
+        <div style={{ position: 'absolute', bottom: 20, left: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>└</div>
+        <div style={{ position: 'absolute', bottom: 20, right: 20, display: 'flex', color: '#22d3ee', fontSize: 14, opacity: 0.5 }}>┘</div>
 
-        {/* top row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', color: '#22d3ee', fontSize: 22 }}>$ dishant.desle</div>
           <div style={{ display: 'flex', alignItems: 'center', color: '#00ff9c', fontSize: 18, gap: 8 }}>
@@ -41,11 +31,8 @@ export default function handler() {
           </div>
         </div>
 
-        {/* center */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', color: '#9ba8b8', fontSize: 20, marginBottom: 12 }}>
-            // hello, world. i'm
-          </div>
+          <div style={{ display: 'flex', color: '#9ba8b8', fontSize: 20, marginBottom: 12 }}>// hello, world. i'm</div>
           <div
             style={{
               display: 'flex',
@@ -68,28 +55,15 @@ export default function handler() {
               Desle.
             </span>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 36,
-              color: '#9ba8b8',
-              marginTop: 22,
-              fontFamily: 'sans-serif',
-            }}
-          >
+          <div style={{ display: 'flex', fontSize: 36, color: '#9ba8b8', marginTop: 22, fontFamily: 'sans-serif' }}>
             Cybersecurity Analyst · SIEM · Threat Detection
           </div>
         </div>
 
-        {/* bottom row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <div style={{ display: 'flex', color: '#22d3ee', fontSize: 18 }}>
-              M.S. Cyber Security · University of Denver
-            </div>
-            <div style={{ display: 'flex', color: '#5a6877', fontSize: 16 }}>
-              grad Aug 2026 · Denver, CO
-            </div>
+            <div style={{ display: 'flex', color: '#22d3ee', fontSize: 18 }}>M.S. Cyber Security · University of Denver</div>
+            <div style={{ display: 'flex', color: '#5a6877', fontSize: 16 }}>grad Aug 2026 · Denver, CO</div>
           </div>
           <div
             style={{

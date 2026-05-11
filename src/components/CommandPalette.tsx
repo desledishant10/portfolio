@@ -81,8 +81,13 @@ export function CommandPalette() {
         setOpen(false);
       }
     };
+    const onCustom = () => setOpen(true);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('open-palette', onCustom);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('open-palette', onCustom);
+    };
   }, []);
 
   useEffect(() => {
