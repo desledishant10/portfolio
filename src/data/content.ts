@@ -218,6 +218,34 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'Vex — Agent-First Red Team Framework',
+    blurb:
+      'Open-source red team framework for AI agents. Probes LLMs, MCP servers, and RAG pipelines for indirect prompt injection, tool hijacking, system prompt extraction, and Unicode smuggling.',
+    stack: ['Python', 'LLM Security', 'MCP', 'Prompt Injection', 'CI/CD'],
+    bullets: [
+      'Built an attack library for the realistic deployment surface (attacker-controlled tool output, documents, MCP) — not just user-supplied jailbreaks.',
+      'Multi-provider abstraction (Anthropic, OpenAI-compatible, Ollama) with composable detectors: refusal, pattern, compliance, LLM-as-judge.',
+      'CI-native — stable JSON schema, deterministic seeds for forensic replay, `--exit-on-finding` flag for build gating.',
+    ],
+    metric: { label: 'attack classes', value: '5+' },
+    accent: 'violet',
+    repo: 'https://github.com/desledishant10/vex',
+  },
+  {
+    title: 'MCP-Scan — Security Scanner for MCP Servers',
+    blurb:
+      'Static analyzer + dynamic harness for Model Context Protocol servers. Surfaced two confirmed SSRF vulnerabilities in PyPI-published MCP servers — one demonstrated end-to-end on EC2 with real IAM credentials retrieved.',
+    stack: ['Python', 'Static Analysis', 'MCP', 'SSRF', 'DNS Rebinding'],
+    bullets: [
+      'Disclosed 2 SSRF vulnerabilities in PyPI MCP servers (incl. an Anthropic reference server); demonstrated full exploitation on EC2 via the instance metadata service.',
+      'Identified a DNS-rebinding class affecting 3 HTTP-transport MCP servers; coordinated disclosure with maintainers under embargo.',
+      'Shipped 14 static-analyzer rules across 151 passing tests, with a 10-target calibration corpus at 100% precision/recall.',
+    ],
+    metric: { label: 'real findings', value: '11' },
+    accent: 'cyan',
+    repo: 'https://github.com/desledishant10/mcp-scan',
+  },
+  {
     title: 'Ransomware Detection & Automated Response Pipeline',
     blurb:
       'Real-time behavioral monitoring with automated containment + recovery aligned to the IR lifecycle.',
@@ -227,33 +255,8 @@ export const projects: Project[] = [
       'Investigated file activity patterns to assess potential compromise and impact.',
       'Implemented automated containment and recovery workflows: detection → containment → recovery.',
     ],
-    metric: { label: 'Detection rate', value: '98%' },
+    metric: { label: 'detection rate', value: '98%' },
     accent: 'green',
-    repo: '',
-  },
-  {
-    title: 'Intrusion Detection & Threat Analysis System (IDPS)',
-    blurb:
-      'Network IDS with alert triage, event correlation, and forensic-style investigation of attack patterns.',
-    stack: ['Suricata', 'Snort', 'ELK Stack', 'Python'],
-    bullets: [
-      'Analyzed network traffic and logs to identify suspicious activity and potential intrusions.',
-      'Performed alert triage and event correlation to distinguish true positives from false positives.',
-      'Documented findings to simulate forensic-style analysis and isolated threats during response.',
-    ],
-    accent: 'cyan',
-    repo: '',
-  },
-  {
-    title: 'Vulnerability Assessment & Security Hardening',
-    blurb:
-      'Endpoint vuln scanning paired with AD/GPO controls to systematically reduce attack surface.',
-    stack: ['Nessus', 'Splunk', 'Active Directory', 'GPO'],
-    bullets: [
-      'Conducted vulnerability assessments and analyzed system weaknesses across endpoints.',
-      'Implemented security configurations and controls to reduce exposure and improve resilience.',
-    ],
-    accent: 'violet',
     repo: '',
   },
 ];
