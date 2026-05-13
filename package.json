@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run lint:dashes",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:dashes": "bash scripts/check-dashes.sh",
+    "lint:dashes:fix": "bash scripts/check-dashes.sh --fix",
+    "preview": "vite preview",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

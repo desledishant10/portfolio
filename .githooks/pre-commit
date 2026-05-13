@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Pre-commit hook: block em-dash (—) and en-dash (–) in STAGED files only.
+# Whole-repo check happens at build time via the `prebuild` npm script.
+#
+# Bypass for an emergency commit:   git commit --no-verify
+set -e
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR \
+  | grep -E '^(src/|public/og\.svg|index\.html)' \
+  | grep -E '\.(tsx?|jsx?|html|css|svg|md)$' \
+  || true)
+
+[ -z "$STAGED" ] && exit 0
+
+# Use python for codepoint-accurate detection (see check-dashes.sh for the why).
+python3 - <<PY
+import sys
+STAGED = """$STAGED""".strip().splitlines()
+EM, EN = '—', '–'
+hits = []
+for f in STAGED:
+    if not f.strip():
+        continue
+    try:
+        with open(f, encoding='utf-8') as fh:
+            for i, line in enumerate(fh, 1):
+                if EM in line or EN in line:
+                    hits.append(f'  {f}:{i}: {line.rstrip()}')
+    except (FileNotFoundError, UnicodeDecodeError, IsADirectoryError):
+        pass
+
+if hits:
+    print()
+    print('✗ commit blocked — em-dash or en-dash in staged files:')
+    print()
+    for h in hits[:40]:
+        print(h)
+    print()
+    print('  Fix: npm run lint:dashes:fix && git add -A')
+    print('  Override (not recommended): git commit --no-verify')
+    print()
+    sys.exit(1)
+PY
