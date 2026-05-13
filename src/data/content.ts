@@ -218,23 +218,23 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: 'Vex — Agent-First Red Team Framework',
+    title: 'Vex - Agent-First Red Team Framework',
     blurb:
       'Open-source red team framework for AI agents. Probes LLMs, MCP servers, and RAG pipelines for indirect prompt injection, tool hijacking, system prompt extraction, and Unicode smuggling.',
     stack: ['Python', 'LLM Security', 'MCP', 'Prompt Injection', 'CI/CD'],
     bullets: [
-      'Built an attack library for the realistic deployment surface (attacker-controlled tool output, documents, MCP) — not just user-supplied jailbreaks.',
+      'Built an attack library for the realistic deployment surface (attacker-controlled tool output, documents, MCP) - not just user-supplied jailbreaks.',
       'Multi-provider abstraction (Anthropic, OpenAI-compatible, Ollama) with composable detectors: refusal, pattern, compliance, LLM-as-judge.',
-      'CI-native — stable JSON schema, deterministic seeds for forensic replay, `--exit-on-finding` flag for build gating.',
+      'CI-native - stable JSON schema, deterministic seeds for forensic replay, `--exit-on-finding` flag for build gating.',
     ],
     metric: { label: 'attack classes', value: '5+' },
     accent: 'violet',
     repo: 'https://github.com/desledishant10/vex',
   },
   {
-    title: 'MCP-Scan — Security Scanner for MCP Servers',
+    title: 'MCP-Scan - Security Scanner for MCP Servers',
     blurb:
-      'Static analyzer + dynamic harness for Model Context Protocol servers. Surfaced two confirmed SSRF vulnerabilities in PyPI-published MCP servers — one demonstrated end-to-end on EC2 with real IAM credentials retrieved.',
+      'Static analyzer + dynamic harness for Model Context Protocol servers. Surfaced two confirmed SSRF vulnerabilities in PyPI-published MCP servers - one demonstrated end-to-end on EC2 with real IAM credentials retrieved.',
     stack: ['Python', 'Static Analysis', 'MCP', 'SSRF', 'DNS Rebinding'],
     bullets: [
       'Disclosed 2 SSRF vulnerabilities in PyPI MCP servers (incl. an Anthropic reference server); demonstrated full exploitation on EC2 via the instance metadata service.',

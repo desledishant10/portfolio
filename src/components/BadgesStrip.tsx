@@ -92,14 +92,14 @@ function TryHackMeWidget() {
 
   const refresh = useCallback(() => {
     setRefreshing(true);
-    // Fire-and-forget — we don't need (and can't read) the response.
+    // Fire-and-forget - we don't need (and can't read) the response.
     fetch(`https://tryhackme.com/${username}/streak`, {
       mode: 'no-cors',
       cache: 'no-store',
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
     }).catch(() => {
-      /* network/CSP fail is fine — we still bump the cache-buster */
+      /* network/CSP fail is fine - we still bump the cache-buster */
     });
     // Give THM ~1.6s to regenerate the OG image on S3, then re-fetch.
     window.setTimeout(() => {
