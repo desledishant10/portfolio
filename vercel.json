@@ -29,6 +29,12 @@
       ]
     },
     {
+      "source": "/api/streak-meta",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600" }
+      ]
+    },
+    {
       "source": "/api/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, no-cache, max-age=0, must-revalidate" }
