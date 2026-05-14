@@ -246,18 +246,18 @@ export const projects: Project[] = [
     repo: 'https://github.com/desledishant10/mcp-scan',
   },
   {
-    title: 'Ransomware Detection & Automated Response Pipeline',
+    title: 'Afterlife - Ghost-Access Auditor',
     blurb:
-      'Real-time behavioral monitoring with automated containment + recovery aligned to the IR lifecycle.',
-    stack: ['Python', 'TensorFlow', 'AWS S3', 'AWS KMS'],
+      'Cross-source identity graph that surfaces credentials outliving their owners across cloud, code hosting, IdPs, and SaaS. The detection class behind Uber 2022, Okta 2023, and the Snowflake 2024 breach wave.',
+    stack: ['Python', 'IAM', 'AWS / GCP', 'Identity Graph', 'Detection Rules'],
     bullets: [
-      'Detected ransomware-like behavior through real-time monitoring and behavioral analysis.',
-      'Investigated file activity patterns to assess potential compromise and impact.',
-      'Implemented automated containment and recovery workflows: detection → containment → recovery.',
+      'Pulls identities and credentials from 8 systems (AWS, GCP, GitHub, GitLab, Okta, Google Workspace, Slack, Vault) and joins them via cross-source identity edges.',
+      'Catches the Uber-2022 pattern: an AWS access key still active even though its owner is suspended in the IdP.',
+      'Shipped 11 detection rules (OFFBOARDED-OWNER, ADMIN-CONCENTRATION, UNROTATED-KEY, and more) ranked by blast radius across 250+ tests.',
     ],
-    metric: { label: 'detection rate', value: '98%' },
+    metric: { label: 'tests passing', value: '250+' },
     accent: 'green',
-    repo: '',
+    repo: 'https://github.com/desledishant10/afterlife',
   },
 ];
 
