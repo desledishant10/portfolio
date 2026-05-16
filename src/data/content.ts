@@ -8,6 +8,9 @@ export const profile = {
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
   tryhackmeUsername: 'ddesle3',
+  // Public ID used by THM's live embed API:
+  //   https://tryhackme.com/api/v2/badges/public-profile?userPublicId=<id>
+  tryhackmePublicId: '2202803',
   tryhackmeStreakUrl:
     'https://tryhackme.com/ddesle3/streak?sharerId=64e11a049da0a6e14be7cdc9',
   resumePath: '/resume.pdf',
