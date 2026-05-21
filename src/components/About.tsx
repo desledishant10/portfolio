@@ -31,16 +31,16 @@ export function About() {
               clean playbooks, reproducible labs, and catching attackers before they get past stage one.
             </p>
 
-            <div className="mt-7 grid grid-cols-2 gap-3 font-mono text-sm">
+            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2 font-mono text-sm">
               {[
                 ['focus', 'threat_detection'],
                 ['status', 'open_to_work'],
                 ['relocate', 'true'],
                 ['grad', 'Aug 2026'],
               ].map(([k, v]) => (
-                <div key={k} className="flex gap-2">
-                  <span className="text-neon-cyan">{k}:</span>
-                  <span className="text-ink">"{v}"</span>
+                <div key={k} className="flex gap-2 min-w-0">
+                  <span className="text-neon-cyan shrink-0">{k}:</span>
+                  <span className="text-ink truncate">"{v}"</span>
                 </div>
               ))}
             </div>
