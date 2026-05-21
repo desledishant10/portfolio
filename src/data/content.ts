@@ -27,24 +27,53 @@ export type SkillCategory = {
 
 export const skills: SkillCategory[] = [
   {
-    label: 'SIEM & Detection',
+    label: 'Security Operations',
     icon: 'radar',
-    items: ['ELK Stack', 'Splunk', 'Suricata', 'Snort'],
+    items: [
+      'Splunk',
+      'ELK Stack',
+      'Suricata',
+      'Snort',
+      'Wireshark',
+      'Threat Detection',
+      'Threat Hunting',
+      'Incident Response',
+      'MITRE ATT&CK',
+      'NIST CSF',
+    ],
   },
   {
-    label: 'Security Tools',
+    label: 'Vulnerability & AppSec',
     icon: 'shield',
-    items: ['Wireshark', 'Nmap', 'Burp Suite', 'Nessus', 'OpenVAS'],
+    items: [
+      'Nessus',
+      'OpenVAS',
+      'Burp Suite',
+      'Nmap',
+      'SAST',
+      'DAST',
+      'AST Analysis',
+      'Penetration Testing',
+      'Coordinated Disclosure',
+    ],
   },
   {
-    label: 'Cloud & Systems',
+    label: 'Cloud & Identity',
     icon: 'cloud',
-    items: ['AWS (S3, KMS)', 'Google Cloud IAM', 'Linux', 'Active Directory', 'GPO'],
+    items: [
+      'AWS (IAM, S3, KMS)',
+      'GCP IAM',
+      'Okta',
+      'Google Workspace',
+      'Active Directory',
+      'GPO',
+      'Linux',
+    ],
   },
   {
     label: 'Programming',
     icon: 'code',
-    items: ['Python', 'Bash', 'SQL', 'C / C++'],
+    items: ['Python', 'Bash', 'SQL', 'C', 'C++'],
   },
 ];
 
@@ -223,12 +252,12 @@ export const projects: Project[] = [
   {
     title: 'Vex - Agent-First Red Team Framework',
     blurb:
-      'Open-source red team framework for AI agents. Probes LLMs, MCP servers, and RAG pipelines for indirect prompt injection, tool hijacking, system prompt extraction, and Unicode smuggling.',
+      'Open-source red team framework probing LLMs, AI agents, MCP servers, and RAG pipelines for indirect tool injection, prompt extraction, Unicode smuggling, and jailbreaks.',
     stack: ['Python', 'LLM Security', 'MCP', 'Prompt Injection', 'CI/CD'],
     bullets: [
-      'Built an attack library for the realistic deployment surface (attacker-controlled tool output, documents, MCP) - not just user-supplied jailbreaks.',
-      'Multi-provider abstraction (Anthropic, OpenAI-compatible, Ollama) with composable detectors: refusal, pattern, compliance, LLM-as-judge.',
-      'CI-native - stable JSON schema, deterministic seeds for forensic replay, `--exit-on-finding` flag for build gating.',
+      'Built for the realistic agent attack surface (attacker-controlled tool output, documents, MCP) rather than only user-supplied jailbreaks.',
+      'Composable detector stack (refusal, pattern, compliance, LLM-as-judge); Anthropic, OpenAI, and Ollama providers supported.',
+      'CI-native with `--exit-on-finding` for build gating; stable JSON schema and deterministic seeds for forensic replay.',
     ],
     metric: { label: 'attack classes', value: '5+' },
     accent: 'violet',
@@ -237,26 +266,26 @@ export const projects: Project[] = [
   {
     title: 'MCP-Scan - Security Scanner for MCP Servers',
     blurb:
-      'Static analyzer + dynamic harness for Model Context Protocol servers. Surfaced two confirmed SSRF vulnerabilities in PyPI-published MCP servers - one demonstrated end-to-end on EC2 with real IAM credentials retrieved.',
-    stack: ['Python', 'Static Analysis', 'MCP', 'SSRF', 'DNS Rebinding'],
+      'Static + dynamic vulnerability scanner for Model Context Protocol servers with 14 rules covering SSRF, path traversal, shell injection, prompt injection, DNS rebinding, and CORS misconfig.',
+    stack: ['Python', 'SAST', 'DAST', 'MCP', 'SSRF', 'DNS Rebinding'],
     bullets: [
-      'Disclosed 2 SSRF vulnerabilities in PyPI MCP servers (incl. an Anthropic reference server); demonstrated full exploitation on EC2 via the instance metadata service.',
-      'Identified a DNS-rebinding class affecting 3 HTTP-transport MCP servers; coordinated disclosure with maintainers under embargo.',
-      'Shipped 14 static-analyzer rules across 151 passing tests, with a 10-target calibration corpus at 100% precision/recall.',
+      'Found vulnerabilities in 5 PyPI-published MCP servers (including an Anthropic reference server) and filed coordinated CVE-track disclosures with maintainers under embargo.',
+      'Demonstrated SSRF on AWS EC2 end-to-end via the instance metadata service, retrieving live IAM credentials as proof of impact.',
+      'Calibration corpus of 10 targets at 100% precision/recall across 151 passing tests for the static analyzer ruleset.',
     ],
-    metric: { label: 'real findings', value: '11' },
+    metric: { label: 'vendors disclosed', value: '5' },
     accent: 'cyan',
     repo: 'https://github.com/desledishant10/mcp-scan',
   },
   {
     title: 'Afterlife - Ghost-Access Auditor',
     blurb:
-      'Cross-source identity graph that surfaces credentials outliving their owners across cloud, code hosting, IdPs, and SaaS. The detection class behind Uber 2022, Okta 2023, and the Snowflake 2024 breach wave.',
-    stack: ['Python', 'IAM', 'AWS / GCP', 'Identity Graph', 'Detection Rules'],
+      'Cross-source identity graph auditor that surfaces credentials outliving their owners across cloud, code hosting, IdPs, and SaaS. The detection class behind Uber 2022, Okta 2023, and the Snowflake 2024 breach wave.',
+    stack: ['Python', 'FastAPI', 'IAM', 'AWS / GCP', 'Identity Graph'],
     bullets: [
       'Pulls identities and credentials from 8 systems (AWS, GCP, GitHub, GitLab, Okta, Google Workspace, Slack, Vault) and joins them via cross-source identity edges.',
-      'Catches the Uber-2022 pattern: an AWS access key still active even though its owner is suspended in the IdP.',
-      'Shipped 11 detection rules (OFFBOARDED-OWNER, ADMIN-CONCENTRATION, UNROTATED-KEY, and more) ranked by blast radius across 250+ tests.',
+      'Shipped 11 detection rules (OFFBOARDED-OWNER, ADMIN-CONCENTRATION, UNROTATED-KEY, and more) ranked by blast radius across 250+ tests against mocked cloud APIs.',
+      'Exports JSON, HTML, PDF, and SARIF reports plus a FastAPI dashboard for SOC review.',
     ],
     metric: { label: 'tests passing', value: '250+' },
     accent: 'green',
@@ -272,19 +301,20 @@ export type Competition = {
 
 export const competitions: Competition[] = [
   {
-    name: 'CyberForce Competition (DOE)',
-    detail: 'Team T-82',
+    name: 'Rocky Mountain Collegiate Cyber Defense Competition',
+    detail: 'RMCCDC · Mar 2026',
     bullets: [
-      'Defended enterprise and ICS infrastructure against live cyber attacks in a simulated environment.',
-      'Performed real-time incident response, system hardening, and threat mitigation.',
+      'First team from the University of Denver to qualify for RMCCDC Regionals.',
+      'Defended enterprise infrastructure (Active Directory, DNS, IIS, FTP, Linux servers, firewalls, VPN) against an active professional Red Team while maintaining required service availability for scoring.',
+      'Performed log analysis, threat detection, persistence removal, and live incident response; produced IR procedures and executive reports for White Team injects.',
     ],
   },
   {
-    name: 'Rocky Mountain Collegiate Cyber Defense Competition',
-    detail: 'RMCCDC',
+    name: 'CyberForce Competition (U.S. Department of Energy)',
+    detail: 'Team T-82 · Nov 2025',
     bullets: [
-      'Secured enterprise systems including Active Directory, web services, and network infrastructure.',
-      'Identified vulnerabilities and responded to active threats using logs and network analysis tools.',
+      'Defended a simulated ICS/OT environment (Active Directory, OpenPLC, HMI, database, web services) against live Red Team attacks while completing White Team incident response injects.',
+      'Removed PAM backdoors, PHP webshells, and port-based persistence; hardened Windows and Linux systems; performed forensic log analysis using netstat, auth logs, and Windows Event Logs.',
     ],
   },
 ];
@@ -368,9 +398,9 @@ export const education: Education[] = [
     date: 'Expected Aug 2026',
   },
   {
-    school: 'University of Illinois - Chicago',
+    school: 'University of Illinois Chicago',
     degree: 'B.S. in Computer Science',
-    detail: '',
+    detail: 'Honor: 1st Place, Undergraduate Research Forum (2023)',
     date: 'May 2024',
   },
 ];
