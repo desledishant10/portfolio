@@ -28,17 +28,55 @@ export function MatrixRain({ opacity = 0.22 }: { opacity?: number }) {
     const fontSize = 14;
     let columns = 0;
     let drops: number[] = [];
+    let initialized = false;
 
+    // On mobile (iOS Safari, Chrome Android) the address bar slides in/out
+    // during scroll, which fires `resize` with a changed innerHeight even
+    // though the viewport WIDTH hasn't actually changed. We must NOT reset
+    // `drops` in that case - otherwise every column snaps back to row 1
+    // and the rain visibly "restarts" on every scroll direction change.
     const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      // Bail-out path for height-only changes (URL bar toggle).
+      if (initialized && newWidth === width) {
+        height = newHeight;
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.height = `${height}px`;
+        // Re-applying the transform is required because setting canvas.height
+        // resets the 2D context state.
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return;
+      }
+
+      width = newWidth;
+      height = newHeight;
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      columns = Math.floor(width / fontSize);
-      drops = Array(columns).fill(1);
+
+      const newColumns = Math.floor(width / fontSize);
+
+      if (!initialized) {
+        drops = Array(newColumns).fill(1);
+        initialized = true;
+      } else {
+        // Width actually changed (orientation or window resize). Preserve
+        // existing drop positions where columns overlap, and for any new
+        // columns seed with a random vertical offset so they look already
+        // in motion instead of all starting at row 1.
+        const preserved = drops.slice(0, newColumns);
+        const maxRow = Math.max(1, Math.floor(height / fontSize));
+        while (preserved.length < newColumns) {
+          preserved.push(Math.floor(Math.random() * maxRow));
+        }
+        drops = preserved;
+      }
+
+      columns = newColumns;
     };
     resize();
     window.addEventListener('resize', resize);
