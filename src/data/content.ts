@@ -242,9 +242,9 @@ export type Project = {
   bullets: string[];
   metric?: { label: string; value: string };
   accent: 'green' | 'cyan' | 'violet';
-  // TODO: paste public GitHub URL for this project (or leave empty to hide the icon)
+  // Public GitHub URL. Omit to hide the repo icon on the card.
   repo?: string;
-  // TODO: optional live demo / writeup URL
+  // Optional live demo or writeup URL. Omit to hide the demo link.
   demo?: string;
 };
 
