@@ -96,12 +96,12 @@ export const experience: ExperienceItem[] = [
   {
     org: 'University of Denver',
     location: 'Denver, CO',
-    type: 'Part-time · 1 yr 3 mos',
+    type: 'Part-time · 1 yr 5 mos',
     roles: [
       {
         title: 'Facility Associate - Ritchie Center',
         start: 'Mar 2025',
-        end: 'Present',
+        end: 'Aug 2026',
         bullets: [
           'Oversee daily operations across multiple campus facilities, maintaining physical security controls, access enforcement, and situational awareness.',
           'Monitor high-traffic and restricted areas to detect unauthorized access, policy violations, and safety anomalies.',
@@ -124,7 +124,7 @@ export const experience: ExperienceItem[] = [
       {
         title: 'Service Associate - Joy Burns Arena & Coors Fitness Center',
         start: 'Mar 2025',
-        end: 'Present',
+        end: 'Aug 2026',
         bullets: [
           'Manage member and guest check-ins using RecTrac, ensuring accurate identity verification, authorization, and policy-compliant access to facilities.',
           'Administer locker room assignments and rental equipment through system tracking, maintaining controlled access and inventory accountability.',
