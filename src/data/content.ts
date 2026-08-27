@@ -16,7 +16,7 @@ export const profile = {
   resumePath: '/resume.pdf',
   tagline:
     'I build things that catch ransomware before it spreads and write the playbooks for what happens next.',
-  bio: `Master's student in Cyber Security at the University of Denver, focused on threat detection, incident response, and security architecture. I like the part of the job where logs become stories - turning noisy telemetry into clear timelines, then automating the response so the same incident never has to be handled twice.`,
+  bio: `Master's graduate in Cyber Security from the University of Denver, focused on threat detection, incident response, and security architecture. I like the part of the job where logs become stories - turning noisy telemetry into clear timelines, then automating the response so the same incident never has to be handled twice.`,
 };
 
 export type SkillCategory = {
@@ -301,6 +301,15 @@ export type Competition = {
 
 export const competitions: Competition[] = [
   {
+    name: 'Trace Labs Global OSINT Search Party CTF - DEF CON 34',
+    detail: 'Team Cyber@DU · 5th of 100+ · Aug 2026',
+    bullets: [
+      'Finished 5th of 100+ international teams (3,500 points across 46 accepted submissions) at Trace Labs flagship crowdsourced-OSINT event at DEF CON 34, where every "flag" is a verified real-world lead on an active missing-persons case handed to law enforcement.',
+      'Rebuilt the digital footprint of assigned subjects across multiple platforms under a 4-hour clock; attributed pseudonymous accounts through cross-platform correlation and reverse image/face analysis, and recovered physical identifiers and timeline details missing from official records.',
+      'Operated inside a strict passive-recon, chain-of-custody framework (isolated Kasm OSINT VM, VPN egress, sock-puppet management) for zero-touch, court-defensible evidence; the team recap was officially reposted by Trace Labs.',
+    ],
+  },
+  {
     name: 'Rocky Mountain Collegiate Cyber Defense Competition',
     detail: 'RMCCDC · Mar 2026',
     bullets: [
@@ -395,7 +404,7 @@ export const education: Education[] = [
     school: 'University of Denver',
     degree: 'M.S. in Cyber Security',
     detail: 'Focus: Threat Detection, Incident Response, Security Architecture',
-    date: 'Expected Aug 2026',
+    date: 'Aug 2026',
   },
   {
     school: 'University of Illinois Chicago',
@@ -412,6 +421,8 @@ export const education: Education[] = [
  * To add a real badge image instead of the icon tile, set `src` to an image URL:
  *   - Credly: https://images.credly.com/size/340x340/images/<image-uuid>/image.png
  *   - TryHackMe: get from your THM profile (some badges have direct image URLs)
+ *   - CanCred / Open Badges v3: https://factory.cancred.ca/obv3/images/badge/<id>
+ * Any new image host must also be allowlisted in vercel.json's CSP img-src.
  */
 export type Badge = {
   name: string;
@@ -424,6 +435,13 @@ export type Badge = {
 const THM_SHARER = '64e11a049da0a6e14be7cdc9';
 
 export const badges: Badge[] = [
+  {
+    name: 'OSINT Search Party CTF',
+    issuer: 'Trace Labs · DEF CON 34',
+    src: 'https://factory.cancred.ca/obv3/images/badge/d7f650b230e3c50e670bf41176f3ca3a20e2d62be3547313ee608d78635bb004',
+    href: 'https://factory.cancred.ca/obv3/credentials/642114cf9622224c555aaa0226adc0dca9bf5370',
+    accent: 'violet',
+  },
   {
     name: 'SEA Badge',
     issuer: 'Credly · DU',

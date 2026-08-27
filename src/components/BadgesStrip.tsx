@@ -75,7 +75,7 @@ function BadgesMarquee() {
   );
 }
 
-type ThmStatus = {
+type ThmStats = {
   username: string | null;
   rank: string | null;
   points: number | null;
@@ -84,12 +84,11 @@ type ThmStatus = {
   badges: number | null;
   rooms: number | null;
   avatarUrl: string | null;
-  fetchedAt: string;
+  fetchedAt: string | null;
 };
 
 function formatAge(seconds: number): string {
-  if (seconds < 5) return 'just now';
-  if (seconds < 60) return `${seconds}s ago`;
+  if (seconds < 60) return 'just now';
   if (seconds < 60 * 60) return `${Math.floor(seconds / 60)}m ago`;
   if (seconds < 60 * 60 * 24) return `${Math.floor(seconds / 3600)}h ago`;
   return `${Math.floor(seconds / 86400)}d ago`;
@@ -121,31 +120,34 @@ function StatCell({
   );
 }
 
+// Stats are refreshed on a schedule by scripts/fetch-thm-stats.mjs (the GitHub
+// Action in .github/workflows/thm-stats.yml) and committed to
+// public/thm-stats.json. We fetch that published snapshot at runtime rather
+// than hitting TryHackMe directly - their profile API is behind a bot challenge
+// that only a real browser can pass. The refresh button re-pulls the latest
+// published snapshot (and picks up a background redeploy without a full reload).
 function TryHackMeWidget() {
-  const username = profile.tryhackmeUsername;
-  const publicId = profile.tryhackmePublicId;
   const streakUrl = profile.tryhackmeStreakUrl;
 
-  const [data, setData] = useState<ThmStatus | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState<ThmStats | null>(null);
+  const [refreshing, setRefreshing] = useState(true);
+  const [syncedAt, setSyncedAt] = useState<number | null>(null);
   const [ageSeconds, setAgeSeconds] = useState<number | null>(null);
 
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const r = await fetch(`/api/streak-meta?id=${encodeURIComponent(publicId)}&t=${Date.now()}`, {
-        cache: 'no-store',
-      });
+      const r = await fetch(`/thm-stats.json?t=${Date.now()}`, { cache: 'no-store' });
       if (r.ok) {
-        const json = (await r.json()) as ThmStatus;
-        setData(json);
+        setData((await r.json()) as ThmStats);
+        setSyncedAt(Date.now());
       }
     } catch {
-      /* offline / blocked - leave previous data in place */
+      /* offline or blocked - keep whatever we already have */
     } finally {
       setRefreshing(false);
     }
-  }, [publicId]);
+  }, []);
 
   useEffect(() => {
     refresh();
@@ -154,35 +156,42 @@ function TryHackMeWidget() {
     return () => window.removeEventListener('focus', onFocus);
   }, [refresh]);
 
-  // Re-tick the "Xs ago" label every 5 seconds without re-fetching.
+  // "synced Xm ago" counts from the last successful client fetch, so hitting
+  // refresh resets it. (The published numbers themselves only change when the
+  // scheduled job re-scrapes; that scrape time is shown in the tooltip.)
   useEffect(() => {
-    if (!data?.fetchedAt) return;
-    const tick = () => {
-      const s = Math.max(0, Math.floor((Date.now() - new Date(data.fetchedAt).getTime()) / 1000));
-      setAgeSeconds(s);
-    };
+    if (syncedAt == null) {
+      setAgeSeconds(null);
+      return;
+    }
+    const tick = () => setAgeSeconds(Math.max(0, Math.floor((Date.now() - syncedAt) / 1000)));
     tick();
-    const id = window.setInterval(tick, 5_000);
+    const id = window.setInterval(tick, 30_000);
     return () => window.clearInterval(id);
-  }, [data?.fetchedAt]);
+  }, [syncedAt]);
 
-  const ageLabel = ageSeconds != null ? formatAge(ageSeconds) : 'loading';
-  const tooltip = data?.fetchedAt
-    ? `Fetched live from TryHackMe at ${new Date(data.fetchedAt).toLocaleString()}`
-    : undefined;
+  const username = data?.username || profile.tryhackmeUsername;
+  const ageLabel = refreshing
+    ? 'syncing'
+    : ageSeconds != null
+      ? `synced ${formatAge(ageSeconds)}`
+      : 'live';
+  const fetchedTitle = data?.fetchedAt
+    ? `Synced with the published stats. Last scraped ${new Date(data.fetchedAt).toLocaleString()} (auto-refreshed daily).`
+    : 'Loading latest stats';
 
   return (
     <div className="panel panel-hover overflow-hidden group">
       <div className="flex items-center justify-between px-4 py-2 border-b border-bg-border bg-bg-soft">
         <div className="flex items-center gap-2 font-mono text-[10px] text-ink-mute">
           <Flame size={11} className="text-neon-red" />
-          <span>tryhackme.live · @{data?.username ?? username}</span>
+          <span>tryhackme.live · @{username}</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={refresh}
-            aria-label="Refresh"
-            title="Refresh now"
+            aria-label="Refresh stats"
+            title="Refresh"
             disabled={refreshing}
             className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50"
           >
@@ -190,7 +199,7 @@ function TryHackMeWidget() {
           </button>
           <span
             className="font-mono text-[9px] text-neon-amber flex items-center gap-1"
-            title={tooltip}
+            title={fetchedTitle}
           >
             <ShieldCheck size={9} />
             {ageLabel}
@@ -202,6 +211,7 @@ function TryHackMeWidget() {
         href={streakUrl}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`TryHackMe profile for ${username}`}
         className="block p-4 bg-gradient-to-br from-[#0a0e14] via-[#10141d] to-[#0a0e14] relative"
       >
         <div className="absolute inset-0 opacity-20 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)] pointer-events-none">
@@ -223,7 +233,7 @@ function TryHackMeWidget() {
           )}
           <div className="min-w-0 flex-1">
             <div className="font-mono text-sm font-bold text-ink leading-tight truncate">
-              {data?.username ?? username}
+              {username}
             </div>
             <div className="flex items-center gap-1.5 mt-1 font-mono text-[10px] text-neon-amber leading-none">
               <Zap size={10} className="fill-current" />
