@@ -156,7 +156,7 @@ function TryHackMeWidget() {
           referrerPolicy="no-referrer"
           onLoad={() => setLoaded(true)}
           className="relative block w-full mx-auto rounded-lg border border-bg-border/70 bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
-          style={{ height: 88, maxWidth: 344 }}
+          style={{ aspectRatio: '4 / 1', maxWidth: 344 }}
         />
       </div>
     </div>
