@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Award, DoorOpen, Flame, RefreshCw, ShieldCheck, Trophy, Zap } from 'lucide-react';
+import { Award, ExternalLink, RefreshCw, ShieldCheck, Trophy } from 'lucide-react';
 import { badges, profile, type Badge } from '../data/content';
 
 const accentMap = {
@@ -75,200 +75,90 @@ function BadgesMarquee() {
   );
 }
 
-type ThmStats = {
-  username: string | null;
-  rank: string | null;
-  points: number | null;
-  streakDays: number | null;
-  streakRaw: string | null;
-  badges: number | null;
-  rooms: number | null;
-  avatarUrl: string | null;
-  fetchedAt: string | null;
-};
-
-function formatAge(seconds: number): string {
-  if (seconds < 60) return 'just now';
-  if (seconds < 60 * 60) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 60 * 60 * 24) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
-}
-
-function StatCell({
-  icon,
-  value,
-  label,
-  color,
-}: {
-  icon: React.ReactNode;
-  value: string | number | null;
-  label: string;
-  color: string;
-}) {
-  return (
-    <div className="flex items-center gap-2.5 min-w-0">
-      <div className={`shrink-0 ${color}`}>{icon}</div>
-      <div className="flex flex-col min-w-0 leading-none">
-        <span className={`font-mono text-base font-bold ${color} leading-none`}>
-          {value ?? '...'}
-        </span>
-        <span className="font-mono text-[9px] text-ink-mute mt-0.5 uppercase tracking-wider truncate">
-          {label}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-// Stats are refreshed on a schedule by scripts/fetch-thm-stats.mjs (the GitHub
-// Action in .github/workflows/thm-stats.yml) and committed to
-// public/thm-stats.json. We fetch that published snapshot at runtime rather
-// than hitting TryHackMe directly - their profile API is behind a bot challenge
-// that only a real browser can pass. The refresh button re-pulls the latest
-// published snapshot (and picks up a background redeploy without a full reload).
+/**
+ * Live TryHackMe status.
+ *
+ * We embed TryHackMe's official badge endpoint in an iframe rather than scraping
+ * it. TryHackMe put that endpoint behind a bot challenge (Vercel Security
+ * Checkpoint) that blocks servers/CI/scrapers - but a real browser loading it in
+ * an iframe passes the challenge and renders the live badge (rank, points,
+ * streak, badges, rooms). So it stays current for every visitor with no backend,
+ * no scheduled job, and nothing to maintain. Requires tryhackme.com in the CSP
+ * frame-src (see vercel.json).
+ */
 function TryHackMeWidget() {
+  const username = profile.tryhackmeUsername;
+  const publicId = profile.tryhackmePublicId;
   const streakUrl = profile.tryhackmeStreakUrl;
+  const embedUrl = `https://tryhackme.com/api/v2/badges/public-profile?userPublicId=${publicId}`;
 
-  const [data, setData] = useState<ThmStats | null>(null);
-  const [refreshing, setRefreshing] = useState(true);
-  const [syncedAt, setSyncedAt] = useState<number | null>(null);
-  const [ageSeconds, setAgeSeconds] = useState<number | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
-  const refresh = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      const r = await fetch(`/thm-stats.json?t=${Date.now()}`, { cache: 'no-store' });
-      if (r.ok) {
-        setData((await r.json()) as ThmStats);
-        setSyncedAt(Date.now());
-      }
-    } catch {
-      /* offline or blocked - keep whatever we already have */
-    } finally {
-      setRefreshing(false);
-    }
+  const refresh = useCallback(() => {
+    setLoaded(false);
+    setReloadKey((k) => k + 1);
   }, []);
 
+  // Reload the live badge when the tab regains focus (stats may have changed).
   useEffect(() => {
-    refresh();
     const onFocus = () => refresh();
     window.addEventListener('focus', onFocus);
     return () => window.removeEventListener('focus', onFocus);
   }, [refresh]);
 
-  // "synced Xm ago" counts from the last successful client fetch, so hitting
-  // refresh resets it. (The published numbers themselves only change when the
-  // scheduled job re-scrapes; that scrape time is shown in the tooltip.)
-  useEffect(() => {
-    if (syncedAt == null) {
-      setAgeSeconds(null);
-      return;
-    }
-    const tick = () => setAgeSeconds(Math.max(0, Math.floor((Date.now() - syncedAt) / 1000)));
-    tick();
-    const id = window.setInterval(tick, 30_000);
-    return () => window.clearInterval(id);
-  }, [syncedAt]);
-
-  const username = data?.username || profile.tryhackmeUsername;
-  const ageLabel = refreshing
-    ? 'syncing'
-    : ageSeconds != null
-      ? `synced ${formatAge(ageSeconds)}`
-      : 'live';
-  const fetchedTitle = data?.fetchedAt
-    ? `Synced with the published stats. Last scraped ${new Date(data.fetchedAt).toLocaleString()} (auto-refreshed daily).`
-    : 'Loading latest stats';
-
   return (
     <div className="panel panel-hover overflow-hidden group">
       <div className="flex items-center justify-between px-4 py-2 border-b border-bg-border bg-bg-soft">
         <div className="flex items-center gap-2 font-mono text-[10px] text-ink-mute">
-          <Flame size={11} className="text-neon-red" />
+          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse shadow-[0_0_6px_rgba(0,255,156,0.8)]" />
           <span>tryhackme.live · @{username}</span>
         </div>
         <div className="flex items-center gap-2">
+          <a
+            href={streakUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open TryHackMe profile"
+            title="Open profile"
+            className="text-ink-mute hover:text-neon-cyan transition-colors"
+          >
+            <ExternalLink size={11} />
+          </a>
           <button
             onClick={refresh}
-            aria-label="Refresh stats"
-            title="Refresh"
-            disabled={refreshing}
+            aria-label="Reload live badge"
+            title="Reload"
+            disabled={!loaded}
             className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50"
           >
-            <RefreshCw size={11} className={refreshing ? 'animate-spin' : ''} />
+            <RefreshCw size={11} className={!loaded ? 'animate-spin' : ''} />
           </button>
           <span
             className="font-mono text-[9px] text-neon-amber flex items-center gap-1"
-            title={fetchedTitle}
+            title="Live badge embedded from TryHackMe"
           >
             <ShieldCheck size={9} />
-            {ageLabel}
+            live
           </span>
         </div>
       </div>
 
-      <a
-        href={streakUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`TryHackMe profile for ${username}`}
-        className="block p-4 bg-gradient-to-br from-[#0a0e14] via-[#10141d] to-[#0a0e14] relative"
-      >
-        <div className="absolute inset-0 opacity-20 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)] pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_40%,rgba(239,68,68,0.18),transparent_55%)]" />
-        </div>
+      <div className="scanline relative bg-bg-soft px-4 py-5 overflow-hidden">
+        {/* Soft neon-green glow that echoes the badge's own green + the site accent. */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_118%,rgba(0,255,156,0.16),transparent_60%)]" />
 
-        <div className="relative flex items-center gap-3 mb-3">
-          {data?.avatarUrl ? (
-            <img
-              src={data.avatarUrl}
-              alt=""
-              className="h-11 w-11 rounded-full border border-neon-cyan/30 shrink-0 group-hover:border-neon-cyan/60 transition-colors"
-              loading="lazy"
-            />
-          ) : (
-            <div className="h-11 w-11 rounded-full bg-neon-cyan/10 border border-neon-cyan/30 flex items-center justify-center shrink-0">
-              <Flame size={18} className="text-neon-red" />
-            </div>
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="font-mono text-sm font-bold text-ink leading-tight truncate">
-              {username}
-            </div>
-            <div className="flex items-center gap-1.5 mt-1 font-mono text-[10px] text-neon-amber leading-none">
-              <Zap size={10} className="fill-current" />
-              <span>{data?.rank ?? '[--]'}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative grid grid-cols-2 gap-x-3 gap-y-3 pt-3 border-t border-bg-border/60">
-          <StatCell
-            icon={<Trophy size={16} />}
-            value={data?.points != null ? data.points.toLocaleString() : null}
-            label="points"
-            color="text-neon-amber"
-          />
-          <StatCell
-            icon={<Flame size={16} />}
-            value={data?.streakDays != null ? `${data.streakDays}d` : null}
-            label="day streak"
-            color="text-neon-red"
-          />
-          <StatCell
-            icon={<Award size={16} />}
-            value={data?.badges ?? null}
-            label="badges"
-            color="text-neon-cyan"
-          />
-          <StatCell
-            icon={<DoorOpen size={16} />}
-            value={data?.rooms ?? null}
-            label="rooms"
-            color="text-neon-violet"
-          />
-        </div>
-      </a>
+        <iframe
+          key={reloadKey}
+          title={`TryHackMe live badge for ${username}`}
+          src={embedUrl}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onLoad={() => setLoaded(true)}
+          className="relative block w-full mx-auto rounded-lg border border-bg-border/70 bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
+          style={{ height: 88, maxWidth: 344 }}
+        />
+      </div>
     </div>
   );
 }

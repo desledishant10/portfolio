@@ -11,8 +11,7 @@
     "lint:dashes": "bash scripts/check-dashes.sh",
     "lint:dashes:fix": "bash scripts/check-dashes.sh --fix",
     "preview": "vite preview",
-    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
-    "thm:refresh": "node scripts/fetch-thm-stats.mjs"
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
