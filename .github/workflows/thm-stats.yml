@@ -27,13 +27,19 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: Install Playwright + Chromium
+      - name: Install Playwright + Chromium (isolated from app deps)
         run: |
-          npm ci
-          npm i playwright@1 --no-save
+          # The scraper only needs Playwright, not the app's dependencies - and the
+          # committed package-lock.json is out of sync, so `npm ci` fails. Install
+          # Playwright by itself into node_modules using a throwaway package.json,
+          # then restore the real one before the commit step.
+          cp package.json .pkg.bak
+          node -e "require('fs').writeFileSync('package.json', JSON.stringify({name:'thm-pw-runner',version:'0.0.0',private:true},null,2))"
+          npm install playwright@1 --no-package-lock --no-audit --no-fund
           npx playwright install --with-deps chromium
+          mv .pkg.bak package.json
 
       - name: Scrape TryHackMe stats
         run: npm run thm:refresh
