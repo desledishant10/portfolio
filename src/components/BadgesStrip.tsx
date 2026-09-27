@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Award, ExternalLink, RefreshCw, ShieldCheck, Trophy } from 'lucide-react';
 import { badges, profile, type Badge } from '../data/content';
 
@@ -75,6 +75,15 @@ function BadgesMarquee() {
   );
 }
 
+// TryHackMe renders the badge as a fixed 327x84 card with 12px rounded corners,
+// top-left aligned on a transparent page. Rendering the iframe at exactly that
+// size (and scaling the whole thing down to fit narrow columns) makes the card
+// fill the frame edge to edge - no leftover space for the iframe's white canvas
+// to show through, and the corner clip matches the card's own rounding.
+const THM_CARD_W = 327;
+const THM_CARD_H = 84;
+const THM_CARD_RADIUS = 12;
+
 /**
  * Live TryHackMe status.
  *
@@ -106,6 +115,20 @@ function TryHackMeWidget() {
     window.addEventListener('focus', onFocus);
     return () => window.removeEventListener('focus', onFocus);
   }, [refresh]);
+
+  // Scale the fixed-size card down to fit the available width (never up).
+  const sizerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const el = sizerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width ?? THM_CARD_W;
+      setScale(Math.min(1, w / THM_CARD_W));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <div className="panel panel-hover overflow-hidden group">
@@ -148,16 +171,34 @@ function TryHackMeWidget() {
         {/* Soft neon-green glow that echoes the badge's own green + the site accent. */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_118%,rgba(0,255,156,0.16),transparent_60%)]" />
 
-        <iframe
-          key={reloadKey}
-          title={`TryHackMe live badge for ${username}`}
-          src={embedUrl}
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          onLoad={() => setLoaded(true)}
-          className="relative block w-full mx-auto rounded-lg border border-bg-border/70 bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
-          style={{ aspectRatio: '4 / 1', maxWidth: 344 }}
-        />
+        {/* Sizer: measures the column so the card can scale to fit; never wider than the card. */}
+        <div ref={sizerRef} className="relative mx-auto w-full" style={{ maxWidth: THM_CARD_W }}>
+          {/* Clip box: exactly the (scaled) card size, rounded to match the card's corners. */}
+          <div
+            className="relative overflow-hidden bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
+            style={{
+              width: THM_CARD_W * scale,
+              height: THM_CARD_H * scale,
+              borderRadius: THM_CARD_RADIUS * scale,
+            }}
+          >
+            <iframe
+              key={reloadKey}
+              title={`TryHackMe live badge for ${username}`}
+              src={embedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              onLoad={() => setLoaded(true)}
+              className="absolute top-0 left-0 border-0 bg-transparent"
+              style={{
+                width: THM_CARD_W,
+                height: THM_CARD_H,
+                transform: `scale(${scale})`,
+                transformOrigin: 'top left',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
