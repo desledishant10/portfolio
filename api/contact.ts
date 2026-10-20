@@ -23,8 +23,25 @@
  * Failures intentionally return generic messages (no "your IP X is blocked" etc.)
  * so an attacker can't probe the filter behavior.
  */
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Resend } from 'resend';
+
+/**
+ * Minimal local types for the Vercel Node runtime. The full `@vercel/node`
+ * package is only needed for these two types during local type-checking - the
+ * function runs under Vercel's own runtime in production - and it drags in a
+ * large tree of vulnerable build-tooling deps (path-to-regexp, undici,
+ * ts-morph, ...). We define exactly what this handler uses instead.
+ */
+type VercelRequest = IncomingMessage & {
+  body: unknown;
+};
+
+type VercelResponse = ServerResponse & {
+  status: (code: number) => VercelResponse;
+  json: (body: unknown) => VercelResponse;
+  send: (body: unknown) => VercelResponse;
+};
 
 type Body = {
   name?: string;
