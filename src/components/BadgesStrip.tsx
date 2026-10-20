@@ -54,13 +54,14 @@ function BadgeTile({ badge, duplicate = false }: { badge: Badge; duplicate?: boo
 /**
  * Credentials rail.
  *
- * The badges drift on their own (ambient "live" feel) but the row is a real
+ * The badges drift on their own (ambient "live" feel) but the row is also a real
  * horizontal scroll container, so a visitor can grab it, flick it, wheel it, or
- * tab through it at any time instead of waiting for the loop to come around.
- * Auto-drift and manual scrolling share one mechanism (scrollLeft), so they
- * never fight: drift pauses on hover, focus, or any recent interaction and
- * resumes when the user lets go. The native scrollbar is hidden (see the
- * `no-scrollbar` utility); the content is doubled so the wrap is seamless.
+ * tab through it instead of waiting for the loop to come around. The auto-drift
+ * loops seamlessly (the content is doubled); manual scrolling runs free and just
+ * stops at the ends. We never reposition scrollLeft mid-gesture - doing that
+ * fought iOS momentum and desktop dragging and read as a glitch. Drift pauses on
+ * hover, focus, or any recent interaction and resumes when the user lets go. The
+ * native scrollbar is hidden via the `no-scrollbar` utility.
  */
 function BadgesMarquee() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -76,14 +77,6 @@ function BadgesMarquee() {
   const markInteract = useCallback(() => {
     interactRef.current = performance.now();
     resyncRef.current = true; // pick up wherever the user left it
-  }, []);
-
-  // Keep scrollLeft within the first copy so manual scrolling wraps too.
-  const wrap = useCallback(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const half = el.scrollWidth / 2;
-    if (half > 0 && el.scrollLeft >= half) el.scrollLeft -= half;
   }, []);
 
   // Gentle auto-drift. Yields to hover, focus, active drag, and recent input.
@@ -177,7 +170,6 @@ function BadgesMarquee() {
 
       <div
         ref={scrollerRef}
-        onScroll={wrap}
         onPointerEnter={() => { holdRef.current = true; }}
         onPointerLeave={() => { holdRef.current = false; endDrag(); }}
         onFocusCapture={() => { holdRef.current = true; }}
