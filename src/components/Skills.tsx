@@ -28,7 +28,7 @@ function SkillCard({ cat, i }: { cat: SkillCategory; i: number }) {
       className="panel panel-hover p-6 group"
     >
       <div className="flex items-center gap-3 mb-4" style={{ transform: 'translateZ(20px)' }}>
-        <div className="p-2 rounded bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20 group-hover:shadow-glow-cyan transition-shadow">
+        <div className="p-2 rounded-sm bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20 group-hover:shadow-glow-cyan transition-shadow">
           <Icon size={18} />
         </div>
         <h3 className="font-mono text-sm tracking-wider text-ink uppercase">{cat.label}</h3>

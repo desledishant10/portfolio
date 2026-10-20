@@ -55,7 +55,7 @@ export function Hero() {
             <Magnetic strength={12}>
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded hover:shadow-glow-cyan transition-all"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded-sm hover:shadow-glow-cyan transition-all"
               >
                 get_in_touch()
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -64,7 +64,7 @@ export function Hero() {
             <Magnetic strength={10}>
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink font-mono text-sm rounded hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink font-mono text-sm rounded-sm hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
               >
                 view_projects/
               </a>
@@ -73,7 +73,7 @@ export function Hero() {
               <a
                 href={profile.resumePath}
                 download="dishant-desle-resume.pdf"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink-dim font-mono text-sm rounded hover:border-neon-green/50 hover:text-neon-green transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-bg-border text-ink-dim font-mono text-sm rounded-sm hover:border-neon-green/50 hover:text-neon-green transition-all"
               >
                 <Download size={14} /> resume.pdf
               </a>

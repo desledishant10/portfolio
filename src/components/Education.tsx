@@ -19,7 +19,7 @@ export function Education() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="panel panel-hover p-6 flex gap-4"
             >
-              <div className="p-3 rounded bg-neon-violet/10 text-neon-violet border border-neon-violet/20 h-fit">
+              <div className="p-3 rounded-sm bg-neon-violet/10 text-neon-violet border border-neon-violet/20 h-fit">
                 <GraduationCap size={20} />
               </div>
               <div className="flex-1">

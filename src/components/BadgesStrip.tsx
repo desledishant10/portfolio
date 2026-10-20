@@ -77,7 +77,7 @@ function BadgesMarquee() {
   );
 }
 
-// TryHackMe renders the badge as a fixed 327x84 card with 12px rounded corners,
+// TryHackMe renders the badge as a fixed 327x84 card with 12px rounded-sm corners,
 // top-left aligned on a transparent page. Rendering the iframe at exactly that
 // size (and scaling the whole thing down to fit narrow columns) makes the card
 // fill the frame edge to edge - no leftover space for the iframe's white canvas
@@ -209,7 +209,7 @@ function TryHackMeWidget() {
 
         {/* Sizer: measures the column so the card can scale to fit; never wider than the card. */}
         <div ref={sizerRef} className="relative mx-auto w-full" style={{ maxWidth: THM_CARD_W }}>
-          {/* Clip box: exactly the (scaled) card size, rounded to match the card's corners. */}
+          {/* Clip box: exactly the (scaled) card size, rounded-sm to match the card's corners. */}
           <div
             className="relative overflow-hidden bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
             style={{

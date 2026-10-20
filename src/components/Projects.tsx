@@ -44,7 +44,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
       className={`panel ${accent.ring} ${accent.glow} p-6 flex flex-col gap-4 transition-shadow duration-300`}
     >
       <div className="flex items-start justify-between gap-3" style={{ transform: 'translateZ(20px)' }}>
-        <div className={`p-2 rounded bg-bg-soft border ${accent.ring} ${accent.text}`}>
+        <div className={`p-2 rounded-sm bg-bg-soft border ${accent.ring} ${accent.text}`}>
           <Folder size={18} />
         </div>
         <div className="flex items-center gap-2">
@@ -55,7 +55,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
               rel="noopener noreferrer"
               aria-label={`${project.title} GitHub repository`}
               onClick={(e) => e.stopPropagation()}
-              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
+              className={`p-2 rounded-sm bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
             >
               <GithubIcon size={16} />
             </a>
@@ -67,7 +67,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
               rel="noopener noreferrer"
               aria-label={`${project.title} demo`}
               onClick={(e) => e.stopPropagation()}
-              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
+              className={`p-2 rounded-sm bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
             >
               <ExternalLink size={16} />
             </a>

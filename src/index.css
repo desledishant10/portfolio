@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
 /* Self-hosted variable fonts: one woff2 per family (all weights, latin subset).
    Replaces a render-blocking Google Fonts @import and removes the third-party
    font dependency, so no fonts.googleapis.com / fonts.gstatic.com round trip. */
@@ -15,10 +18,6 @@
   font-weight: 100 800;
   src: url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   color-scheme: dark;
@@ -53,6 +52,15 @@ body {
   background: transparent;
 }
 
+/* Tailwind v4 drops the default `cursor: pointer` on buttons; restore it so
+   buttons and role=button elements keep the v3 affordance. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 /* Smaller overall padding on the hero magnetic CTA group when stacked on mobile */
 @media (max-width: 480px) {
   button, a {
@@ -78,6 +86,14 @@ body {
   @apply bg-neon-cyan/40;
 }
 
+/* v4 does not turn the config's backgroundSize.grid into a `bg-grid` utility
+   the way v3 did (there is no background-size theme namespace in v4), so define
+   it explicitly. bg-grid-lines (a backgroundImage) still comes from the JS
+   config; together they tile the 40px hero/background grid. */
+@utility bg-grid {
+  background-size: 40px 40px;
+}
+
 @layer components {
   .panel {
     @apply bg-bg-panel/60 backdrop-blur-md border border-bg-border rounded-lg;
@@ -88,11 +104,13 @@ body {
   }
 
   .chip {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded border border-bg-border bg-bg-soft text-ink-dim;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded-sm border border-bg-border bg-bg-soft text-ink-dim;
   }
 
+  /* v4 @apply only takes real utilities, not the custom `chip` class, so the
+     base chip utilities are inlined here with the accent color overrides. */
   .chip-accent {
-    @apply chip border-neon-cyan/30 text-neon-cyan bg-neon-cyan/5;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded-sm border border-neon-cyan/30 text-neon-cyan bg-neon-cyan/5;
   }
 
   .text-glow-green { text-shadow: 0 0 12px rgba(0, 255, 156, 0.6); }
@@ -177,6 +195,14 @@ body {
 @keyframes gradient {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+/* The BadgesStrip marquee uses an arbitrary `animate-[marquee_...]` utility,
+   so the keyframes must exist in plain CSS (config keyframes are not guaranteed
+   to back an arbitrary animation name under the v4 @config compat layer). */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

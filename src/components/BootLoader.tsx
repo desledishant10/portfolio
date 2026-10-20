@@ -81,7 +81,7 @@ export function BootLoader() {
               )}
             </div>
 
-            <div className="mt-6 h-1 bg-bg-border rounded overflow-hidden">
+            <div className="mt-6 h-1 bg-bg-border rounded-sm overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '100%' }}

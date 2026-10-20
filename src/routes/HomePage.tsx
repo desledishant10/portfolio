@@ -15,12 +15,12 @@ export default function HomePage() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:px-3 focus:py-2 focus:rounded focus:bg-neon-cyan focus:text-bg focus:font-mono focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:px-3 focus:py-2 focus:rounded-sm focus:bg-neon-cyan focus:text-bg focus:font-mono focus:text-sm"
       >
         skip to content
       </a>
       <Nav />
-      <main id="main" tabIndex={-1} className="outline-none">
+      <main id="main" tabIndex={-1} className="outline-hidden">
         <Hero />
         <About />
         <Skills />

@@ -197,7 +197,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="self-start inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded hover:shadow-glow-cyan transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+              className="self-start inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded-sm hover:shadow-glow-cyan transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {status === 'sending' ? (
                 <>
@@ -245,7 +245,7 @@ function Field({
   textarea?: boolean;
 }) {
   const cls =
-    'w-full bg-bg-soft border border-bg-border rounded px-3 py-2.5 font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-neon-cyan/60 focus:ring-1 focus:ring-neon-cyan/30 transition-colors';
+    'w-full bg-bg-soft border border-bg-border rounded-sm px-3 py-2.5 font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute focus:outline-hidden focus:border-neon-cyan/60 focus:ring-1 focus:ring-neon-cyan/30 transition-colors';
   return (
     <label className="flex flex-col gap-1.5">
       <span className="font-mono text-xs text-ink-dim">

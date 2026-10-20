@@ -112,7 +112,7 @@ export default function AdminPage() {
             className="flex items-center justify-between mb-8 panel p-4"
           >
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded bg-neon-red/10 text-neon-red border border-neon-red/30 animate-pulse">
+              <div className="p-2 rounded-sm bg-neon-red/10 text-neon-red border border-neon-red/30 animate-pulse">
                 <Eye size={18} />
               </div>
               <div>
@@ -135,7 +135,7 @@ export default function AdminPage() {
               </div>
               <Link
                 to="/"
-                className="inline-flex items-center gap-2 px-3 py-2 border border-bg-border text-ink-dim font-mono text-xs rounded hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
+                className="inline-flex items-center gap-2 px-3 py-2 border border-bg-border text-ink-dim font-mono text-xs rounded-sm hover:border-neon-cyan/50 hover:text-neon-cyan transition-all"
               >
                 <ArrowLeft size={14} /> exit
               </Link>

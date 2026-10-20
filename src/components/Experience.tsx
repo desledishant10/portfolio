@@ -76,7 +76,7 @@ function ExperienceCard({
         className="panel panel-hover p-6"
       >
         <div className="flex items-start gap-3 pb-4 mb-5 border-b border-bg-border">
-          <div className="p-2 rounded bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20">
+          <div className="p-2 rounded-sm bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20">
             <Briefcase size={16} />
           </div>
           <div className="flex-1">

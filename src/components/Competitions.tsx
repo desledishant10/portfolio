@@ -21,7 +21,7 @@ export function Competitions() {
             >
               <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-neon-amber/5 blur-2xl group-hover:bg-neon-amber/10 transition-colors" />
               <div className="relative flex items-start gap-4">
-                <div className="p-3 rounded bg-neon-amber/10 text-neon-amber border border-neon-amber/20">
+                <div className="p-3 rounded-sm bg-neon-amber/10 text-neon-amber border border-neon-amber/20">
                   {i === 0 ? <Swords size={20} /> : <Trophy size={20} />}
                 </div>
                 <div className="flex-1">

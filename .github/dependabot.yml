@@ -25,11 +25,8 @@ updates:
           - patch
     ignore:
       # Held back until a deliberate migration: typescript-eslint does not yet
-      # support TypeScript 7, and Tailwind 4 is a breaking config/PostCSS rewrite.
+      # support TypeScript 7. (Tailwind was migrated to v4, so 4.x flows normally.)
       - dependency-name: typescript
-        update-types:
-          - version-update:semver-major
-      - dependency-name: tailwindcss
         update-types:
           - version-update:semver-major
 

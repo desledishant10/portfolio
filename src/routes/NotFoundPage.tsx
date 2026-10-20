@@ -41,7 +41,7 @@ export default function NotFoundPage() {
           </div>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded hover:shadow-glow-cyan transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-neon-cyan text-bg font-mono text-sm font-semibold rounded-sm hover:shadow-glow-cyan transition-all"
           >
             <ArrowLeft size={16} /> cd ~
           </Link>

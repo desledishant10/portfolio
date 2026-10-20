@@ -7,9 +7,9 @@ import { useTilt } from '../hooks/useTilt';
 function CertInner({ c, Icon }: { c: Certification; Icon: typeof Award }) {
   return (
     <>
-      <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/0 via-neon-cyan/0 to-neon-violet/0 group-hover:from-neon-cyan/5 group-hover:to-neon-violet/5 transition-all" />
+      <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/0 to-neon-violet/0 group-hover:from-neon-cyan/5 group-hover:to-neon-violet/5 transition-all" />
       <div className="relative flex items-start gap-3" style={{ transform: 'translateZ(15px)' }}>
-        <div className="p-2 rounded bg-bg-soft border border-bg-border text-neon-cyan group-hover:text-neon-green group-hover:border-neon-green/30 transition-colors">
+        <div className="p-2 rounded-sm bg-bg-soft border border-bg-border text-neon-cyan group-hover:text-neon-green group-hover:border-neon-green/30 transition-colors">
           <Icon size={18} />
         </div>
         <div className="flex-1 min-w-0">

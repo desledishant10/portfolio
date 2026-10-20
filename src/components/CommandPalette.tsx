@@ -150,7 +150,7 @@ export function CommandPalette() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-[80] bg-bg/70 backdrop-blur-sm flex items-start justify-center pt-[12vh] px-4"
+          className="fixed inset-0 z-[80] bg-bg/70 backdrop-blur-xs flex items-start justify-center pt-[12vh] px-4"
         >
           <motion.div
             initial={{ scale: 0.96, opacity: 0, y: -10 }}
@@ -168,9 +168,9 @@ export function CommandPalette() {
                 onChange={(e) => setQ(e.target.value)}
                 onKeyDown={onKeyDown}
                 placeholder="type a command..."
-                className="flex-1 bg-transparent outline-none font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute"
+                className="flex-1 bg-transparent outline-hidden font-mono text-base sm:text-sm text-ink placeholder:text-ink-mute"
               />
-              <kbd className="font-mono text-[10px] text-ink-mute border border-bg-border px-1.5 py-0.5 rounded">
+              <kbd className="font-mono text-[10px] text-ink-mute border border-bg-border px-1.5 py-0.5 rounded-sm">
                 esc
               </kbd>
             </div>
@@ -223,10 +223,10 @@ export function CommandPalette() {
             <div className="px-4 py-2 border-t border-bg-border bg-bg-soft flex items-center justify-between font-mono text-[10px] text-ink-mute">
               <div className="flex items-center gap-3">
                 <span>
-                  <kbd className="border border-bg-border px-1 rounded">↑↓</kbd> navigate
+                  <kbd className="border border-bg-border px-1 rounded-sm">↑↓</kbd> navigate
                 </span>
                 <span>
-                  <kbd className="border border-bg-border px-1 rounded">↵</kbd> select
+                  <kbd className="border border-bg-border px-1 rounded-sm">↵</kbd> select
                 </span>
               </div>
               <span className="flex items-center gap-1">

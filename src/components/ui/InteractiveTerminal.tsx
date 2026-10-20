@@ -326,7 +326,7 @@ export function InteractiveTerminal() {
             autoCapitalize="off"
             autoCorrect="off"
             autoComplete="off"
-            className="flex-1 bg-transparent outline-none text-ink caret-neon-cyan text-base sm:text-[13px]"
+            className="flex-1 bg-transparent outline-hidden text-ink caret-neon-cyan text-base sm:text-[13px]"
             aria-label="terminal input"
             inputMode="text"
           />
