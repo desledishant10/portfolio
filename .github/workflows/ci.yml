@@ -25,7 +25,13 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        # Prefer strict, reproducible `npm ci`. Fall back to `npm install` when
+        # the lockfile is missing a platform's optional native deps: npm prunes
+        # the wasm-fallback subtree (@emnapi/*, @napi-rs/wasm-runtime) from the
+        # lock when it is regenerated on macOS, which Linux `npm ci` then rejects
+        # (npm/cli optional-deps bug). Dependabot's Linux-generated locks still
+        # take the strict path.
+        run: npm ci || npm install --no-audit --no-fund
 
       - name: Dash lint
         run: npm run lint:dashes
