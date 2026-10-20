@@ -168,54 +168,67 @@ function TryHackMeWidget() {
 
   return (
     <div className="panel panel-hover overflow-hidden group">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-bg-border bg-bg-soft">
-        <div className="flex items-center gap-2 font-mono text-[10px] text-ink-mute">
-          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse motion-reduce:animate-none shadow-[0_0_6px_rgba(0,255,156,0.8)]" />
-          <span>tryhackme.live · @{username}</span>
-        </div>
-        <div className="flex items-center gap-2">
+      {/* monitor titlebar - frames the embedded (cross-origin) badge as a live feed */}
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-bg-border bg-bg-soft">
+        <span aria-hidden className="flex items-center gap-1.5 shrink-0">
+          <span className="h-2.5 w-2.5 rounded-full bg-neon-red/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-neon-amber/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-neon-green/70" />
+        </span>
+        <span className="ml-1 font-mono text-[10px] text-ink-mute truncate">
+          tryhackme.live :: @{username}
+        </span>
+        <div className="ml-auto flex items-center gap-2 shrink-0">
+          <span
+            className={`font-mono text-[9px] flex items-center gap-1 ${failed ? 'text-ink-mute' : 'text-neon-green'}`}
+            title={failed ? 'Could not load the live badge' : 'Live badge embedded from TryHackMe'}
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                failed
+                  ? 'bg-ink-mute'
+                  : 'bg-neon-green animate-pulse motion-reduce:animate-none shadow-[0_0_6px_rgba(0,255,156,0.8)]'
+              }`}
+            />
+            {failed ? 'offline' : 'live'}
+          </span>
+          <button
+            onClick={refresh}
+            aria-label="Reload live badge"
+            title="Reload"
+            disabled={loading}
+            className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50 focus:outline-hidden focus-visible:text-neon-cyan"
+          >
+            <RefreshCw size={11} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} />
+          </button>
           <a
             href={streakUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open TryHackMe profile"
             title="Open profile"
-            className="text-ink-mute hover:text-neon-cyan transition-colors"
+            className="text-ink-mute hover:text-neon-cyan transition-colors focus:outline-hidden focus-visible:text-neon-cyan"
           >
             <ExternalLink size={11} />
           </a>
-          <button
-            onClick={refresh}
-            aria-label="Reload live badge"
-            title="Reload"
-            disabled={loading}
-            className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50"
-          >
-            <RefreshCw size={11} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} />
-          </button>
-          <span
-            className={`font-mono text-[9px] flex items-center gap-1 ${failed ? 'text-ink-mute' : 'text-neon-amber'}`}
-            title={failed ? 'Could not load the live badge' : 'Live badge embedded from TryHackMe'}
-          >
-            <ShieldCheck size={9} />
-            {failed ? 'offline' : 'live'}
-          </span>
         </div>
       </div>
 
-      <div className="scanline relative bg-bg-soft px-4 py-5 overflow-hidden">
+      {/* monitor screen */}
+      <div className="scanline relative bg-[#06090f] px-4 py-5 overflow-hidden">
         {/* Soft neon-green glow that echoes the badge's own green + the site accent. */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_118%,rgba(0,255,156,0.16),transparent_60%)]" />
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_120%,rgba(0,255,156,0.16),transparent_62%)]" />
 
         {/* Sizer: measures the column so the card can scale to fit; never wider than the card. */}
         <div ref={sizerRef} className="relative mx-auto w-full" style={{ maxWidth: THM_CARD_W }}>
-          {/* Clip box: exactly the (scaled) card size, rounded-sm to match the card's corners. */}
+          {/* Screen: exactly the (scaled) 327x84 card, so no white iframe canvas shows. */}
           <div
-            className="relative overflow-hidden bg-[#0b1220] shadow-[0_0_22px_rgba(0,255,156,0.07)] transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,156,0.16)]"
+            className="relative overflow-hidden bg-[#0b1220]"
             style={{
               width: THM_CARD_W * scale,
               height: THM_CARD_H * scale,
               borderRadius: THM_CARD_RADIUS * scale,
+              boxShadow: '0 0 22px rgba(0,255,156,0.08)',
             }}
           >
             <iframe
@@ -234,6 +247,26 @@ function TryHackMeWidget() {
                 transformOrigin: 'top left',
               }}
             />
+
+            {/* on-brand loading skeleton (scales with the card) */}
+            {loading && (
+              <div
+                className="absolute inset-0 flex items-center bg-[#0b1220]"
+                style={{ gap: 12 * scale, paddingLeft: 14 * scale, paddingRight: 14 * scale }}
+                aria-hidden
+              >
+                <div
+                  className="rounded-full bg-bg-border/70 animate-pulse motion-reduce:animate-none shrink-0"
+                  style={{ width: 44 * scale, height: 44 * scale }}
+                />
+                <div className="flex-1 flex flex-col" style={{ gap: 7 * scale }}>
+                  <div className="rounded-sm bg-bg-border/70 animate-pulse motion-reduce:animate-none" style={{ height: 10 * scale, width: '64%' }} />
+                  <div className="rounded-sm bg-bg-border/50 animate-pulse motion-reduce:animate-none" style={{ height: 8 * scale, width: '86%' }} />
+                  <div className="rounded-sm bg-bg-border/40 animate-pulse motion-reduce:animate-none" style={{ height: 8 * scale, width: '48%' }} />
+                </div>
+              </div>
+            )}
+
             {failed && (
               <a
                 href={streakUrl}
@@ -246,8 +279,24 @@ function TryHackMeWidget() {
                 <ExternalLink size={11} />
               </a>
             )}
+
+            {/* screen bezel + glass reflection, over the badge so it reads as a monitor */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                borderRadius: 'inherit',
+                boxShadow: 'inset 0 0 0 1px rgba(34,211,238,0.22)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.06), transparent 42%)',
+              }}
+            />
           </div>
         </div>
+      </div>
+
+      {/* caption - what the live feed shows */}
+      <div className="px-4 py-2 border-t border-bg-border bg-bg-soft flex items-center gap-1.5 font-mono text-[9px] text-ink-mute">
+        <ShieldCheck size={9} className="text-neon-green shrink-0" />
+        <span className="truncate">streak, rank, points, badges + rooms :: live from tryhackme.com</span>
       </div>
     </div>
   );
