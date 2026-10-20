@@ -1,4 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* Self-hosted variable fonts: one woff2 per family (all weights, latin subset).
+   Replaces a render-blocking Google Fonts @import and removes the third-party
+   font dependency, so no fonts.googleapis.com / fonts.gstatic.com round trip. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/inter-latin-var.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');
+}
 
 @tailwind base;
 @tailwind components;
