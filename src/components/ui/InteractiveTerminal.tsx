@@ -92,6 +92,7 @@ const COMPLETIONS = [
   'cat bio', 'cat focus', 'cat contact', 'resume',
   'goto about', 'goto skills', 'goto projects', 'goto experience', 'goto contact',
   'contact', 'github', 'linkedin', 'email', 'thm', 'sudo hire-me', 'admin',
+  'open github', 'open linkedin', 'open thm', 'open resume', 'open profiles',
 ];
 
 // One-click shortcuts so non-CLI visitors can explore without typing.
@@ -126,9 +127,7 @@ function helpLines(): Line[] {
     ['resume', 'download resume.pdf'],
     ['goto <section>', 'scroll to a section'],
     ['contact', 'jump to the contact form'],
-    ['github / linkedin', 'open profiles'],
-    ['email', 'compose an email'],
-    ['thm', 'open TryHackMe profile'],
+    ['open <target>', 'github / linkedin / thm / resume / email'],
     ['date', 'current date'],
     ['clear', 'clear the terminal'],
     ['sudo hire-me', 'the good ending'],
@@ -332,6 +331,54 @@ export function InteractiveTerminal() {
           out.push({ kind: 'out', text: 'opening contact form...' });
           setTimeout(() => scrollToId('contact'), 100);
           break;
+        case 'open': {
+          // Forgiving `open <target>` alias for the destination commands - people
+          // naturally type `open github` / `open linkedin`.
+          const target = arg.toLowerCase().split(/\s+/)[0] || '';
+          switch (target) {
+            case 'github':
+              out.push({ kind: 'out', text: 'opening github.com/desledishant10...' });
+              safeOpen(profile.github);
+              break;
+            case 'linkedin':
+              out.push({ kind: 'out', text: 'opening linkedin...' });
+              safeOpen(profile.linkedin);
+              break;
+            case 'thm':
+            case 'tryhackme':
+              out.push({ kind: 'out', text: `opening tryhackme.com/p/${profile.tryhackmeUsername}...` });
+              safeOpen(`https://tryhackme.com/p/${encodeURIComponent(profile.tryhackmeUsername)}`);
+              break;
+            case 'resume':
+            case 'cv':
+              out.push({ kind: 'out', text: 'fetching resume.pdf...' });
+              safeOpen(profile.resumePath);
+              break;
+            case 'email':
+            case 'mail':
+              out.push({ kind: 'out', text: `composing email to ${profile.email}...` });
+              safeOpen(`mailto:${profile.email}`);
+              break;
+            case 'admin':
+              out.push({ kind: 'out', text: 'authenticating... access granted. navigating to /admin' });
+              setTimeout(() => navigate('/admin'), 400);
+              break;
+            case 'profiles':
+            case 'profile':
+            case 'socials':
+            case 'links':
+              out.push({ kind: 'out', text: `github:   ${profile.github}\nlinkedin: ${profile.linkedin}` });
+              out.push({ kind: 'out', text: 'opening linkedin...' });
+              safeOpen(profile.linkedin);
+              break;
+            case '':
+              out.push({ kind: 'err', text: 'open: usage: open <github|linkedin|thm|resume|email|profiles>' });
+              break;
+            default:
+              out.push({ kind: 'err', text: `open: unknown target '${target}'. try: github, linkedin, thm, resume, email` });
+          }
+          break;
+        }
         case 'github':
           out.push({ kind: 'out', text: 'opening github.com/desledishant10...' });
           safeOpen(profile.github);
