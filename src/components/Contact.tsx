@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Loader2, Mail, Send, ShieldCheck, XCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './ui/BrandIcons';
@@ -24,9 +24,14 @@ export function Contact() {
   const [token, setToken] = useState('');
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
+  const loadedRef = useRef(false);
 
-  useEffect(() => {
-    if (!TURNSTILE_SITE_KEY || !turnstileRef.current) return;
+  // Inject the Turnstile script and render the widget on demand. Idempotent:
+  // safe to call from both the viewport observer and the focus fallback.
+  const loadTurnstile = useCallback(() => {
+    if (loadedRef.current || !TURNSTILE_SITE_KEY || !turnstileRef.current) return;
+    loadedRef.current = true;
     const id = 'cf-turnstile-script';
     const render = () => {
       if (!window.turnstile || !turnstileRef.current) return;
@@ -39,8 +44,10 @@ export function Contact() {
         'expired-callback': () => setToken(''),
       });
     };
-    if (document.getElementById(id)) {
-      render();
+    const existing = document.getElementById(id) as HTMLScriptElement | null;
+    if (existing) {
+      if (window.turnstile) render();
+      else existing.addEventListener('load', render, { once: true });
       return;
     }
     const s = document.createElement('script');
@@ -51,6 +58,30 @@ export function Contact() {
     s.onload = render;
     document.body.appendChild(s);
   }, []);
+
+  // Defer loading the third-party Turnstile script until the contact form is
+  // near the viewport, so visitors who never scroll to it never pay for it.
+  // (A focus fallback on the form handles any case the observer misses.)
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+    const el = formRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      loadTurnstile();
+      return;
+    }
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          loadTurnstile();
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px 0px' },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [loadTurnstile]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -152,11 +183,13 @@ export function Contact() {
           </motion.div>
 
           <motion.form
+            ref={formRef}
             initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.5, delay: 0.1 }}
             onSubmit={onSubmit}
+            onFocusCapture={loadTurnstile}
             className="lg:col-span-3 panel p-6 flex flex-col gap-4"
           >
             <input
