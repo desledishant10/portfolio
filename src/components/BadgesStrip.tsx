@@ -27,12 +27,14 @@ function BadgeTile({ badge, duplicate = false }: { badge: Badge; duplicate?: boo
       aria-label={`${badge.name} - ${badge.issuer}`}
       aria-hidden={duplicate || undefined}
       tabIndex={duplicate ? -1 : undefined}
+      draggable={false}
       className={`shrink-0 w-40 panel ${accent.ring} ${accent.glow} p-3 flex items-center gap-3 transition-all duration-300 hover:-translate-y-0.5`}
     >
       {badge.src ? (
         <img
           src={badge.src}
           alt={badge.name}
+          draggable={false}
           className="h-12 w-12 object-contain shrink-0"
           loading="lazy"
         />
@@ -181,8 +183,12 @@ function BadgesMarquee() {
         onWheel={markInteract}
         onTouchStart={markInteract}
         onClickCapture={onClickCapture}
+        // A real mouse drag over the badge links/images would otherwise start a
+        // native drag-and-drop (ghost image) and fight the scroll-drag; touch
+        // never does this, which is why it only misbehaved on desktop.
+        onDragStart={(e) => e.preventDefault()}
         aria-label="Verified credentials - drag or scroll to browse"
-        className="no-scrollbar relative overflow-x-auto overscroll-x-contain cursor-grab active:cursor-grabbing py-3 px-2"
+        className="no-scrollbar select-none relative overflow-x-auto overscroll-x-contain cursor-grab active:cursor-grabbing py-3 px-2"
         style={{
           maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)',
           WebkitMaskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)',
