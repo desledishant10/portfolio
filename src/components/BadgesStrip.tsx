@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
 import { Award, ExternalLink, RefreshCw, ShieldCheck, Trophy } from 'lucide-react';
 import { badges, profile, type Badge } from '../data/content';
 
@@ -44,7 +51,115 @@ function BadgeTile({ badge, duplicate = false }: { badge: Badge; duplicate?: boo
   );
 }
 
+/**
+ * Credentials rail.
+ *
+ * The badges drift on their own (ambient "live" feel) but the row is a real
+ * horizontal scroll container, so a visitor can grab it, flick it, wheel it, or
+ * tab through it at any time instead of waiting for the loop to come around.
+ * Auto-drift and manual scrolling share one mechanism (scrollLeft), so they
+ * never fight: drift pauses on hover, focus, or any recent interaction and
+ * resumes when the user lets go. The native scrollbar is hidden (see the
+ * `no-scrollbar` utility); the content is doubled so the wrap is seamless.
+ */
 function BadgesMarquee() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const holdRef = useRef(false); // hovered or focused -> drift paused
+  const interactRef = useRef(0); // timestamp of the last manual interaction
+  const posRef = useRef(0); // float drift position (scrollLeft rounds to ints)
+  const resyncRef = useRef(false); // re-read scrollLeft before the next drift step
+  const draggingRef = useRef(false);
+  const dragMovedRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartLeftRef = useRef(0);
+
+  const markInteract = useCallback(() => {
+    interactRef.current = performance.now();
+    resyncRef.current = true; // pick up wherever the user left it
+  }, []);
+
+  // Keep scrollLeft within the first copy so manual scrolling wraps too.
+  const wrap = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const half = el.scrollWidth / 2;
+    if (half > 0 && el.scrollLeft >= half) el.scrollLeft -= half;
+  }, []);
+
+  // Gentle auto-drift. Yields to hover, focus, active drag, and recent input.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let raf = 0;
+    let last = performance.now();
+    const SPEED = 22; // px/s - slow and ambient
+
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick);
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (holdRef.current || draggingRef.current || now - interactRef.current < 1500) return;
+      const half = el.scrollWidth / 2;
+      if (half <= 0) return;
+      // scrollLeft rounds to whole pixels, so accumulate in a float and write
+      // the rounded value - otherwise a sub-pixel per-frame step rounds to 0 and
+      // the drift never moves. Resync to the user's position after they scroll.
+      if (resyncRef.current) {
+        posRef.current = el.scrollLeft;
+        resyncRef.current = false;
+      }
+      posRef.current += SPEED * dt;
+      if (posRef.current >= half) posRef.current -= half;
+      el.scrollLeft = posRef.current;
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Mouse drag-to-scroll (trackpads/touch already scroll natively, so leave
+  // those to the browser and only hand-drive a real mouse pointer).
+  const onPointerDown = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    draggingRef.current = true;
+    dragMovedRef.current = false;
+    dragStartXRef.current = e.clientX;
+    dragStartLeftRef.current = el.scrollLeft;
+  }, []);
+
+  const onPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    const dx = e.clientX - dragStartXRef.current;
+    if (!dragMovedRef.current && Math.abs(dx) > 5) {
+      dragMovedRef.current = true;
+      el.setPointerCapture?.(e.pointerId);
+    }
+    if (dragMovedRef.current) {
+      el.scrollLeft = dragStartLeftRef.current - dx;
+      markInteract();
+    }
+  }, [markInteract]);
+
+  const endDrag = useCallback(() => {
+    draggingRef.current = false;
+    markInteract();
+  }, [markInteract]);
+
+  // Swallow the click that follows a drag so a flick never opens a badge link.
+  const onClickCapture = useCallback((e: ReactMouseEvent<HTMLDivElement>) => {
+    if (dragMovedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragMovedRef.current = false;
+    }
+  }, []);
+
   if (badges.length === 0) return null;
   const looped = [...badges, ...badges];
 
@@ -56,18 +171,32 @@ function BadgesMarquee() {
           <span>verified_credentials.live</span>
         </div>
         <span className="font-mono text-[9px] text-neon-green flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse" /> synced
+          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse motion-reduce:animate-none" /> synced
         </span>
       </div>
 
       <div
-        className="relative overflow-hidden py-3 px-2"
+        ref={scrollerRef}
+        onScroll={wrap}
+        onPointerEnter={() => { holdRef.current = true; }}
+        onPointerLeave={() => { holdRef.current = false; endDrag(); }}
+        onFocusCapture={() => { holdRef.current = true; }}
+        onBlurCapture={() => { holdRef.current = false; }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onWheel={markInteract}
+        onTouchStart={markInteract}
+        onClickCapture={onClickCapture}
+        aria-label="Verified credentials - drag or scroll to browse"
+        className="no-scrollbar relative overflow-x-auto overscroll-x-contain cursor-grab active:cursor-grabbing py-3 px-2"
         style={{
           maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)',
           WebkitMaskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)',
         }}
       >
-        <div className="flex gap-3 animate-[marquee_30s_linear_infinite] whitespace-nowrap w-max hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:[animation-play-state:paused]">
+        <div className="flex gap-3 w-max">
           {looped.map((b, i) => (
             <BadgeTile key={`${b.name}-${i}`} badge={b} duplicate={i >= badges.length} />
           ))}
@@ -194,8 +323,8 @@ function TryHackMeWidget() {
           </span>
           <button
             onClick={refresh}
-            aria-label="Reload live badge"
-            title="Reload"
+            aria-label="Reload live badge (fetch fresh)"
+            title="Reload - fetch fresh from TryHackMe"
             disabled={loading}
             className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50 focus:outline-hidden focus-visible:text-neon-cyan"
           >
@@ -234,8 +363,14 @@ function TryHackMeWidget() {
             <iframe
               key={reloadKey}
               title={`TryHackMe live badge for ${username}`}
-              src={embedUrl}
+              // The embed sometimes renders a hair larger than the 327x84 card,
+              // which makes the iframe show its own white scrollbars. `scrolling="no"`
+              // suppresses them; the card itself still fills the frame.
+              // Reloads append a cache-buster so TryHackMe re-renders fresh (e.g.
+              // after the profile avatar changes) instead of serving a cached badge.
+              src={reloadKey === 0 ? embedUrl : `${embedUrl}&_r=${reloadKey}`}
               loading="lazy"
+              scrolling="no"
               referrerPolicy="no-referrer"
               sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
               onLoad={handleLoad}
