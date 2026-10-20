@@ -44,11 +44,13 @@ export default function AdminPage() {
 
   return (
     <main className="relative min-h-screen pt-8 pb-16 px-6">
-      <div className="max-w-7xl mx-auto">
+      {/* flex column so the attack map can lead on mobile (order-3) while the
+          desktop layout keeps its original top-to-bottom sequence. */}
+      <div className="max-w-7xl mx-auto flex flex-col">
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-6 panel p-4"
+          className="order-1 flex items-center justify-between mb-6 panel p-4"
         >
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-sm bg-neon-red/10 text-neon-red border border-neon-red/30 animate-pulse">
@@ -86,7 +88,7 @@ export default function AdminPage() {
           <motion.div
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 panel border-neon-red/40 bg-neon-red/[0.06] p-3 flex items-center gap-3"
+            className="order-2 mb-6 panel border-neon-red/40 bg-neon-red/[0.06] p-3 flex items-center gap-3"
           >
             <Siren size={16} className="text-neon-red animate-pulse shrink-0" aria-hidden />
             <div className="flex-1 min-w-0">
@@ -105,15 +107,15 @@ export default function AdminPage() {
         )}
 
         {/* stat cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div className="order-4 lg:order-3 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           <StatCard icon={<ShieldCheck size={16} />} label="threats_blocked" value={feed.blocked.toLocaleString()} accent="green" />
           <StatCard icon={<AlertTriangle size={16} />} label="threats_detected" value={feed.detected.toLocaleString()} accent="amber" />
           <StatCard icon={<Cpu size={16} />} label="cpu_load" value={`${cpu}%`} accent="cyan" />
           <StatCard icon={<Network size={16} />} label="net_throughput" value={`${net} Mb/s`} accent="violet" />
         </div>
 
-        {/* map + gauges */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        {/* map + gauges (leads on mobile) */}
+        <div className="order-3 lg:order-4 grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
           <div className="lg:col-span-2">
             <AttackMap activeIp={feed.activeIp} />
           </div>
@@ -125,12 +127,12 @@ export default function AdminPage() {
         </div>
 
         {/* ATT&CK matrix */}
-        <div className="mb-6">
+        <div className="order-5 mb-6">
           <AttackMatrix firedAt={feed.firedAt} />
         </div>
 
         {/* stream + side panels */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="order-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
             <LogStream events={feed.events} />
           </div>
