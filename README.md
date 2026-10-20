@@ -29,6 +29,7 @@ npm run build        # dash-lint + tsc -b + production build to dist/
 npm run preview      # preview the dist/ build locally
 npm run lint         # eslint
 npm run lint:dashes  # fail on em/en dashes in src, index.html, public/og.svg
+npm test             # vitest (watch); npm run test:run for a single pass
 ```
 
 ## the TryHackMe live badge
@@ -88,7 +89,8 @@ API Keys -> create -> `RESEND_API_KEY`. For testing, `onboarding@resend.dev` onl
 
 ## continuous integration
 
-- **`.github/workflows/ci.yml`** runs on every push and PR: `npm ci`, dash-lint, `tsc -b`, `vite build`, eslint, and a production-only `npm audit --omit=dev` advisory gate.
+- **`.github/workflows/ci.yml`** runs on every push and PR: install, dash-lint, `tsc -b`, `vite build`, eslint, the Vitest suite, and a production-only `npm audit --omit=dev` advisory gate.
+- **Tests** (Vitest + Testing Library, jsdom): unit tests for the contact handler's security logic (validation, sanitizers, rate limit, Turnstile fail-closed, the request-flow gates) and component tests for the 404 page and the command palette's dialog/combobox semantics. Config in `vitest.config.ts`.
 - **`.github/dependabot.yml`** opens grouped weekly PRs for npm and GitHub Actions updates.
 - Local commits run `.githooks/pre-commit`, which blocks em/en dashes in `src/**`, `index.html`, and `public/og.svg`. `npm run prepare` wires the hooks path.
 

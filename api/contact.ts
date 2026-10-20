@@ -78,7 +78,7 @@ function evictIfOverCap() {
   }
 }
 
-function rateLimit(ip: string): boolean {
+export function rateLimit(ip: string): boolean {
   const now = Date.now();
   cleanupBuckets(now);
   const bucket = ipBuckets.get(ip);
@@ -93,19 +93,19 @@ function rateLimit(ip: string): boolean {
 }
 
 // ---------- validation ----------
-function isValidEmail(s: string): boolean {
+export function isValidEmail(s: string): boolean {
   // RFC-shaped: local@domain.tld. Anchored, no whitespace, TLD min 2 chars.
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
 }
 
-function stripCrlf(s: string): string {
+export function stripCrlf(s: string): string {
   // Used on values that feed email headers (Subject, Reply-To) — prevents
   // injection of additional headers like "\r\nBcc: attacker@evil.com".
   // eslint-disable-next-line no-control-regex -- stripping control bytes is the point
   return s.replace(/[\r\n\x00-\x1f\x7f]/g, '').slice(0, 256);
 }
 
-function escapeHtml(s: string): string {
+export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -123,7 +123,7 @@ const ALLOWED_TURNSTILE_HOSTNAMES = new Set<string>([
   // 'localhost',
 ]);
 
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
+export async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
     // Local dev / unconfigured: skip. But in any deployed (Vercel) environment

@@ -3,18 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Command, Search } from 'lucide-react';
 import { GlitchText } from '../components/ui/GlitchText';
-
-// Sanitize the pathname before rendering. React already escapes text nodes, so
-// HTML/script injection is impossible. This extra pass strips control chars,
-// bidi-override characters (Trojan Source-style), and caps length - preventing
-// visual confusion / very-long-path layout abuse from crafted URLs like
-// `/foo<bidi-override>bar`. The ranges stay as \u escapes so this file remains
-// plain text (not "binary") on GitHub - never paste the raw control bytes here.
-function safePath(): string {
-  const raw = typeof window !== 'undefined' ? window.location.pathname : '/';
-  // eslint-disable-next-line no-control-regex -- stripping control bytes is the point
-  return raw.replace(/[\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/gu, '').slice(0, 80);
-}
+import { safePath } from '../lib/safePath';
 
 // Real home-page sections. The 404 is not the homepage: these live on "/", so
 // each entry is a plain full-navigation anchor to the hash the browser scrolls
