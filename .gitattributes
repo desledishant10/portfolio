@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.ts text
+*.tsx text
+*.css text
+*.json text
+*.svg text
+*.pdf binary
+*.png binary

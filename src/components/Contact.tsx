@@ -115,7 +115,7 @@ export function Contact() {
             <p className="text-ink-dim leading-relaxed">
               I'm currently open to <span className="text-neon-green">SOC analyst</span>,{' '}
               <span className="text-neon-cyan">threat detection</span>, and{' '}
-              <span className="text-neon-violet">incident response</span> roles starting summer 2026.
+              <span className="text-neon-violet">incident response</span> roles, and I'm available now.
               Drop a message - I read every one.
             </p>
             <div className="flex flex-col gap-2 mt-2">

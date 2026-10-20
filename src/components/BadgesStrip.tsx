@@ -10,7 +10,7 @@ const accentMap = {
   pink: { ring: 'border-neon-pink/40', text: 'text-neon-pink', glow: 'hover:shadow-[0_0_24px_rgba(244,114,182,0.35)]' },
 };
 
-function BadgeTile({ badge }: { badge: Badge }) {
+function BadgeTile({ badge, duplicate = false }: { badge: Badge; duplicate?: boolean }) {
   const accent = accentMap[badge.accent ?? 'cyan'];
   return (
     <a
@@ -18,6 +18,8 @@ function BadgeTile({ badge }: { badge: Badge }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${badge.name} - ${badge.issuer}`}
+      aria-hidden={duplicate || undefined}
+      tabIndex={duplicate ? -1 : undefined}
       className={`shrink-0 w-40 panel ${accent.ring} ${accent.glow} p-3 flex items-center gap-3 transition-all duration-300 hover:-translate-y-0.5`}
     >
       {badge.src ? (
@@ -65,9 +67,9 @@ function BadgesMarquee() {
           WebkitMaskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)',
         }}
       >
-        <div className="flex gap-3 animate-[marquee_30s_linear_infinite] whitespace-nowrap w-max">
+        <div className="flex gap-3 animate-[marquee_30s_linear_infinite] whitespace-nowrap w-max hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:[animation-play-state:paused]">
           {looped.map((b, i) => (
-            <BadgeTile key={`${b.name}-${i}`} badge={b} />
+            <BadgeTile key={`${b.name}-${i}`} badge={b} duplicate={i >= badges.length} />
           ))}
         </div>
       </div>
@@ -103,18 +105,52 @@ function TryHackMeWidget() {
 
   const [reloadKey, setReloadKey] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const watchdogRef = useRef<number | null>(null);
+  const lastLoadRef = useRef(0);
+
+  const armWatchdog = useCallback(() => {
+    if (watchdogRef.current) window.clearTimeout(watchdogRef.current);
+    // If the badge has not rendered in 12s (third-party frame blocked, challenge
+    // stuck, offline), show a fallback link instead of a blank/white box.
+    watchdogRef.current = window.setTimeout(() => setFailed(true), 12_000);
+  }, []);
 
   const refresh = useCallback(() => {
     setLoaded(false);
+    setFailed(false);
     setReloadKey((k) => k + 1);
+    armWatchdog();
+  }, [armWatchdog]);
+
+  const handleLoad = useCallback(() => {
+    if (watchdogRef.current) window.clearTimeout(watchdogRef.current);
+    lastLoadRef.current = Date.now();
+    setLoaded(true);
+    setFailed(false);
   }, []);
 
-  // Reload the live badge when the tab regains focus (stats may have changed).
+  // Arm the watchdog for the initial load; clear it on unmount.
   useEffect(() => {
-    const onFocus = () => refresh();
-    window.addEventListener('focus', onFocus);
-    return () => window.removeEventListener('focus', onFocus);
+    armWatchdog();
+    return () => {
+      if (watchdogRef.current) window.clearTimeout(watchdogRef.current);
+    };
+  }, [armWatchdog]);
+
+  // Refresh only when returning to a tab hidden for over 5 minutes - not on
+  // every window focus (which used to remount the iframe constantly).
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === 'visible' && Date.now() - lastLoadRef.current > 300_000) {
+        refresh();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, [refresh]);
+
+  const loading = !loaded && !failed;
 
   // Scale the fixed-size card down to fit the available width (never up).
   const sizerRef = useRef<HTMLDivElement>(null);
@@ -134,7 +170,7 @@ function TryHackMeWidget() {
     <div className="panel panel-hover overflow-hidden group">
       <div className="flex items-center justify-between px-4 py-2 border-b border-bg-border bg-bg-soft">
         <div className="flex items-center gap-2 font-mono text-[10px] text-ink-mute">
-          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse shadow-[0_0_6px_rgba(0,255,156,0.8)]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse motion-reduce:animate-none shadow-[0_0_6px_rgba(0,255,156,0.8)]" />
           <span>tryhackme.live · @{username}</span>
         </div>
         <div className="flex items-center gap-2">
@@ -152,17 +188,17 @@ function TryHackMeWidget() {
             onClick={refresh}
             aria-label="Reload live badge"
             title="Reload"
-            disabled={!loaded}
+            disabled={loading}
             className="text-ink-mute hover:text-neon-cyan transition-colors disabled:opacity-50"
           >
-            <RefreshCw size={11} className={!loaded ? 'animate-spin' : ''} />
+            <RefreshCw size={11} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} />
           </button>
           <span
-            className="font-mono text-[9px] text-neon-amber flex items-center gap-1"
-            title="Live badge embedded from TryHackMe"
+            className={`font-mono text-[9px] flex items-center gap-1 ${failed ? 'text-ink-mute' : 'text-neon-amber'}`}
+            title={failed ? 'Could not load the live badge' : 'Live badge embedded from TryHackMe'}
           >
             <ShieldCheck size={9} />
-            live
+            {failed ? 'offline' : 'live'}
           </span>
         </div>
       </div>
@@ -188,7 +224,8 @@ function TryHackMeWidget() {
               src={embedUrl}
               loading="lazy"
               referrerPolicy="no-referrer"
-              onLoad={() => setLoaded(true)}
+              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+              onLoad={handleLoad}
               className="absolute top-0 left-0 border-0 bg-transparent"
               style={{
                 width: THM_CARD_W,
@@ -197,6 +234,18 @@ function TryHackMeWidget() {
                 transformOrigin: 'top left',
               }}
             />
+            {failed && (
+              <a
+                href={streakUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0 flex items-center justify-center gap-1.5 bg-[#0b1220] font-mono text-neon-cyan hover:underline"
+                style={{ fontSize: Math.max(9, Math.round(11 * scale)) }}
+              >
+                View live stats on TryHackMe
+                <ExternalLink size={11} />
+              </a>
+            )}
           </div>
         </div>
       </div>
