@@ -116,6 +116,9 @@ body {
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
+  /* Empty alt text so screen readers do not announce the name three times;
+     engines without content-alt support ignore this and keep the effect. */
+  content: attr(data-text) / '';
   position: absolute;
   top: 0;
   left: 0;
@@ -144,6 +147,20 @@ body {
   25% { transform: translate(1px, -1px); }
   50% { transform: translate(-1px, 1px); }
   75% { transform: translate(1px, 1px); }
+}
+
+/* Defined here (not only in tailwind.config.js) so they are always emitted.
+   .scanline::after and .gradient-text reference these via a raw `animation:`
+   declaration, which Tailwind does not detect, so the config keyframes were
+   never output and both effects were silently static. translateY(100%) (not
+   100vh) keeps the scan visible inside small overflow-hidden panels. */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

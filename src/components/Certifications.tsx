@@ -13,7 +13,7 @@ function CertInner({ c, Icon }: { c: Certification; Icon: typeof Award }) {
           <Icon size={18} />
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-semibold text-ink leading-snug">{c.name}</h4>
+          <h3 className="text-sm font-semibold text-ink leading-snug">{c.name}</h3>
           <div className="mt-1 text-xs text-ink-dim">{c.issuer}</div>
           <div className="mt-2 font-mono text-[10px] text-neon-cyan">{c.date}</div>
         </div>

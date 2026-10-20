@@ -15,7 +15,7 @@ function RoleBlock({ role }: { role: Role }) {
       <ul className="mt-3 space-y-1.5 text-sm text-ink-dim leading-relaxed">
         {role.bullets.map((b) => (
           <li key={b} className="flex gap-2">
-            <span className="text-neon-green mt-0.5 shrink-0">▸</span>
+            <span className="text-neon-green mt-0.5 shrink-0" aria-hidden="true">▸</span>
             <span>{b}</span>
           </li>
         ))}

@@ -116,7 +116,9 @@ export function Nav() {
         <button
           onClick={() => setOpen((o) => !o)}
           className="lg:hidden p-2 text-ink"
-          aria-label="Toggle menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -124,6 +126,7 @@ export function Nav() {
 
       {open && (
         <motion.div
+          id="mobile-menu"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           className="lg:hidden border-t border-bg-border bg-bg/95 backdrop-blur-lg"

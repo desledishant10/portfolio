@@ -76,15 +76,24 @@ function useCounter(start: number, perSec: [number, number]) {
   return v;
 }
 
+// Stable references so the ticker/counter effects do not re-run (resetting their
+// intervals) on every re-render. AdminPage re-renders whenever the log list
+// updates (~1.1s), which previously kept the slower gauges from ever ticking.
+const CPU_RANGE: [number, number] = [10, 92];
+const NET_RANGE: [number, number] = [20, 95];
+const MEM_RANGE: [number, number] = [40, 88];
+const BLOCKED_STEP: [number, number] = [1, 4];
+const DETECTED_STEP: [number, number] = [0, 1];
+
 export default function AdminPage() {
   const [logs, setLogs] = useState<LogEntry[]>(() =>
     Array.from({ length: 8 }, randLog),
   );
-  const cpu = useTicker(34, [10, 92], 1200);
-  const net = useTicker(54, [20, 95], 900);
-  const mem = useTicker(67, [40, 88], 1500);
-  const blocked = useCounter(31_847, [1, 4]);
-  const detected = useCounter(112, [0, 1]);
+  const cpu = useTicker(34, CPU_RANGE, 1200);
+  const net = useTicker(54, NET_RANGE, 900);
+  const mem = useTicker(67, MEM_RANGE, 1500);
+  const blocked = useCounter(31_847, BLOCKED_STEP);
+  const detected = useCounter(112, DETECTED_STEP);
 
   useEffect(() => {
     const t = setInterval(() => {

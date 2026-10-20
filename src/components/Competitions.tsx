@@ -32,7 +32,7 @@ export function Competitions() {
                   <ul className="mt-3 space-y-2 text-sm text-ink-dim">
                     {c.bullets.map((b) => (
                       <li key={b} className="flex gap-2">
-                        <span className="text-neon-amber mt-0.5">▸</span>
+                        <span className="text-neon-amber mt-0.5" aria-hidden="true">▸</span>
                         <span>{b}</span>
                       </li>
                     ))}

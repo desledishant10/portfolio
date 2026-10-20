@@ -26,14 +26,6 @@ export function CRTOverlay() {
           mixBlendMode: 'screen',
         }}
       />
-      {/* subtle flicker */}
-      <motion.div
-        aria-hidden
-        animate={{ opacity: [1, 0.97, 1, 0.99, 1, 0.96, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
-        className="pointer-events-none fixed inset-0 z-[89]"
-        style={{ background: 'rgba(0,0,0,0)' }}
-      />
     </>
   );
 }

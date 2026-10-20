@@ -249,7 +249,7 @@ function Field({
   return (
     <label className="flex flex-col gap-1.5">
       <span className="font-mono text-xs text-ink-dim">
-        <span className="text-neon-green">›</span> {label}
+        <span className="text-neon-green" aria-hidden="true">›</span> {label}
         {required && <span className="text-neon-red ml-1">*</span>}
       </span>
       {textarea ? (

@@ -6,9 +6,9 @@ import { GithubIcon } from './ui/BrandIcons';
 import { SectionHeader } from './ui/SectionHeader';
 
 const accentMap = {
-  green: { ring: 'border-neon-green/40', glow: 'hover:shadow-glow-green', text: 'text-neon-green' },
-  cyan: { ring: 'border-neon-cyan/40', glow: 'hover:shadow-glow-cyan', text: 'text-neon-cyan' },
-  violet: { ring: 'border-neon-violet/40', glow: 'hover:shadow-glow-violet', text: 'text-neon-violet' },
+  green: { ring: 'border-neon-green/40', glow: 'hover:shadow-glow-green', text: 'text-neon-green', hoverText: 'hover:text-neon-green' },
+  cyan: { ring: 'border-neon-cyan/40', glow: 'hover:shadow-glow-cyan', text: 'text-neon-cyan', hoverText: 'hover:text-neon-cyan' },
+  violet: { ring: 'border-neon-violet/40', glow: 'hover:shadow-glow-violet', text: 'text-neon-violet', hoverText: 'hover:text-neon-violet' },
 };
 
 function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: number }) {
@@ -55,7 +55,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
               rel="noopener noreferrer"
               aria-label={`${project.title} GitHub repository`}
               onClick={(e) => e.stopPropagation()}
-              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}
+              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
             >
               <GithubIcon size={16} />
             </a>
@@ -67,7 +67,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
               rel="noopener noreferrer"
               aria-label={`${project.title} demo`}
               onClick={(e) => e.stopPropagation()}
-              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim hover:${accent.text} hover:border-current transition-colors`}
+              className={`p-2 rounded bg-bg-soft border border-bg-border text-ink-dim ${accent.hoverText} hover:border-current transition-colors`}
             >
               <ExternalLink size={16} />
             </a>
@@ -91,7 +91,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
       <ul className="space-y-1.5 text-xs text-ink-dim/90" style={{ transform: 'translateZ(10px)' }}>
         {project.bullets.map((b) => (
           <li key={b} className="flex gap-2">
-            <span className={`${accent.text} mt-0.5`}>▸</span>
+            <span className={`${accent.text} mt-0.5`} aria-hidden="true">▸</span>
             <span>{b}</span>
           </li>
         ))}
