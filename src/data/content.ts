@@ -418,11 +418,11 @@ export const education: Education[] = [
  * Badges that scroll in the marquee above the terminal in the Hero.
  * Each renders as a styled tile (icon + name + issuer + click → verification URL).
  *
- * To add a real badge image instead of the icon tile, set `src` to an image URL:
- *   - Credly: https://images.credly.com/size/340x340/images/<image-uuid>/image.png
- *   - TryHackMe: get from your THM profile (some badges have direct image URLs)
- *   - CanCred / Open Badges v3: https://factory.cancred.ca/obv3/images/badge/<id>
- * Any new image host must also be allowlisted in vercel.json's CSP img-src.
+ * Badge images are self-hosted under public/badges/ (downscaled to 128px and
+ * compressed) so the site loads no third-party image hosts. To add one, save
+ * the image there and set `src` to '/badges/<name>.png'. If you ever point
+ * `src` at an external host instead, that host must be re-added to the CSP
+ * img-src in vercel.json (the badge CDNs were removed from it).
  */
 export type Badge = {
   name: string;
@@ -438,35 +438,35 @@ export const badges: Badge[] = [
   {
     name: 'OSINT Search Party CTF',
     issuer: 'Trace Labs · DEF CON 34',
-    src: 'https://factory.cancred.ca/obv3/images/badge/d7f650b230e3c50e670bf41176f3ca3a20e2d62be3547313ee608d78635bb004',
+    src: '/badges/osint-search-party-ctf.png',
     href: 'https://factory.cancred.ca/obv3/credentials/642114cf9622224c555aaa0226adc0dca9bf5370',
     accent: 'violet',
   },
   {
     name: 'SEA Badge',
     issuer: 'Credly · DU',
-    src: 'https://images.credly.com/images/b0cdb1d6-c205-4366-96f5-563e486ca20d/linkedin_thumb_image.png',
+    src: '/badges/sea-badge.png',
     href: 'https://www.credly.com/badges/9d5e098b-13e5-4834-bc24-9a2d1bf2cc1c',
     accent: 'amber',
   },
   {
     name: 'Linux Guardian',
     issuer: 'TryHackMe',
-    src: 'https://assets.tryhackme.com/room-badges/18908d5bd61f470bd1bea5737d58d023.png',
+    src: '/badges/linux-guardian.png',
     href: `https://tryhackme.com/ddesle3/badges/linux-guardian?sharerId=${THM_SHARER}`,
     accent: 'green',
   },
   {
     name: 'Windows Guardian',
     issuer: 'TryHackMe',
-    src: 'https://assets.tryhackme.com/room-badges/fea10f17246d396c5b29abeb0d4a672a.png',
+    src: '/badges/windows-guardian.png',
     href: `https://tryhackme.com/ddesle3/badges/windows-guardian?sharerId=${THM_SHARER}`,
     accent: 'cyan',
   },
   {
     name: 'Adversary',
     issuer: 'TryHackMe',
-    src: 'https://assets.tryhackme.com/room-badges/e2ce4a409fa11e6085a075fbf99a443a.png',
+    src: '/badges/adversary.png',
     href: `https://tryhackme.com/ddesle3/badges/adversary?sharerId=${THM_SHARER}`,
     accent: 'pink',
   },
