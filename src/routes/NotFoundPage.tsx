@@ -10,6 +10,7 @@ import { GlitchText } from '../components/ui/GlitchText';
 // `/foo<bidi-override>bar`.
 function safePath(): string {
   const raw = typeof window !== 'undefined' ? window.location.pathname : '/';
+  // eslint-disable-next-line no-control-regex -- stripping control bytes is the point
   return raw.replace(/[\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/gu, '').slice(0, 80);
 }
 

@@ -84,6 +84,7 @@ function isValidEmail(s: string): boolean {
 function stripCrlf(s: string): string {
   // Used on values that feed email headers (Subject, Reply-To) — prevents
   // injection of additional headers like "\r\nBcc: attacker@evil.com".
+  // eslint-disable-next-line no-control-regex -- stripping control bytes is the point
   return s.replace(/[\r\n\x00-\x1f\x7f]/g, '').slice(0, 256);
 }
 

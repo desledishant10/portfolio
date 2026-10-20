@@ -44,6 +44,7 @@ function sanitizeInput(s: string): string {
   //   U+2066-U+2069 isolates
   // then cap to INPUT_MAX
   return s
+    // eslint-disable-next-line no-control-regex -- stripping control bytes is the point
     .replace(/[\x00-\x1f\x7f-\x9f\u200b-\u200d\ufeff\u202a-\u202e\u2066-\u2069]/gu, '')
     .slice(0, INPUT_MAX);
 }
