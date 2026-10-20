@@ -94,6 +94,16 @@ body {
   background-size: 40px 40px;
 }
 
+/* Hide the native scrollbar on an element that stays scrollable by wheel,
+   touch, drag, and keyboard. Used by the credentials rail so it can be
+   scrubbed by hand without an always-visible bar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer components {
   .panel {
     @apply bg-bg-panel/60 backdrop-blur-md border border-bg-border rounded-lg;
@@ -195,14 +205,6 @@ body {
 @keyframes gradient {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
-}
-
-/* The BadgesStrip marquee uses an arbitrary `animate-[marquee_...]` utility,
-   so the keyframes must exist in plain CSS (config keyframes are not guaranteed
-   to back an arbitrary animation name under the v4 @config compat layer). */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
