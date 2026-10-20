@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { BootLoader } from './components/BootLoader';
@@ -7,8 +8,11 @@ import { CommandPalette } from './components/CommandPalette';
 import { KonamiListener } from './components/KonamiListener';
 import { MatrixRain } from './components/MatrixRain';
 import HomePage from './routes/HomePage';
-import AdminPage from './routes/AdminPage';
 import NotFoundPage from './routes/NotFoundPage';
+
+// The /admin SOC console is a heavy easter egg (attack map, ATT&CK matrix, feed
+// engine). Lazy-load it so none of that ships in the main bundle.
+const AdminPage = lazy(() => import('./routes/AdminPage'));
 
 function App() {
   const { pathname } = useLocation();
@@ -23,11 +27,13 @@ function App() {
       <CRTOverlay />
       <CommandPalette />
       <KonamiListener />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<div className="min-h-screen" aria-hidden />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
       <Analytics />
     </>
   );
