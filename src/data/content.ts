@@ -241,7 +241,7 @@ export type Project = {
   stack: string[];
   bullets: string[];
   metric?: { label: string; value: string };
-  accent: 'green' | 'cyan' | 'violet';
+  accent: 'green' | 'cyan' | 'violet' | 'amber';
   // Public GitHub URL. Omit to hide the repo icon on the card.
   repo?: string;
   // Optional live demo or writeup URL. Omit to hide the demo link.
@@ -250,32 +250,46 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: 'Vex - Agent-First Red Team Framework',
+    title: 'mcp-witness - Security Scanner for MCP Servers',
     blurb:
-      'Open-source red team framework probing LLMs, AI agents, MCP servers, and RAG pipelines for indirect tool injection, prompt extraction, Unicode smuggling, and jailbreaks.',
-    stack: ['Python', 'LLM Security', 'MCP', 'Prompt Injection', 'CI/CD'],
+      'Static + dynamic vulnerability scanner for Model Context Protocol servers: 15 static rules and 7 dynamic test scenarios covering SSRF, path traversal, shell injection, prompt injection, DNS rebinding, and CORS misconfig.',
+    stack: ['Python', 'SAST', 'DAST', 'MCP', 'SSRF', 'DNS Rebinding'],
     bullets: [
-      'Built for the realistic agent attack surface (attacker-controlled tool output, documents, MCP) rather than only user-supplied jailbreaks.',
-      'Composable detector stack (refusal, pattern, compliance, LLM-as-judge); Anthropic, OpenAI, and Ollama providers supported.',
-      'CI-native with `--exit-on-finding` for build gating; stable JSON schema and deterministic seeds for forensic replay.',
+      `Reported 6 vulnerabilities through coordinated disclosure, including an SSRF in Anthropic's mcp-server-fetch, and filed CVE requests confirming the upstream fixes.`,
+      'Proved the SSRF end-to-end on AWS EC2 via the instance metadata service, retrieving live IAM credentials as impact.',
+      'Calibrated against a corpus of real MCP servers at high precision/recall, with a deterministic test suite backing the ruleset.',
     ],
-    metric: { label: 'attack classes', value: '5+' },
+    metric: { label: 'vulns disclosed', value: '6' },
+    accent: 'cyan',
+    repo: 'https://github.com/desledishant10/mcp-witness',
+  },
+  {
+    title: 'AgentSploit - Offensive Framework for AI Agents',
+    blurb:
+      'Open-source (PyPI) offensive testing framework for AI agents and MCP servers: 11 modules spanning MCP scanning, indirect prompt injection, attack-path mapping, and memory/RAG/thread poisoning.',
+    stack: ['Python', 'PyPI', 'LLM Security', 'MCP', 'Prompt Injection'],
+    bullets: [
+      'Delivers prompt-injection payloads through realistic carriers (PDF, email, and calendar files), not just user-supplied jailbreaks.',
+      'Traces attack paths from untrusted inputs to sensitive tools against live Claude and OpenAI agents.',
+      'Composable detector stack (refusal, pattern, compliance, LLM-as-judge); CI-native with build-gating exit codes and deterministic replay.',
+    ],
+    metric: { label: 'modules', value: '11' },
     accent: 'violet',
     repo: 'https://github.com/desledishant10/vex',
   },
   {
-    title: 'MCP-Scan - Security Scanner for MCP Servers',
+    title: 'mllm-scan - On-Device LLM Measurement Study',
     blurb:
-      'Static + dynamic vulnerability scanner for Model Context Protocol servers with 14 rules covering SSRF, path traversal, shell injection, prompt injection, DNS rebinding, and CORS misconfig.',
-    stack: ['Python', 'SAST', 'DAST', 'MCP', 'SSRF', 'DNS Rebinding'],
+      `Master's capstone: a static scanner that detects on-device LLMs bundled inside Android apps, run as a large-scale measurement study across the app ecosystem.`,
+    stack: ['Python', 'Android', 'APK Analysis', 'Static Analysis', 'Research'],
     bullets: [
-      'Found vulnerabilities in 5 PyPI-published MCP servers (including an Anthropic reference server) and filed coordinated CVE-track disclosures with maintainers under embargo.',
-      'Demonstrated SSRF on AWS EC2 end-to-end via the instance metadata service, retrieving live IAM credentials as proof of impact.',
-      'Calibration corpus of 10 targets at 100% precision/recall across 151 passing tests for the static analyzer ruleset.',
+      'Scanned 1,001 Android apps to map how on-device models ship in the wild.',
+      'Identified a new threat class, Mutable-Reference Model Substitution, where a swappable model reference becomes an injection point.',
+      'Static pipeline over APKs: locating model artifacts, loaders, and the references that bind them at runtime.',
     ],
-    metric: { label: 'vendors disclosed', value: '5' },
-    accent: 'cyan',
-    repo: 'https://github.com/desledishant10/mcp-scan',
+    metric: { label: 'apps scanned', value: '1,001' },
+    accent: 'amber',
+    repo: 'https://github.com/desledishant10/mllm-scan',
   },
   {
     title: 'Afterlife - Ghost-Access Auditor',

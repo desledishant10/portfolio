@@ -9,9 +9,10 @@ const accentMap = {
   green: { ring: 'border-neon-green/40', glow: 'hover:shadow-glow-green', text: 'text-neon-green', hoverText: 'hover:text-neon-green' },
   cyan: { ring: 'border-neon-cyan/40', glow: 'hover:shadow-glow-cyan', text: 'text-neon-cyan', hoverText: 'hover:text-neon-cyan' },
   violet: { ring: 'border-neon-violet/40', glow: 'hover:shadow-glow-violet', text: 'text-neon-violet', hoverText: 'hover:text-neon-violet' },
+  amber: { ring: 'border-neon-amber/40', glow: 'hover:shadow-[0_0_24px_rgba(251,191,36,0.35)]', text: 'text-neon-amber', hoverText: 'hover:text-neon-amber' },
 };
 
-function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: number }) {
+function ProjectCard({ project, i, extraClass = '' }: { project: (typeof projects)[number]; i: number; extraClass?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -41,7 +42,7 @@ function ProjectCard({ project, i }: { project: (typeof projects)[number]; i: nu
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: i * 0.08 }}
-      className={`panel ${accent.ring} ${accent.glow} p-6 flex flex-col gap-4 transition-shadow duration-300`}
+      className={`panel ${accent.ring} ${accent.glow} p-6 flex flex-col gap-4 transition-shadow duration-300 ${extraClass}`}
     >
       <div className="flex items-start justify-between gap-3" style={{ transform: 'translateZ(20px)' }}>
         <div className={`p-2 rounded-sm bg-bg-soft border ${accent.ring} ${accent.text}`}>
@@ -115,7 +116,14 @@ export function Projects() {
         <SectionHeader index="05." title="projects" subtitle="// builds[]" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style={{ perspective: '1000px' }}>
           {projects.map((p, i) => (
-            <ProjectCard key={p.title} project={p} i={i} />
+            <ProjectCard
+              key={p.title}
+              project={p}
+              i={i}
+              // Center a lone trailing card on the 3-wide desktop grid so it
+              // does not sit orphaned in the left column (e.g. a 4th project).
+              extraClass={projects.length % 3 === 1 && i === projects.length - 1 ? 'lg:col-start-2' : ''}
+            />
           ))}
         </div>
       </div>
