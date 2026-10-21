@@ -275,7 +275,7 @@ export const projects: Project[] = [
     ],
     metric: { label: 'modules', value: '11' },
     accent: 'violet',
-    repo: 'https://github.com/desledishant10/vex',
+    repo: 'https://github.com/agentsploit/agentsploit',
   },
   {
     title: 'mllm-scan - On-Device LLM Measurement Study',
