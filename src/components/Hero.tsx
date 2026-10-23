@@ -5,6 +5,7 @@ import { GlitchText } from './ui/GlitchText';
 import { BadgesStrip } from './BadgesStrip';
 import { Magnetic } from './ui/Magnetic';
 import { InteractiveTerminal } from './ui/InteractiveTerminal';
+import { RadarMark } from './ui/RadarMark';
 
 export function Hero() {
   return (
@@ -95,6 +96,7 @@ export function Hero() {
               <span className="w-3 h-3 rounded-full bg-neon-amber/70" />
               <span className="w-3 h-3 rounded-full bg-neon-green/70" />
               <span className="ml-2 font-mono text-xs text-ink-mute">~/dishant - zsh</span>
+              <RadarMark size={14} className="ml-auto opacity-60 shrink-0" />
             </div>
             <div className="p-5 min-h-[260px]">
               <InteractiveTerminal />
