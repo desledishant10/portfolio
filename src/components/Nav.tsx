@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Command, Mail, Menu, X } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './ui/BrandIcons';
+import { RadarMark } from './ui/RadarMark';
 import { profile } from '../data/content';
 import clsx from 'clsx';
 
@@ -59,6 +60,7 @@ export function Nav() {
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
         <a href="#top" className="font-mono text-sm flex items-center gap-2 group">
+          <RadarMark size={18} className="shrink-0" />
           <span className="text-neon-green">$</span>
           <span className="text-ink group-hover:text-neon-cyan transition-colors">
             {profile.handle}

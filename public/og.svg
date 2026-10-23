@@ -8,9 +8,27 @@
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(34,211,238,0.08)" stroke-width="1"/>
     </pattern>
+    <radialGradient id="rglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#00ff9c" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#00ff9c" stop-opacity="0"/>
+    </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="#05070a"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- radar brand mark (right side) -->
+  <circle cx="1005" cy="315" r="150" fill="url(#rglow)"/>
+  <g fill="none" stroke="#22d3ee">
+    <circle cx="1005" cy="315" r="132" stroke-width="6"/>
+    <circle cx="1005" cy="315" r="86" stroke-width="3" opacity="0.5"/>
+    <circle cx="1005" cy="315" r="43" stroke-width="2" opacity="0.4"/>
+    <line x1="1005" y1="183" x2="1005" y2="447" stroke-width="2" opacity="0.25"/>
+    <line x1="873" y1="315" x2="1137" y2="315" stroke-width="2" opacity="0.25"/>
+  </g>
+  <path d="M1005 315 L1005 183 A132 132 0 0 1 1113 239 Z" fill="#00ff9c" opacity="0.22"/>
+  <line x1="1005" y1="315" x2="1113" y2="239" stroke="#00ff9c" stroke-width="4"/>
+  <circle cx="1080" cy="250" r="7" fill="#00ff9c"/>
 
   <!-- corner brackets -->
   <text x="40" y="60" fill="#22d3ee" font-family="monospace" font-size="20" opacity="0.4">┌</text>
