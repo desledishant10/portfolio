@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Loader2, Mail, Send, ShieldCheck, XCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './ui/BrandIcons';
+import { socialLinks } from './ui/socialLinks';
 import { profile } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 
@@ -175,6 +176,26 @@ export function Contact() {
                 <GithubIcon size={16} className="text-neon-cyan" />
                 <span className="text-ink-dim group-hover:text-neon-cyan">@{profile.handle}</span>
               </a>
+            </div>
+            <div className="mt-1">
+              <div className="font-mono text-[11px] text-ink-mute mb-2">// elsewhere</div>
+              <div className="flex flex-wrap gap-2">
+                {socialLinks
+                  .filter((s) => s.label !== 'GitHub' && s.label !== 'LinkedIn')
+                  .map(({ label, href, Icon, rel }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel={rel ? `noopener noreferrer ${rel}` : 'noopener noreferrer'}
+                      aria-label={label}
+                      title={label}
+                      className="p-2.5 panel panel-hover text-ink-dim hover:text-neon-cyan transition-colors"
+                    >
+                      <Icon size={16} />
+                    </a>
+                  ))}
+              </div>
             </div>
             <div className="mt-2 flex items-center gap-2 text-[11px] text-ink-mute font-mono">
               <ShieldCheck size={12} className="text-neon-green" />

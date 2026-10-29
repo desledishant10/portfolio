@@ -7,6 +7,12 @@ export const profile = {
   email: 'didesle7@gmail.com',
   github: 'https://github.com/desledishant10',
   linkedin: 'https://www.linkedin.com/in/dishant-desle-253437226/',
+  twitter: 'https://x.com/dishant_desle',
+  bluesky: 'https://bsky.app/profile/jinjijo.bsky.social',
+  mastodon: 'https://infosec.exchange/@jinjijo',
+  devto: 'https://dev.to/dishant_desle',
+  reddit: 'https://www.reddit.com/user/didesle/',
+  hackernews: 'https://news.ycombinator.com/user?id=di_desle',
   tryhackmeUsername: 'ddesle3',
   // Public ID used by THM's live embed API:
   //   https://tryhackme.com/api/v2/badges/public-profile?userPublicId=<id>
