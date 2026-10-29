@@ -68,7 +68,7 @@ export function Nav() {
           <span className="w-2 h-4 bg-neon-cyan animate-blink" aria-hidden />
         </a>
 
-        <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 min-w-0">
+        <div className="hidden min-[1152px]:flex items-center gap-0.5 min-w-0">
           {links.map((l) => {
             const id = l.href.slice(1);
             const isActive = active === id;
@@ -77,11 +77,10 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 className={clsx(
-                  'relative group px-2 xl:px-3 py-2 font-mono text-xs transition-colors whitespace-nowrap',
+                  'relative group px-2 py-2 font-mono text-xs transition-colors whitespace-nowrap',
                   isActive ? 'text-neon-cyan' : 'text-ink-dim hover:text-neon-cyan',
                 )}
               >
-                <span className="hidden xl:inline text-neon-green/70 mr-1">{l.idx}.</span>
                 {l.label}
                 {isActive && (
                   <motion.span
@@ -93,7 +92,7 @@ export function Nav() {
               </a>
             );
           })}
-          <div className="flex items-center gap-1.5 ml-2 xl:ml-3 pl-3 xl:pl-4 border-l border-bg-border shrink-0">
+          <div className="flex items-center gap-1.5 ml-2 pl-3 border-l border-bg-border shrink-0">
             <button
               onClick={() => window.dispatchEvent(new Event('open-palette'))}
               aria-label="Open command palette"
@@ -117,7 +116,7 @@ export function Nav() {
 
         <button
           onClick={() => setOpen((o) => !o)}
-          className="lg:hidden p-2 text-ink"
+          className="min-[1152px]:hidden p-2 text-ink"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -131,7 +130,7 @@ export function Nav() {
           id="mobile-menu"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden border-t border-bg-border bg-bg/95 backdrop-blur-lg"
+          className="min-[1152px]:hidden border-t border-bg-border bg-bg/95 backdrop-blur-lg"
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1">
             {links.map((l) => {
