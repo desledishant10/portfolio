@@ -92,7 +92,8 @@ const COMPLETIONS = [
   'cat bio', 'cat focus', 'cat contact', 'resume',
   'goto about', 'goto skills', 'goto projects', 'goto experience', 'goto contact',
   'contact', 'github', 'linkedin', 'email', 'thm', 'sudo hire-me', 'admin',
-  'open github', 'open linkedin', 'open thm', 'open resume', 'open profiles',
+  'open github', 'open linkedin', 'open x', 'open bluesky', 'open mastodon',
+  'open devto', 'open reddit', 'open hn', 'open thm', 'open resume', 'open profiles',
 ];
 
 // One-click shortcuts so non-CLI visitors can explore without typing.
@@ -127,7 +128,8 @@ function helpLines(): Line[] {
     ['resume', 'download resume.pdf'],
     ['goto <section>', 'scroll to a section'],
     ['contact', 'jump to the contact form'],
-    ['open <target>', 'github / linkedin / thm / resume / email'],
+    ['open <target>', 'github / linkedin / x / bluesky / mastodon / reddit / hn / thm'],
+    ['open profiles', 'print every handle (github, socials, hn ...)'],
     ['date', 'current date'],
     ['clear', 'clear the terminal'],
     ['sudo hire-me', 'the good ending'],
@@ -359,6 +361,35 @@ export function InteractiveTerminal() {
               out.push({ kind: 'out', text: `composing email to ${profile.email}...` });
               safeOpen(`mailto:${profile.email}`);
               break;
+            case 'x':
+            case 'twitter':
+              out.push({ kind: 'out', text: 'opening x.com/dishant_desle...' });
+              safeOpen(profile.twitter);
+              break;
+            case 'bluesky':
+            case 'bsky':
+              out.push({ kind: 'out', text: 'opening bsky.app/profile/jinjijo...' });
+              safeOpen(profile.bluesky);
+              break;
+            case 'mastodon':
+            case 'masto':
+              out.push({ kind: 'out', text: 'opening infosec.exchange/@jinjijo...' });
+              safeOpen(profile.mastodon);
+              break;
+            case 'devto':
+            case 'dev':
+              out.push({ kind: 'out', text: 'opening dev.to/dishant_desle...' });
+              safeOpen(profile.devto);
+              break;
+            case 'reddit':
+              out.push({ kind: 'out', text: 'opening reddit.com/user/didesle...' });
+              safeOpen(profile.reddit);
+              break;
+            case 'hn':
+            case 'hackernews':
+              out.push({ kind: 'out', text: 'opening news.ycombinator.com...' });
+              safeOpen(profile.hackernews);
+              break;
             case 'admin':
               out.push({ kind: 'out', text: 'authenticating... access granted. navigating to /admin' });
               setTimeout(() => navigate('/admin'), 400);
@@ -367,15 +398,16 @@ export function InteractiveTerminal() {
             case 'profile':
             case 'socials':
             case 'links':
-              out.push({ kind: 'out', text: `github:   ${profile.github}\nlinkedin: ${profile.linkedin}` });
-              out.push({ kind: 'out', text: 'opening linkedin...' });
-              safeOpen(profile.linkedin);
+              out.push({
+                kind: 'out',
+                text: `github:   ${profile.github}\nlinkedin: ${profile.linkedin}\nx:        ${profile.twitter}\nbluesky:  ${profile.bluesky}\nmastodon: ${profile.mastodon}\ndev.to:   ${profile.devto}\nreddit:   ${profile.reddit}\nhn:       ${profile.hackernews}`,
+              });
               break;
             case '':
-              out.push({ kind: 'err', text: 'open: usage: open <github|linkedin|thm|resume|email|profiles>' });
+              out.push({ kind: 'err', text: 'open: usage: open <github|linkedin|x|bluesky|mastodon|devto|reddit|hn|thm|resume|email|profiles>' });
               break;
             default:
-              out.push({ kind: 'err', text: `open: unknown target '${target}'. try: github, linkedin, thm, resume, email` });
+              out.push({ kind: 'err', text: `open: unknown target '${target}'. try: open profiles (lists all), or github, linkedin, x, bluesky, mastodon, devto, reddit, hn, thm, resume, email` });
           }
           break;
         }

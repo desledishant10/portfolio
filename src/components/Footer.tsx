@@ -1,6 +1,6 @@
 import { Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './ui/BrandIcons';
 import { profile } from '../data/content';
+import { socialLinks } from './ui/socialLinks';
 
 export function Footer() {
   return (
@@ -9,10 +9,28 @@ export function Footer() {
         <div>
           <span className="text-neon-green">$</span> echo "built by {profile.name} · {new Date().getFullYear()}"
         </div>
-        <div className="flex items-center gap-3">
-          <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-neon-cyan"><GithubIcon size={14} /></a>
-          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-neon-cyan"><LinkedinIcon size={14} /></a>
-          <a href={`mailto:${profile.email}`} aria-label="Email" className="hover:text-neon-cyan"><Mail size={14} /></a>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {socialLinks.map(({ label, href, Icon, rel }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel={rel ? `noopener noreferrer ${rel}` : 'noopener noreferrer'}
+              aria-label={label}
+              title={label}
+              className="hover:text-neon-cyan transition-colors"
+            >
+              <Icon size={14} />
+            </a>
+          ))}
+          <a
+            href={`mailto:${profile.email}`}
+            aria-label="Email"
+            title="Email"
+            className="hover:text-neon-cyan transition-colors"
+          >
+            <Mail size={14} />
+          </a>
         </div>
       </div>
     </footer>
