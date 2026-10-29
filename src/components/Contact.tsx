@@ -17,6 +17,12 @@ declare global {
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '';
 
+// Brand colors keyed by label, sourced from the shared social list so the
+// logo tints here never drift from the footer.
+const BRAND: Record<string, string> = Object.fromEntries(
+  socialLinks.map((s) => [s.label, s.color]),
+);
+
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 export function Contact() {
@@ -162,18 +168,20 @@ export function Contact() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                style={{ color: BRAND.LinkedIn }}
                 className="flex items-center gap-3 p-3 panel panel-hover text-sm font-mono group"
               >
-                <LinkedinIcon size={16} className="text-neon-cyan" />
+                <LinkedinIcon size={16} />
                 <span className="text-ink-dim group-hover:text-neon-cyan">/in/dishant-desle</span>
               </a>
               <a
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                style={{ color: BRAND.GitHub }}
                 className="flex items-center gap-3 p-3 panel panel-hover text-sm font-mono group"
               >
-                <GithubIcon size={16} className="text-neon-cyan" />
+                <GithubIcon size={16} />
                 <span className="text-ink-dim group-hover:text-neon-cyan">@{profile.handle}</span>
               </a>
             </div>
@@ -182,7 +190,7 @@ export function Contact() {
               <div className="flex flex-wrap gap-2">
                 {socialLinks
                   .filter((s) => s.label !== 'GitHub' && s.label !== 'LinkedIn')
-                  .map(({ label, href, Icon, rel }) => (
+                  .map(({ label, href, Icon, rel, color }) => (
                     <a
                       key={label}
                       href={href}
@@ -190,7 +198,8 @@ export function Contact() {
                       rel={rel ? `noopener noreferrer ${rel}` : 'noopener noreferrer'}
                       aria-label={label}
                       title={label}
-                      className="p-2.5 panel panel-hover text-ink-dim hover:text-neon-cyan transition-colors"
+                      style={{ color }}
+                      className="p-2.5 panel panel-hover transition-transform hover:scale-110"
                     >
                       <Icon size={16} />
                     </a>
