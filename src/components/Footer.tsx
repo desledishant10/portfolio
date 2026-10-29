@@ -10,7 +10,7 @@ export function Footer() {
           <span className="text-neon-green">$</span> echo "built by {profile.name} · {new Date().getFullYear()}"
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          {socialLinks.map(({ label, href, Icon, rel }) => (
+          {socialLinks.map(({ label, href, Icon, rel, color }) => (
             <a
               key={label}
               href={href}
@@ -18,7 +18,8 @@ export function Footer() {
               rel={rel ? `noopener noreferrer ${rel}` : 'noopener noreferrer'}
               aria-label={label}
               title={label}
-              className="hover:text-neon-cyan transition-colors"
+              style={{ color }}
+              className="transition duration-200 hover:scale-125 hover:brightness-110"
             >
               <Icon size={14} />
             </a>
@@ -27,7 +28,7 @@ export function Footer() {
             href={`mailto:${profile.email}`}
             aria-label="Email"
             title="Email"
-            className="hover:text-neon-cyan transition-colors"
+            className="text-neon-cyan transition duration-200 hover:scale-125 hover:brightness-110"
           >
             <Mail size={14} />
           </a>
